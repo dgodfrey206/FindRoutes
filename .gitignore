@@ -28,3 +28,7 @@
 *.app
 /Release/
 /Debug/
+
+.cproject
+.project
+/.settings/
