@@ -1,0 +1,29 @@
+body{color:#6E6E6E; font-family:Arial;}
+    th {background-color:white; font-size:18px; text-align:left; border-bottom:1px solid #6E6E6E; color:#6E6E6E !important;}
+    td {background-color:#white; color:#6E6E6E;}
+    table {border-width: 0px 0px 0px 0px;}
+    td.whitebg { background-color:white;}
+    a.special  { 
+		background-color:#026fba;
+		color:White;
+    }
+     a:hover.special  { 
+		color:White;
+    }
+    a.objazd {background-color: yellow;}
+    a.niezmiana {background-color: #ddddd4;}
+    td.special  { 
+		background-color:#026fba;
+		color:white;
+    }
+    td.objazd {background-color: yellow;}
+    td.niezmiana {background-color: #ddddd4;}
+    td.lt {background-color:white; text-align: left;}
+    a{
+		text-decoration:none;
+		color:#6E6E6E;
+    }
+    a:hover {
+    text-decoration: underline;
+    color:#0979C7;
+    }
