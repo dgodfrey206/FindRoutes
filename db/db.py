@@ -19,10 +19,11 @@ def main():
     trips = getTrips(routes, calendar)
 
     pp = pprint.PrettyPrinter(indent=4)
-    #pp.pprint(agency)
-    #pp.pprint(stops)
-    #pp.pprint(routes)
-    #pp.pprint(trips)
+    pp.pprint(agency)
+    pp.pprint(stops)
+    pp.pprint(routes)
+    pp.pprint(trips)
+    pp.pprint(calendar)
 
 def getAgency():
     return {
@@ -34,19 +35,7 @@ def getAgency():
 def getCalendar():
     calendar = []
     id = 1
-    calendar.append({
-        "service_id": "Service" + str(id),
-        "monday": 1,
-        "tuesday": 1,
-        "wednesday": 1,
-        "thursday": 1,
-        "friday": 1,
-        "saturday": 1,
-        "sunday": 1,
-        "start_date": 20000101,
-        "end_date": 20991231
-    })
-    id += 1
+
     calendar.append({
         "service_id": "Service" + str(id),
         "monday": 1,
@@ -150,28 +139,76 @@ def getTrips(routes, calendar):
     trips = []
 
     url = "rozklady.krakow/aktualne/{:0>4}/{:0>4}w{:0>3}.htm"
-
+    url2 = "rozklady.krakow/aktualne/{:0>4}/{}"
     for route in routes:
         dir = 1
         id = route['route_short_name']
-        print(route)
 
         while(True):
             try:
-                with open(url.format(id, id, dir), encoding="iso-8859-2") as file:
-                    pass
-                    # trips.append({
-                    #     "route_id",: route['route_id'],
-                    #     "service_id":
-                    #
-                    # })
+                u = url.format(id, id, dir)
+                with open(u, encoding="iso-8859-2") as file:
+                    html = file.readlines()
+                    soup = BeautifulSoup(str(html))
+
+                    u2 = url2.format(id, soup.find("table").find_all("a")[1]["href"])
+
+                    with open(u2, encoding="iso-8859-2") as file2:
+                        html2 = file2.readlines()
+                        soup2 = BeautifulSoup(str(html2))
+
+                    commondays = False
+                    saturdays = False
+                    sundays = False
+
+                    rows = soup2.find_all("tr")
+
+                    for row in rows:
+                        cellid = 0
+                        cells = row.find_all("td")
+                        for cell in cells[1::2]:
+                            if cell.text != "-":
+                                if cellid == 0:
+                                    commondays = True
+                                elif cellid == 1:
+                                    saturdays = True
+                                elif cellid == 2:
+                                    sundays = True
+                            cellid += 1
+
+                        if commondays and saturdays and sundays:
+                            break #no need to search further
+
+                    if commondays:
+                        trips.append({
+                            "route_id": route['route_id'],
+                            "service_id": calendar[0]['service_id'],
+                            "trip_id": route['route_id'] + calendar[0]['service_id'] + "Trip" + str(dir),
+                            "url": u
+                        })
+
+                    if saturdays:
+                        trips.append({
+                            "route_id": route['route_id'],
+                            "service_id": calendar[1]['service_id'],
+                            "trip_id": route['route_id'] + calendar[1]['service_id'] + "Trip" + str(dir),
+                            "url": u
+                        })
+
+                    if sundays:
+                        trips.append({
+                            "route_id": route['route_id'],
+                            "service_id": calendar[2]['service_id'],
+                            "trip_id": route['route_id'] + calendar[2]['service_id'] + "Trip" + str(dir),
+                            "url": u
+                        })
                 # todo
+                dir += 1
 
             except FileNotFoundError:
                 #no more directions remaining
                 break
-            break
-        break
+    return trips
 
 def is_number(s):
     try:
