@@ -171,14 +171,14 @@ def getTrips(routes, calendar):
                     soup = BeautifulSoup(str(html))
 
                     u2 = url2.format(id, soup.find("table").find_all("a")[1]["href"])
-
+                    print(u2)
                     with open(u2, encoding="iso-8859-2") as file2:
                         html2 = file2.readlines()
                         soup2 = BeautifulSoup(str(html2))
 
-                    commondays = False
-                    saturdays = False
-                    sundays = False
+                    commondays = 0
+                    saturdays = 0
+                    sundays = 0
 
                     rows = soup2.find_all("tr")
 
@@ -186,42 +186,55 @@ def getTrips(routes, calendar):
                         cellid = 0
                         cells = row.find_all("td")
                         for cell in cells[1::2]:
-                            if cell.text != "-":
+                            if 'cellmin' in cell['class']:
+                                els = cell.text.split()
+                                counts = 0
+                                if '-' not in els:
+                                    counts += len(els)
                                 if cellid == 0:
-                                    commondays = True
+                                    commondays += counts
                                 elif cellid == 1:
-                                    saturdays = True
+                                    saturdays += counts
                                 elif cellid == 2:
-                                    sundays = True
+                                    sundays += counts
                             cellid += 1
 
-                        if commondays and saturdays and sundays:
-                            break  # no need to search further
+                        #if commondays and saturdays and sundays:
+                        #    break  # no need to search further
 
-                    if commondays:
+                    tripid = 1
+                    while commondays:
                         trips.append({
                             "route_id": route['route_id'],
                             "service_id": calendar[0]['service_id'],
-                            "trip_id": route['route_id'] + calendar[0]['service_id'] + "Trip" + str(dir),
+                            "trip_id": route['route_id'] + calendar[0]['service_id'] + "Trip" + str(tripid) + "Dir" + str(dir),
                             "url": u
                         })
+                        commondays -= 1
+                        tripid += 1
 
-                    if saturdays:
+                    tripid = 1
+                    while saturdays:
                         trips.append({
                             "route_id": route['route_id'],
                             "service_id": calendar[1]['service_id'],
-                            "trip_id": route['route_id'] + calendar[1]['service_id'] + "Trip" + str(dir),
+                            "trip_id": route['route_id'] + calendar[1]['service_id'] + "Trip" + str(tripid) + "Dir" + str(dir),
                             "url": u
                         })
+                        saturdays -= 1
+                        tripid += 1
 
-                    if sundays:
+                    tripid = 1
+                    while sundays:
                         trips.append({
                             "route_id": route['route_id'],
                             "service_id": calendar[2]['service_id'],
-                            "trip_id": route['route_id'] + calendar[2]['service_id'] + "Trip" + str(dir),
+                            "trip_id": route['route_id'] + calendar[2]['service_id'] + "Trip" + str(tripid) + "Dir" + str(dir),
                             "url": u
                         })
-                # todo
+                        sundays -= 1
+                        tripid += 1
+
                 dir += 1
 
             except FileNotFoundError:
