@@ -9,8 +9,8 @@
 #define SRC_TRANSPORTTYPE_H_
 
 enum TransportType {
-	TRAM = 1,
-	BUS = 2
+	TRAM = 0,
+	BUS = 1
 };
 
 
