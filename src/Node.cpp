@@ -37,11 +37,11 @@ std::string Node::getName() const
 
 std::ostream& operator<<(std::ostream& stream, const Node& n)
 {
-	stream << "Node #";
-	stream << std::setw(5) << std::right << n.getID() << ". ";
-	stream << n.getName() << std::endl;
-	stream << '\t' << std::setw(8) << std::right  << n.getLatitude() << ' ';
-	stream << std::setw(8) << std::right << n.getLongtitude();
+	stream << "Node:" << std::endl;
+	stream << "[" << std::setw(4) << std::right << n.getID();
+	stream << "]--[" << std::setw(8) << std::right << n.getLatitude();
+	stream << "]-[" << std::setw(8) << std::right << n.getLongtitude();
+	stream << "] " << std::setw(49) << std::right << n.getName();
 
 	return stream;
 }

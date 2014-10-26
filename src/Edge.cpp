@@ -69,20 +69,21 @@ Edge& Edge::operator =(const Edge& e) {
 
 std::ostream& operator<<(std::ostream& stream, const Edge& e)
 {
-	stream << "Edge #";
-		stream << std::setw(5) << std::right << e.getID() << "." << std::endl;
-		stream << std::setw(8) << std::left << "From:" <<  " [" << std::setw(5) << std::right << e.getStartNode()->getID() << "] " << e.getStartNode()->getName() << std::endl;
-		stream << std::setw(8) << std::left << "To:" <<  " [" << std::setw(5) << std::right << e.getEndNode()->getID() << "] " << e.getEndNode()->getName() << std::endl;
-		stream << std::setw(8) << std::left << "Type: ";
-		if(e.getType() == BUS)
-			stream <<  "BUS";
-		else if(e.getType() == TRAM)
-			stream << "TRAM";
-		else
-			stream << "UNKNOWN";
-		stream << std::endl;
+	stream << "Edge:" << std::endl;
+	stream << "[" << std::setw(4) << std::right << e.getStartNode()->getID() << "]->";
+	stream << "[" << std::setw(4) << std::right << e.getEndNode()->getID() << "]-";
 
-		stream << std::setw(8) << std::left << "Weight: " << e.getWeight();
+	if(e.getType() == BUS)
+		stream << "[" << std::setw(4) << std::right << "BUS";
+	else if(e.getType() == TRAM)
+		stream << "[" << std::setw(4) << std::right << "TRAM";
+	else
+		stream << "[" << std::setw(4) << std::right << "UNKN";
 
-		return stream;
+	stream << "]-[" << std::setw(5) << std::right << e.getID();
+	stream << "]-[" << std::setw(7) << std::right << e.getWeight() << "]";
+	stream << " " << std::setw(19) << std::right <<e.getStartNode()->getName();
+	stream << " " << std::setw(19) << std::right <<e.getEndNode()->getName();
+
+	return stream;
 }
