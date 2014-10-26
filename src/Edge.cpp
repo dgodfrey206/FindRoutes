@@ -7,7 +7,7 @@
 
 #include "Edge.h"
 
-Edge::Edge(unsigned int id, const Node& start, const Node& end, double weight, TransportType type)
+Edge::Edge(unsigned int id, Node* start, Node* end, double weight, TransportType type)
 	:
 	id(id),
 	start(start),
@@ -25,11 +25,11 @@ double Edge::getWeight() const {
 	return this->weight;
 }
 
-const Node& Edge::getStartNode() const {
+const Node* Edge::getStartNode() const {
 	return this->start;
 }
 
-const Node& Edge::getEndNode() const {
+const Node* Edge::getEndNode() const {
 	return this->end;
 }
 
@@ -45,20 +45,30 @@ void Edge::setType(TransportType type) {
 	this->type = type;
 }
 
-bool Edge::operator ==(Edge& e) {
+bool Edge::operator ==(const Edge& e) const {
 	return this->id == e.getID();
 }
 
-bool Edge::operator !=(Edge& e) {
+bool Edge::operator !=(const Edge& e) const {
 	return this->id != e.getID();
+}
+
+Edge& Edge::operator =(const Edge& e) {
+	this->id = e.getID();
+	this->type = e.getType();
+	this->weight = e.getWeight();
+	this->start = e.getStartNode();
+	this->end = e.getEndNode();
+
+	return *this;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Edge& e)
 {
 	stream << "Edge #";
 		stream << std::setw(5) << std::right << e.getID() << "." << std::endl;
-		stream << std::setw(8) << std::left << "From:" <<  " [" << std::setw(5) << std::right << e.getStartNode().getID() << "] " << e.getStartNode().getName() << std::endl;
-		stream << std::setw(8) << std::left << "To:" <<  " [" << std::setw(5) << std::right << e.getEndNode().getID() << "] " << e.getEndNode().getName() << std::endl;
+		stream << std::setw(8) << std::left << "From:" <<  " [" << std::setw(5) << std::right << e.getStartNode()->getID() << "] " << e.getStartNode()->getName() << std::endl;
+		stream << std::setw(8) << std::left << "To:" <<  " [" << std::setw(5) << std::right << e.getEndNode()->getID() << "] " << e.getEndNode()->getName() << std::endl;
 		stream << std::setw(8) << std::left << "Type: ";
 		if(e.getType() == BUS)
 			stream <<  "BUS";
