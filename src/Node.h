@@ -26,8 +26,10 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const Node&);
 
-	bool operator ==(Node & n);
-	bool operator !=(Node & n);
+	bool operator ==(const Node & n) const;
+	bool operator !=(const Node & n) const;
+
+	Node & operator = (const Node &);
 
 private:
 	unsigned int id;

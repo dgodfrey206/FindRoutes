@@ -46,10 +46,19 @@ std::ostream& operator<<(std::ostream& stream, const Node& n)
 	return stream;
 }
 
-bool Node::operator ==(Node& n) {
+bool Node::operator ==(const Node& n) const {
 	return this->id == n.getID();
 }
 
-bool Node::operator !=(Node& n) {
+bool Node::operator !=(const Node& n) const {
 	return this->id != n.getID();
+}
+
+Node& Node::operator =(const Node& n) {
+	this->id = n.getID();
+	this->name = n.getName();
+	this->longtitude = n.getLongtitude();
+	this->latitude = n.getLatitude();
+
+	return *this;
 }
