@@ -46,11 +46,15 @@ void Edge::setType(TransportType type) {
 }
 
 bool Edge::operator ==(const Edge& e) const {
-	return this->id == e.getID();
+	//return (this->getStartNode()->getID() == e.getStartNode()->getID())
+	//		&& (this->getEndNode()->getID() == e.getEndNode()->getID());
+	return this->getID() == e.getID();
 }
 
 bool Edge::operator !=(const Edge& e) const {
-	return this->id != e.getID();
+	//return (this->getStartNode()->getID() != e.getStartNode()->getID())
+	//			|| (this->getEndNode()->getID() != e.getEndNode()->getID());
+	return this->getID() != e.getID();
 }
 
 Edge& Edge::operator =(const Edge& e) {
