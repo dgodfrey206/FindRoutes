@@ -58,51 +58,50 @@ bool Route::addEdge(const Edge * e) {
 }
 
 bool Route::switchEdge(const Edge * e) {
-	//todo list is broken. Switch to std::set
-	std::list<const Edge *>::iterator pos;
-	for(pos = this->route.begin(); pos != this->route.end(); pos++)
-	{
-		if((*pos)->getStartNode() == e->getStartNode() && (*pos)->getEndNode() == e->getEndNode())
-		{
-			this->route.erase(pos);
-			this->route.insert(pos, e);
-			return true;
-		}
-	}
-	return false;
+	Route r;
+	r.addEdge(e);
+	return this->switchRoute(r);
+
 }
 
 bool Route::switchRoute(Route& r) {
-	std::cout << '1';
-	if(r.begin() == r.end())
-		return false; //unknown behavior
-	std::cout << '2';
-	//std::list<const Edge *>::iterator pos = std::search(this->route.begin(), this->route.end(), r.begin(), r.end());
+	/*
+	 * removes subroute from object and replaces it with given subroute.
+	 */
+	if(r.begin() == r.end()) //empty route
+		return false;
 
 	std::list<const Edge *>::iterator startPos = this->route.begin();
 	while(*((*startPos)->getStartNode()) != *(r.getStartNode()) && startPos++ != this->route.end()); //locate starting position
-	std::cout << '3';
 
-	if(startPos == this->route.end())
+	if(startPos == this->route.end())	//did not find
 		return false;
-	std::cout << '4';
 
-	std::list<const Edge *>::iterator endPos = startPos;
-	while((endPos++ != this->route.end()) && (*(*(endPos))->getEndNode()) != *(r.getEndNode()));
-	std::cout << '5';
+	std::list<const Edge *>::iterator endPos(startPos);
+
+
+	while(endPos != this->route.end())
+		if(*(*endPos)->getEndNode() != *r.getEndNode())
+			endPos++;
+		else
+			break;
+
+	std::cout << **startPos;
+	std::cout << **endPos;
 	if(endPos == this->route.end())
 		return false;
-	std::cout << '6';
-//	for(std::list<const Edge *>::iterator it = startPos; it != endPos;it = this->route.erase(it));
-	//this->route.erase(startPos, endPos);
-	std::list<const Edge *>::iterator it = startPos;
-	while(*it != *endPos)
-	{
-		this->route.erase(*it);
-	}
+	std::cout << "ping";
+	std::list<const Edge *> newRoute;
+	std::list<const Edge *>::iterator it;
 
-	this->route.insert(startPos, r.begin(), r.end());
-	std::cout << '7';
+	newRoute.splice(newRoute.begin(), this->route, this->route.begin(), startPos);
+
+	newRoute.insert(newRoute.end(), r.begin(), r.end());
+
+	newRoute.splice(newRoute.end(), this->route, ++endPos, this->route.end());
+
+	this->route = newRoute;
+
 	return true;
 }
 
@@ -162,26 +161,31 @@ bool Route::isConnectionBetween(const Node* start, const Node* end) const {
 }
 
 std::ostream& operator << (std::ostream& stream, Route & r){
+
 	std::list<const Edge *>::const_iterator pos;
+
 	stream << "Route:" << std::endl;
+	stream << "[ FROM]->[   TO]-[WITH]-[ EDGE] ";
+	stream << std::setw(23) << std::right << "FROM NAME" << std::setw(24) << std::right << "TO NAME" << std::endl;
 
 	for(pos = r.begin(); pos != r.end(); pos++)
 	{
-		stream << "[" << std::setw(5) << std::right << (*pos)->getStartNode()->getID() << "]";
+		stream << "[" << std::setw(5) << std::right << (*pos)->getStartNode()->getID() << "]->";
+		stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() << "]-";
+
 		if((*pos)->getType() == BUS)
 			stream << "[" << std::setw(4) << std::right << "BUS";
 		else if((*pos)->getType() == TRAM)
 			stream << "[" << std::setw(4) << std::right << "TRAM";
 		else
 			stream << "[" << std::setw(4) << std::right << "UNKN";
-		stream << "] " << (*pos)->getStartNode()->getName() << std::endl;
-	}
-	pos--;
-	stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() << "]";
-	stream << "[*END] " << (*pos)->getEndNode()->getName() << std::endl;
 
-	stream << "Total length: " << std::setw(10) << std::right << r.getLength() << std::endl;
-	stream << "Total weight: " << std::setw(10) << std::right << r.getWeight();
+		stream << "]-[" <<std::setw(5) << std::right << (*pos)->getID() << "]";
+		stream << " " << std::setw(23) << std::right <<(*pos)->getStartNode()->getName();
+		stream << " " << std::setw(23) << std::right <<(*pos)->getEndNode()->getName() << std::endl;
+	}
+	stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
+	stream << std::endl << std::setw(15) << std::left << "Total weight: [" << std::setw(10) << std::right << r.getWeight() << "]";
 
 	return stream;
 }

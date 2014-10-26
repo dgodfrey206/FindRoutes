@@ -37,7 +37,11 @@ int main()
 	r2->addEdge(edges[7]);
 	std::cout << *r2 << std::endl;
 
-	r1->switchRoute(*r2);
+	if(!(r1->switchRoute(*r2)))
+			std::cout << "Switch failed" << std::endl;
+
+	if(!(r1->switchEdge(edges[4])))
+		std::cout << "Switch failed" << std::endl;
 	std::cout << *r1 << std::endl;
 
 
