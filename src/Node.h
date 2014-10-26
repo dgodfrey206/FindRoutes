@@ -26,6 +26,9 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, const Node&);
 
+	bool operator ==(Node & n);
+	bool operator !=(Node & n);
+
 private:
 	unsigned int id;
 	std::string name;
