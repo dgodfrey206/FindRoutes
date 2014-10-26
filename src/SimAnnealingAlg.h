@@ -14,6 +14,8 @@ class SimAnnealingAlg: public Solver {
 public:
 	SimAnnealingAlg();
 	~SimAnnealingAlg();
+
+	virtual static Route& solve(const Network &);
 };
 
 #endif /* SRC_SIMANNEALINGALG_H_ */

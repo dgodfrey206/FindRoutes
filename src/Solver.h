@@ -19,7 +19,7 @@ public:
 	Solver();
 	virtual ~Solver();
 
-	virtual static void /*todo type Route?*/ solve(const Network & /*todo route representation*/) = 0;
+	virtual static Route& solve(const Network &) = 0;
 };
 
 #endif /* SRC_SOLVER_H_ */
