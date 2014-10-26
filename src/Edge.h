@@ -13,24 +13,28 @@
 
 class Edge {
 public:
-	Edge();
-	~Edge();
+	Edge(unsigned int id, const Node& start, const Node& end,
+			const double weight, const TransportType type);
 
+	unsigned int getID() const;
 	double getWeight() const;
-	Node & getStartNode() const;
-	Node & getEndNode() const;
+	const Node & getStartNode() const;
+	const Node & getEndNode() const;
 	TransportType getType() const;
 
 	void setWeight(double);
 	void setType(TransportType);
 
-	friend bool operator == (Edge&, Edge &);
-	friend bool operator != (Edge&, Edge &);
+	bool operator ==(Edge &);
+	bool operator !=(Edge &);
+
+	friend std::ostream& operator<<(std::ostream&, const Edge&);
 
 private:
+	unsigned int id;
+	const Node & start;
+	const Node & end;
 	double weight;
-	Node & start;
-	Node & end;
 	TransportType type;
 
 };
