@@ -8,22 +8,29 @@
 #ifndef SRC_NODE_H_
 #define SRC_NODE_H_
 
+#include <iostream>
+#include <iomanip>
+#include <string>
+
 class Node {
 	/*
 	 * primary element.
 	 */
 public:
-	Node();
-	~Node();
+	Node(unsigned int id, std::string name, double lon, double lat);
 
-	double getLon() const;
-	double getLat() const;
+	double getLongtitude() const;
+	double getLatitude() const;
+	unsigned int getID() const;
+	std::string getName() const;
+
+	friend std::ostream& operator<<(std::ostream&, const Node&);
 
 private:
+	unsigned int id;
+	std::string name;
 	double longtitude;
 	double latitude;
-	double name;
-
 };
 
 #endif /* SRC_NODE_H_ */
