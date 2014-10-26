@@ -8,10 +8,16 @@
 #include "Route.h"
 
 Route::Route() {
+	/*
+	 * init empty list
+	 */
 	route = std::list<const Edge *>();
 }
 
 unsigned int Route::getLength() const {
+	/*
+	 * return length of route
+	 */
 	if(this->route.empty())
 		return 0;
 
@@ -22,6 +28,9 @@ unsigned int Route::getLength() const {
 }
 
 double Route::getWeight() const {
+	/*
+	 * return weight of route
+	 */
 	if(this->route.empty())
 			return 0;
 
@@ -32,17 +41,24 @@ double Route::getWeight() const {
 }
 
 bool Route::validate() const {
+	/*
+	 * check if all edges are connected and if there are any loops.
+	 */
 	return true;//todo
 }
 
 bool Route::addEdge(const Edge * e) {
-	if((this->getLength() != 0) && this->route.back()->getEndNode() != e->getEndNode())
+	/*
+	 * add edge to the end of route
+	 */
+	if((this->getLength() != 0) && (*this->route.back()->getEndNode()) != (*e->getStartNode()))
 		return false;
 	this->route.push_back(e);
 	return true;
 }
 
 bool Route::switchEdge(const Edge * e) {
+	//todo list is broken. Switch to std::set
 	std::list<const Edge *>::iterator pos;
 	for(pos = this->route.begin(); pos != this->route.end(); pos++)
 	{
@@ -57,19 +73,36 @@ bool Route::switchEdge(const Edge * e) {
 }
 
 bool Route::switchRoute(Route& r) {
+	std::cout << '1';
 	if(r.begin() == r.end())
 		return false; //unknown behavior
+	std::cout << '2';
+	//std::list<const Edge *>::iterator pos = std::search(this->route.begin(), this->route.end(), r.begin(), r.end());
 
-	std::list<const Edge *>::iterator pos = std::search(this->route.begin(), this->route.end(), r.begin(), r.end());
-	if(pos == this->route.end())
+	std::list<const Edge *>::iterator startPos = this->route.begin();
+	while(*((*startPos)->getStartNode()) != *(r.getStartNode()) && startPos++ != this->route.end()); //locate starting position
+	std::cout << '3';
+
+	if(startPos == this->route.end())
 		return false;
+	std::cout << '4';
 
-	std::list<const Edge *>::iterator it = pos;
-	while(*((*it)->getStartNode()) != *(r.getEndNode()))
+	std::list<const Edge *>::iterator endPos = startPos;
+	while((endPos++ != this->route.end()) && (*(*(endPos))->getEndNode()) != *(r.getEndNode()));
+	std::cout << '5';
+	if(endPos == this->route.end())
+		return false;
+	std::cout << '6';
+//	for(std::list<const Edge *>::iterator it = startPos; it != endPos;it = this->route.erase(it));
+	//this->route.erase(startPos, endPos);
+	std::list<const Edge *>::iterator it = startPos;
+	while(*it != *endPos)
 	{
-		this->route.remove(*it);
+		this->route.erase(*it);
 	}
-	this->route.insert(pos, r.begin(), r.end());
+
+	this->route.insert(startPos, r.begin(), r.end());
+	std::cout << '7';
 	return true;
 }
 
@@ -143,8 +176,12 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 			stream << "[" << std::setw(4) << std::right << "UNKN";
 		stream << "] " << (*pos)->getStartNode()->getName() << std::endl;
 	}
+	pos--;
+	stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() << "]";
+	stream << "[*END] " << (*pos)->getEndNode()->getName() << std::endl;
+
 	stream << "Total length: " << std::setw(10) << std::right << r.getLength() << std::endl;
-	stream << "Total weight: " << std::setw(10) << std::right << r.getWeight() << std::endl;
+	stream << "Total weight: " << std::setw(10) << std::right << r.getWeight();
 
 	return stream;
 }
