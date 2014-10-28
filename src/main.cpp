@@ -44,6 +44,11 @@ int main()
 		std::cout << "Switch failed" << std::endl;
 	std::cout << *r1 << std::endl;
 
+	if(r1->validate())
+		std::cout << "ok";
+	else
+		std::cout << ":(";
+
 
 
 }

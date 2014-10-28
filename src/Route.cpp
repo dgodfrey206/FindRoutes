@@ -44,7 +44,31 @@ bool Route::validate() const {
 	/*
 	 * check if all edges are connected and if there are any loops.
 	 */
-	return true;//todo
+
+	if(this->route.empty())
+		return true;
+
+	std::set<unsigned int> nodes;
+	unsigned int id = (this->route.front())->getStartNode()->getID();
+	unsigned int lastEndID;
+	bool first = true;
+	nodes.insert(id);
+
+	for(std::list<const Edge *>::const_iterator pos = this->route.begin(); pos != this->route.end(); pos++)
+	{
+		if(!first && (lastEndID != (*pos)->getStartNode()->getID()))
+			return false;
+
+		id = (*pos)->getEndNode()->getID();
+
+		if(nodes.find(id) != nodes.end()) //found node in set, invalid route
+			return false;
+
+		nodes.insert(id);
+		lastEndID = id;
+	}
+
+	return true;
 }
 
 bool Route::addEdge(const Edge * e) {

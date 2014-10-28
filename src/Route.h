@@ -9,8 +9,9 @@
 #define SRC_ROUTE_H_
 
 #include <list>
-#include <algorithm> //std::search
+#include <set> //validate() fctn
 #include <iostream>
+
 #include "Edge.h"
 
 class Route {
