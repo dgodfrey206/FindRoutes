@@ -28,6 +28,8 @@ public:
 	bool operator ==(const Edge &) const;
 	bool operator !=(const Edge &) const;
 
+	bool operator <(const Edge &) const; //for network sets
+
 	Edge & operator = (const Edge &);
 
 	friend std::ostream& operator<<(std::ostream&, const Edge&);

@@ -67,6 +67,10 @@ Edge& Edge::operator =(const Edge& e) {
 	return *this;
 }
 
+bool Edge::operator <(const Edge& e) const {
+	return this->id < e.getID();
+}
+
 std::ostream& operator<<(std::ostream& stream, const Edge& e)
 {
 	stream << "Edge:" << std::endl;
