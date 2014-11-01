@@ -53,11 +53,12 @@ def parser():
     #for e in nfounds:
     #    print(' ' + e['name'])
 
-    #with open('db.json', 'w') as f:
-    #    json.dump(db, f, indent=2)
+    with open('db.json', 'w') as f:
+        json.dump(db, f, indent=2)
 
     #print('\nFile saved as db.json')
 
+    '''
     routeID = 0
     routeTrips = []
     routeTripsIds = []
@@ -78,13 +79,13 @@ def parser():
 
     sequences = []
     seq_id = 0
-    '''
+    \'''
     sequence:
         seq_id:
         trip_id:
         service_id:
         seq: [stop_time]
-    '''
+    \'''
     lastKnownStopId = None
     lastKnownTripID = None
     curID = -1
@@ -117,6 +118,7 @@ def parser():
             pp.pprint(sequences)
             pp.pprint(el)
             break
+    '''
 
 
 if __name__ == '__main__':
