@@ -7,13 +7,16 @@
 
 #ifndef SRC_NETWORK_H_
 #define SRC_NETWORK_H_
-#include <vector>
 
 #include <set>
 #include <list>
+#include <iostream>
+#include <cmath> //distance computing
 
 #include "Node.h"
 #include "Edge.h"
+#include "TransportType.h"
+#include "Route.h"
 #include "Solver.h"
 
 class Network {
@@ -27,26 +30,32 @@ class Network {
 	 */
 public:
 	Network();
+	Network(std::string);
 	~Network();
 
-	void loadFromFile(std::string filename);
-	bool setSover(Solver &);// todosetSolver(Route & (*ptr)(const Network &));
+	void loadFromFile(std::string);
+	void setSover(Solver *);// todosetSolver(Route & (*ptr)(const Network &))?;
 
 	Route * findRouteBetween(const Node *, const Node *);
 
-private:
-	std::set<Node*> nodes;
-	std::set<Edge*> edges;
+	friend std::ostream& operator<<(std::ostream&, const Network&);
 
-	bool findEdgeBetween(const Node *, const Node *) const; //returns true if edge between two nodes exists
+private:
+	std::set<Node *> nodes;
+	std::set<Edge *> edges;
+
+	bool isEdgeBetween(const Node *, const Node *) const; //returns true if edge between two nodes exists
 
 	bool addNode(Node *); //adds Node if not exists
 	bool addEdge(Edge *); //adds Edge if not exists
 
-	std::list<Edge *> getEdgesForNode(const Node *) const;
-	Node * getNodeCloseToPos(double, double) const; //returns node close do desired position
+	Node * getNode(unsigned int); //get Node by id
+	Edge * getEdge(unsigned int); //get Edge by id
 
-	Solver & solver;
+	std::list<Edge *> getEdgesForNode(const Node *) const;
+	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
+
+	Solver * solver;
 };
 
 #endif /* SRC_NETWORK_H_ */
