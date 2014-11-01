@@ -8,6 +8,11 @@
 #ifndef SRC_SOLVER_H_
 #define SRC_SOLVER_H_
 
+#include "Network.h"
+#include "Route.h"
+
+class Network; //forward declaration
+
 class Solver {
 public:
 	/*
@@ -16,10 +21,11 @@ public:
 	 * Solver needs to implement solve method,
 	 * which gets Network map as
 	 */
-	Solver();
+public:
 	virtual ~Solver();
 
-	virtual static Route& solve(const Network &) = 0;
+	virtual Route& solve(const Network & n) = 0;
 };
+
 
 #endif /* SRC_SOLVER_H_ */
