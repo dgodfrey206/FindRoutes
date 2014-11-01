@@ -33,3 +33,8 @@
 .project
 /.settings/
 /db/.idea/
+/db/rozklady.krakow
+/db/*log*
+/db/*.json
+/db/*.pickle
+/db/*.xml
