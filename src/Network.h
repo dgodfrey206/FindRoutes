@@ -9,9 +9,12 @@
 #define SRC_NETWORK_H_
 #include <vector>
 
-#include <vector>
+#include <set>
+#include <list>
+
 #include "Node.h"
 #include "Edge.h"
+#include "Solver.h"
 
 class Network {
 	/*
@@ -27,19 +30,23 @@ public:
 	~Network();
 
 	void loadFromFile(std::string filename);
+	bool setSover(Solver &);// todosetSolver(Route & (*ptr)(const Network &));
+
+	Route * findRouteBetween(const Node *, const Node *);
 
 private:
-	std::vector<Node&> nodes;
-	std::vector<Edge&> edges;
+	std::set<Node*> nodes;
+	std::set<Edge*> edges;
 
-	bool findEdgeBetween(const Node &, const Node &) const; //returns true if edge between two nodes exists
+	bool findEdgeBetween(const Node *, const Node *) const; //returns true if edge between two nodes exists
 
-	bool addNode(Node &); //adds Node if not exists
-	bool addEdge(Edge &); //adds Edge if not exists
+	bool addNode(Node *); //adds Node if not exists
+	bool addEdge(Edge *); //adds Edge if not exists
 
-	void /*todo*/ getEdgesForNode(const Node &) const;
-	Node & getNodeCloseToPos(double, double) const; //returns node close do desired position
+	std::list<Edge *> getEdgesForNode(const Node *) const;
+	Node * getNodeCloseToPos(double, double) const; //returns node close do desired position
 
+	Solver & solver;
 };
 
 #endif /* SRC_NETWORK_H_ */
