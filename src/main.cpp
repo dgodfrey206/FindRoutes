@@ -6,14 +6,20 @@
  */
 
 #include <iostream>
+#include <fstream>
+#include <streambuf>
+
 #include <string>
-//#include "Network.h"
+#include "Network.h"
 #include "Node.h"
 #include "Edge.h"
 #include "Route.h"
 
+#include "jsoncpp/json/json.h"
+
 int main()
 {
+	/*
 	Node * nodes[5];
 	Edge * edges[8];
 	for(int i = 0; i < 5; i++)
@@ -48,7 +54,31 @@ int main()
 		std::cout << "ok";
 	else
 		std::cout << ":(";
+*/
+	std::string filename = "../db/db.json";
+	std::ifstream in(filename);
+	std::string s((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
 
+	std::cout << "Load network from file test program" << std::endl;
+	std::cout << "DB file is: " << filename << std::endl;
+	std::cout << "Calling method..." << std::endl;
+
+	Json::Value root;
+	Json::Reader reader;
+	if(reader.parse(s, root))
+		std::cout << "Successfully read file" << std::endl;
+	else
+	{
+		std::cout  << "Failed to parse \n"
+		               << reader.getFormattedErrorMessages();
+		return 0;
+	}
+	Json::Value stops = root["stops"];
+
+	for(unsigned int i = 0; i < stops.size(); i++)
+	{
+		std::cout << stops[i].toStyledString();
+	}
 
 
 }
