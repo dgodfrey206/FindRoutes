@@ -29,6 +29,8 @@ public:
 	bool operator ==(const Node & n) const;
 	bool operator !=(const Node & n) const;
 
+	bool operator <(const Node & n) const; //for Network purpose
+
 	Node & operator = (const Node &);
 
 private:

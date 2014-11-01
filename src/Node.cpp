@@ -62,3 +62,7 @@ Node& Node::operator =(const Node& n) {
 
 	return *this;
 }
+
+bool Node::operator <(const Node& n) const {
+	return this->id < n.getID();
+}
