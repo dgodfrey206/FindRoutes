@@ -1,0 +1,233 @@
+\hypertarget{classEdge}{\section{Edge Class Reference}
+\label{classEdge}\index{Edge@{Edge}}
+}
+
+
+{\ttfamily \#include $<$Edge.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classEdge_a8f25ebc010f7bd477335f905643d34bf}{Edge} (unsigned int id, \hyperlink{classNode}{Node} $\ast$start, \hyperlink{classNode}{Node} $\ast$end, const double weight, const Transport\+Type type)
+\item 
+unsigned int \hyperlink{classEdge_ab14a1f1e26da641effaa7af1e36bd410}{get\+I\+D} () const 
+\item 
+double \hyperlink{classEdge_ad52d5996050993b96b0b04d68f14f4e4}{get\+Weight} () const 
+\item 
+const \hyperlink{classNode}{Node} $\ast$ \hyperlink{classEdge_a88540e6c5ab8ad2aa4343a8f21339707}{get\+Start\+Node} () const 
+\item 
+const \hyperlink{classNode}{Node} $\ast$ \hyperlink{classEdge_abeb6634d35c7c5c1706bc90d91b12c37}{get\+End\+Node} () const 
+\item 
+Transport\+Type \hyperlink{classEdge_aa38a79bf1da5e02ebd57292c73bfd5fa}{get\+Type} () const 
+\item 
+void \hyperlink{classEdge_a7ba1bfa5c9c7972d2c31b2c3ba3d7c69}{set\+Weight} (double w)
+\item 
+void \hyperlink{classEdge_a6fd6d3fd58d73f04b763e2a5bfa6e7e0}{set\+Type} (Transport\+Type t)
+\item 
+bool \hyperlink{classEdge_a5e15d0508aa070e0dfb9d8b63f1fd510}{operator==} (const \hyperlink{classEdge}{Edge} \&e) const 
+\item 
+bool \hyperlink{classEdge_a71932326f1787effb05a27254ec354f4}{operator!=} (const \hyperlink{classEdge}{Edge} \&e) const 
+\item 
+bool \hyperlink{classEdge_a2dd271913eaa0f6250d764170055a3e9}{operator$<$} (const \hyperlink{classEdge}{Edge} \&e) const 
+\item 
+\hyperlink{classEdge}{Edge} \& \hyperlink{classEdge_ad61a4407d09b063f1d36827cdaa8cfa7}{operator=} (const \hyperlink{classEdge}{Edge} \&e)
+\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \hyperlink{classEdge_a25f0a91097a6c9b29db3305b469895aa}{operator$<$$<$} (std\+::ostream \&s, const \hyperlink{classEdge}{Edge} \&e)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Object used for storage of one connections. Includes info about start and end positions, type of connection and weight of it. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classEdge_a8f25ebc010f7bd477335f905643d34bf}{\index{Edge@{Edge}!Edge@{Edge}}
+\index{Edge@{Edge}!Edge@{Edge}}
+\subsubsection[{Edge}]{\setlength{\rightskip}{0pt plus 5cm}Edge\+::\+Edge (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{id, }
+\item[{{\bf Node} $\ast$}]{start, }
+\item[{{\bf Node} $\ast$}]{end, }
+\item[{const double}]{weight, }
+\item[{const Transport\+Type}]{type}
+\end{DoxyParamCaption}
+)}}\label{classEdge_a8f25ebc010f7bd477335f905643d34bf}
+Constructor of \hyperlink{classEdge}{Edge} object. 
+\begin{DoxyParams}{Parameters}
+{\em id} & Identificator of object. \\
+\hline
+{\em start} & Pointer to \hyperlink{classNode}{Node} assigned as starting position. \\
+\hline
+{\em end} & Pointer to \hyperlink{classNode}{Node} assigned as ending position. \\
+\hline
+{\em weight} & Given weight. \\
+\hline
+{\em type} & Enumerated value describing type of route. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classEdge_abeb6634d35c7c5c1706bc90d91b12c37}{\index{Edge@{Edge}!get\+End\+Node@{get\+End\+Node}}
+\index{get\+End\+Node@{get\+End\+Node}!Edge@{Edge}}
+\subsubsection[{get\+End\+Node}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Node} $\ast$ Edge\+::get\+End\+Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_abeb6634d35c7c5c1706bc90d91b12c37}
+\begin{DoxyReturn}{Returns}
+Returns pointer to ending \hyperlink{classNode}{Node}. 
+\end{DoxyReturn}
+\hypertarget{classEdge_ab14a1f1e26da641effaa7af1e36bd410}{\index{Edge@{Edge}!get\+I\+D@{get\+I\+D}}
+\index{get\+I\+D@{get\+I\+D}!Edge@{Edge}}
+\subsubsection[{get\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Edge\+::get\+I\+D (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_ab14a1f1e26da641effaa7af1e36bd410}
+\begin{DoxyReturn}{Returns}
+Returns id of itself. 
+\end{DoxyReturn}
+\hypertarget{classEdge_a88540e6c5ab8ad2aa4343a8f21339707}{\index{Edge@{Edge}!get\+Start\+Node@{get\+Start\+Node}}
+\index{get\+Start\+Node@{get\+Start\+Node}!Edge@{Edge}}
+\subsubsection[{get\+Start\+Node}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf Node} $\ast$ Edge\+::get\+Start\+Node (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_a88540e6c5ab8ad2aa4343a8f21339707}
+\begin{DoxyReturn}{Returns}
+Returns pointer to starting \hyperlink{classNode}{Node}. 
+\end{DoxyReturn}
+\hypertarget{classEdge_aa38a79bf1da5e02ebd57292c73bfd5fa}{\index{Edge@{Edge}!get\+Type@{get\+Type}}
+\index{get\+Type@{get\+Type}!Edge@{Edge}}
+\subsubsection[{get\+Type}]{\setlength{\rightskip}{0pt plus 5cm}Transport\+Type Edge\+::get\+Type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_aa38a79bf1da5e02ebd57292c73bfd5fa}
+\begin{DoxyReturn}{Returns}
+Returns Transport\+Type enum value describing type. 
+\end{DoxyReturn}
+\hypertarget{classEdge_ad52d5996050993b96b0b04d68f14f4e4}{\index{Edge@{Edge}!get\+Weight@{get\+Weight}}
+\index{get\+Weight@{get\+Weight}!Edge@{Edge}}
+\subsubsection[{get\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}double Edge\+::get\+Weight (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_ad52d5996050993b96b0b04d68f14f4e4}
+\begin{DoxyReturn}{Returns}
+Returns weight of itself. 
+\end{DoxyReturn}
+\hypertarget{classEdge_a71932326f1787effb05a27254ec354f4}{\index{Edge@{Edge}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Edge@{Edge}}
+\subsubsection[{operator"!=}]{\setlength{\rightskip}{0pt plus 5cm}bool Edge\+::operator!= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Edge} \&}]{e}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_a71932326f1787effb05a27254ec354f4}
+Compares itself id with given edge id. 
+\begin{DoxyParams}{Parameters}
+{\em e} & Given \hyperlink{classEdge}{Edge}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if ids are not equal, false otherwise. 
+\end{DoxyReturn}
+\hypertarget{classEdge_a2dd271913eaa0f6250d764170055a3e9}{\index{Edge@{Edge}!operator$<$@{operator$<$}}
+\index{operator$<$@{operator$<$}!Edge@{Edge}}
+\subsubsection[{operator$<$}]{\setlength{\rightskip}{0pt plus 5cm}bool Edge\+::operator$<$ (
+\begin{DoxyParamCaption}
+\item[{const {\bf Edge} \&}]{e}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_a2dd271913eaa0f6250d764170055a3e9}
+Compares itself id with given edge id. Method used in \hyperlink{classNetwork}{Network} class. 
+\begin{DoxyParams}{Parameters}
+{\em e} & Given \hyperlink{classEdge}{Edge}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if this-\/$>$id is smaller than e.\+id, false otherwise. 
+\end{DoxyReturn}
+\hypertarget{classEdge_ad61a4407d09b063f1d36827cdaa8cfa7}{\index{Edge@{Edge}!operator=@{operator=}}
+\index{operator=@{operator=}!Edge@{Edge}}
+\subsubsection[{operator=}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Edge} \& Edge\+::operator= (
+\begin{DoxyParamCaption}
+\item[{const {\bf Edge} \&}]{e}
+\end{DoxyParamCaption}
+)}}\label{classEdge_ad61a4407d09b063f1d36827cdaa8cfa7}
+Assign operator. 
+\begin{DoxyParams}{Parameters}
+{\em e} & Given \hyperlink{classEdge}{Edge}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Reference to itself. 
+\end{DoxyReturn}
+\hypertarget{classEdge_a5e15d0508aa070e0dfb9d8b63f1fd510}{\index{Edge@{Edge}!operator==@{operator==}}
+\index{operator==@{operator==}!Edge@{Edge}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool Edge\+::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Edge} \&}]{e}
+\end{DoxyParamCaption}
+) const}}\label{classEdge_a5e15d0508aa070e0dfb9d8b63f1fd510}
+Compares itself id with given edge id. 
+\begin{DoxyParams}{Parameters}
+{\em e} & Given \hyperlink{classEdge}{Edge}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if ids are equal, false otherwise. 
+\end{DoxyReturn}
+\hypertarget{classEdge_a6fd6d3fd58d73f04b763e2a5bfa6e7e0}{\index{Edge@{Edge}!set\+Type@{set\+Type}}
+\index{set\+Type@{set\+Type}!Edge@{Edge}}
+\subsubsection[{set\+Type}]{\setlength{\rightskip}{0pt plus 5cm}void Edge\+::set\+Type (
+\begin{DoxyParamCaption}
+\item[{Transport\+Type}]{t}
+\end{DoxyParamCaption}
+)}}\label{classEdge_a6fd6d3fd58d73f04b763e2a5bfa6e7e0}
+Sets type to given. 
+\begin{DoxyParams}{Parameters}
+{\em t} & Given type value. Should be not equal to U\+N\+K\+N\+O\+W\+N. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classEdge_a7ba1bfa5c9c7972d2c31b2c3ba3d7c69}{\index{Edge@{Edge}!set\+Weight@{set\+Weight}}
+\index{set\+Weight@{set\+Weight}!Edge@{Edge}}
+\subsubsection[{set\+Weight}]{\setlength{\rightskip}{0pt plus 5cm}void Edge\+::set\+Weight (
+\begin{DoxyParamCaption}
+\item[{double}]{w}
+\end{DoxyParamCaption}
+)}}\label{classEdge_a7ba1bfa5c9c7972d2c31b2c3ba3d7c69}
+Sets weight to given. 
+\begin{DoxyParams}{Parameters}
+{\em w} & Given weight value. Should be greater than 0. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{classEdge_a25f0a91097a6c9b29db3305b469895aa}{\index{Edge@{Edge}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Edge@{Edge}}
+\subsubsection[{operator$<$$<$}]{\setlength{\rightskip}{0pt plus 5cm}std\+::ostream\& operator$<$$<$ (
+\begin{DoxyParamCaption}
+\item[{std\+::ostream \&}]{s, }
+\item[{const {\bf Edge} \&}]{e}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [friend]}}}\label{classEdge_a25f0a91097a6c9b29db3305b469895aa}
+Operator used for console debug purposes. 
+\begin{DoxyParams}{Parameters}
+{\em s} & Stream which is used for output. \\
+\hline
+{\em e} & \hyperlink{classEdge}{Edge} on which operator is called. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Given stream. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/vka/\+Workspace/\+Route\+Finder/src/Edge.\+h\item 
+/home/vka/\+Workspace/\+Route\+Finder/src/Edge.\+cpp\end{DoxyCompactItemize}

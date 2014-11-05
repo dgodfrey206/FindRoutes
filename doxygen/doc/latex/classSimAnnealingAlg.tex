@@ -1,0 +1,49 @@
+\hypertarget{classSimAnnealingAlg}{\section{Sim\+Annealing\+Alg Class Reference}
+\label{classSimAnnealingAlg}\index{Sim\+Annealing\+Alg@{Sim\+Annealing\+Alg}}
+}
+
+
+{\ttfamily \#include $<$Sim\+Annealing\+Alg.\+h$>$}
+
+Inheritance diagram for Sim\+Annealing\+Alg\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classSimAnnealingAlg}
+\end{center}
+\end{figure}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual static \hyperlink{classRoute}{Route} $\ast$ \hyperlink{classSimAnnealingAlg_adc4279f093215c222928f5a0a2b9c4f0}{solve} (const \hyperlink{classNetwork}{Network} $\ast$n)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Simulated Annealing Algorithm used for finding routes. See doc folder for more information. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classSimAnnealingAlg_adc4279f093215c222928f5a0a2b9c4f0}{\index{Sim\+Annealing\+Alg@{Sim\+Annealing\+Alg}!solve@{solve}}
+\index{solve@{solve}!Sim\+Annealing\+Alg@{Sim\+Annealing\+Alg}}
+\subsubsection[{solve}]{\setlength{\rightskip}{0pt plus 5cm}virtual static {\bf Route}$\ast$ Sim\+Annealing\+Alg\+::solve (
+\begin{DoxyParamCaption}
+\item[{const {\bf Network} $\ast$}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [virtual]}}}\label{classSimAnnealingAlg_adc4279f093215c222928f5a0a2b9c4f0}
+Method used in \hyperlink{classNetwork}{Network} class for finding best connection between points. 
+\begin{DoxyParams}{Parameters}
+{\em n} & Pointer to \hyperlink{classNetwork}{Network} in which \hyperlink{classRoute}{Route} is being searched for. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to found \hyperlink{classRoute}{Route}, N\+U\+L\+L if no route can be found. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classSolver_ad5eb692895667e7a529bffa5895bf6cc}{Solver}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+/home/vka/\+Workspace/\+Route\+Finder/src/Sim\+Annealing\+Alg.\+h\end{DoxyCompactItemize}
