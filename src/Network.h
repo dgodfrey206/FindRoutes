@@ -19,40 +19,110 @@
 #include "Route.h"
 #include "Solver.h"
 
+/**
+ * main class, contains information
+ * about nodes and edges between them.
+ * Should be created from file containing
+ * data in GTFS or other format. //todo
+ * loadFromFile method should load "db/db.ext" file
+ * and save it to inner variables.
+ */
 class Network {
-	/*
-	 * main class, contains information
-	 * about nodes and edges between them.
-	 * Should be created from file containing
-	 * data in GTFS or other format. //todo
-	 * loadFromFile method should load "db/db.ext" file
-	 * and save it to inner variables.
-	 */
 public:
+	/**
+	 * Network object constructor.
+	 * If this constructor is called, loadFromFile method need to be called after.
+	 */
 	Network();
-	Network(std::string);
+
+	/**
+	 * Network object constructor in which {@link Network::loadFromFile()} method is being called.
+	 * @param f Name of file from which database is loaded.
+	 */
+	Network(std::string f);
+
+	/**
+	 * Destructs all objects in Network and itself.
+	 */
 	~Network();
 
-	void loadFromFile(std::string);
-	void setSover(Solver *);// todosetSolver(Route & (*ptr)(const Network &))?;
 
-	Route * findRouteBetween(const Node *, const Node *);
+	/**
+	 * Load database entries from given file.
+	 * @param f Filename from which database is being loaded.
+	 */
+	void loadFromFile(std::string f);
 
-	friend std::ostream& operator<<(std::ostream&, const Network&);
+	/**
+	 * Set solved used in {@link Network::findRouteBetween()} method.
+	 * @param s Pointer to Solver being used.
+	 */
+	void setSover(Solver * s);// todosetSolver(Route & (*ptr)(const Network &))?;
+
+	/**
+	 * Searches for Route beetween two given points.
+	 * @param start Start Node.
+	 * @param end End Node.
+	 * @return Pointer to Route between given nodes, NULL if no route can be found.
+	 */
+	Route * findRouteBetween(const Node * start, const Node * end);
+
+	/**
+	 * Used of debug in console purposes.
+	 * @param s Stream used for output.
+	 * @param n Reference to Network being printed.
+	 * @return Given stream.
+	 */
+	friend std::ostream& operator<<(std::ostream& s, const Network& n);
 
 private:
 	std::set<Node *> nodes;
 	std::set<Edge *> edges;
 
-	bool isEdgeBetween(const Node *, const Node *) const; //returns true if edge between two nodes exists
+	/**
+	 * @param start Pointer to starting Node.
+	 * @param end Pointer to ending Node.
+	 * @return True if Edge from start to end exists in graph, false otherwise.
+	 */
+	bool isEdgeBetween(const Node * start, const Node * end) const; //returns true if edge between two nodes exists
 
-	bool addNode(Node *); //adds Node if not exists
-	bool addEdge(Edge *); //adds Edge if not exists
+	/**
+	 * Adds given Node to graph.
+	 * @param n Pointer to Node.
+	 * @return true if Node was added to graph, false otherwise.
+	 */
+	bool addNode(Node * n); //adds Node if not exists
 
-	Node * getNode(unsigned int); //get Node by id
-	Edge * getEdge(unsigned int); //get Edge by id
+	/**
+	 * Adds given Edge to graph.
+	 * @param e Pointer to Edge.
+	 * @return true if Edge was added to graph, false otherwise.
+	 */
+	bool addEdge(Edge * e); //adds Edge if not exists
 
-	std::list<Edge *> getEdgesForNode(const Node *) const;
+	/**
+	 *	@param id Id of desired Node.
+	 *	@return Pointer to desired Node if exists in graph, NULL otherwise.
+	 */
+	Node * getNode(unsigned int id); //get Node by id
+
+	/**
+	 *	@param id Id of desired Edge.
+	 *	@return Pointer to desired Edge if exists in graph, NULL otherwise.
+	 */
+	Edge * getEdge(unsigned int id); //get Edge by id
+
+	/**
+	 * @param n Pointer to given Node.
+	 * @return std::list of all Edges starting in given Node.
+	 */
+	std::list<Edge *> getEdgesForNode(const Node * n) const;
+
+	/**
+	 * @param latitude Given latitude
+	 * @param longtitude Given longtitude.
+	 * @return Returns pointer to Node being closest to given geographic position.
+	 */
 	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
 
 	Solver * solver;

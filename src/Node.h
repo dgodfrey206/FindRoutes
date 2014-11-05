@@ -12,26 +12,76 @@
 #include <iomanip>
 #include <string>
 
+/**
+ * primary element.
+ * Contains info about position and name of itself.
+ */
 class Node {
-	/*
-	 * primary element.
-	 */
 public:
+	/**
+	 * Constructs new Node object.
+	 * @param id Id of an node.
+	 * @param name Name of node (stop).
+	 * @param lon Longtitude coord.
+	 * @param lat Latitude coord.
+	 */
 	Node(unsigned int id, std::string name, double lon, double lat);
 
+	/**
+	 * @return Returns longtitude as double.
+	 */
 	double getLongtitude() const;
+
+	/**
+	 * @return Returns latutide as double.
+	 */
 	double getLatitude() const;
+
+	/**
+	 * @return Returns id of itself.
+	 */
 	unsigned int getID() const;
+
+	/**
+	 * @return Returns string containing name.
+	 */
 	std::string getName() const;
 
-	friend std::ostream& operator<<(std::ostream&, const Node&);
+	/**
+	 * Operator used for console debug purposes.
+	 * @param s Stream which is used for output.
+	 * @param n Node on which operator is called.
+	 * @return Given stream.
+	 */
+	friend std::ostream& operator<<(std::ostream& s, const Node& n);
 
+	/**
+	 * Operator compares id of this and given node.
+	 * @param n Node which is being compared.
+	 * @return True if ids are equal, false otherwise.
+	 */
 	bool operator ==(const Node & n) const;
+
+	/**
+	 * Operator compares id of this and given node.
+	 * @param n Node which is being compared.
+	 * @return False if ids are equal, true otherwise.
+	 */
 	bool operator !=(const Node & n) const;
 
+	/**
+	 * Operator used in sets in Network class. Compares ids.
+	 * @param n Node which is being compared.
+	 * @return True if this->id is smaller than n.id, false otherwise.
+	 */
 	bool operator <(const Node & n) const; //for Network purpose
 
-	Node & operator = (const Node &);
+	/**
+	 * Copies params from given Node to itself.
+	 * @param n Node which is being copied.
+	 * @return Reference to itself.
+	 */
+	Node & operator = (const Node & n);
 
 private:
 	unsigned int id;

@@ -13,18 +13,23 @@
 
 class Network; //forward declaration
 
+/**
+ * wrapper class for solver algorithm.
+ * Those shall inherit from Solver class.
+ * Solver needs to implement solve method,
+ * which gets Network map as
+ */
 class Solver {
-public:
-	/*
-	 * wrapper class for solver algorithm.
-	 * Those shall inherit from Solver class.
-	 * Solver needs to implement solve method,
-	 * which gets Network map as
-	 */
 public:
 	virtual ~Solver();
 
-	virtual Route& solve(const Network & n) = 0;
+	/**
+	 * Method used in Network class for finding best connection between points.
+	 * This method need to be implemented in any class inheriting from Solver class.
+	 * @param n Pointer to Network in which Route is being searched for.
+	 * @return Pointer to found Route, NULL if no route can be found.
+	 */
+	virtual Route* solve(const Network * n) = 0;
 };
 
 
