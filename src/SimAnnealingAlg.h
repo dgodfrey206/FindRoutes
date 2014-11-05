@@ -24,7 +24,7 @@ public:
 	 * @param n Pointer to Network in which Route is being searched for.
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
-	virtual static Route* solve(const Network * n);
+	virtual Route* solve(const Network * n);
 };
 
 #endif /* SRC_SIMANNEALINGALG_H_ */
