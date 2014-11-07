@@ -4,12 +4,17 @@
 #
 #-------------------------------------------------
 
+<<<<<<< HEAD
 QT       += core gui webkit webkitwidgets
+=======
+QT       += core gui
+>>>>>>> aadf5d30... QT GUI init commit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gui
 TEMPLATE = app
+<<<<<<< HEAD
 CONFIG += c++11
 
 SOURCES += main.cpp\
@@ -43,3 +48,13 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     debugwindow.ui
+=======
+
+
+SOURCES += main.cpp\
+        mainwindow.cpp
+
+HEADERS  += mainwindow.h
+
+FORMS    += mainwindow.ui
+>>>>>>> aadf5d30... QT GUI init commit

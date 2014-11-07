@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+<<<<<<< HEAD
 
     this->debug = new debugWindow();
 
@@ -16,10 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     this->network = NULL;
 
     this->prepareMap();
+=======
+>>>>>>> aadf5d30... QT GUI init commit
 }
 
 MainWindow::~MainWindow()
 {
+<<<<<<< HEAD
     if(this->debug)
         delete this->debug;
     delete ui;
@@ -183,3 +187,7 @@ void MainWindow::findRoute()
         this->debug->append(QString("No solution has been found."));
     }
 }
+=======
+    delete ui;
+}
+>>>>>>> aadf5d30... QT GUI init commit

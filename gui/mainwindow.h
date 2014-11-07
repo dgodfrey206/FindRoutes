@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+<<<<<<< HEAD
 #include <QWindow>
 #include <QFileDialog>
 #include <QTime>
@@ -11,6 +12,8 @@
 #include "debugwindow.h"
 
 #include "../src/graph/Network.h"
+=======
+>>>>>>> aadf5d30... QT GUI init commit
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +28,7 @@ public:
     ~MainWindow();
 
 private:
+<<<<<<< HEAD
 
     void setupActions();
 
@@ -45,6 +49,9 @@ private slots:
     void showHelp();
 
     void findRoute();
+=======
+    Ui::MainWindow *ui;
+>>>>>>> aadf5d30... QT GUI init commit
 };
 
 #endif // MAINWINDOW_H
