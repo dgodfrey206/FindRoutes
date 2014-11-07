@@ -38,3 +38,8 @@
 /db/*.json
 /db/*.pickle
 /db/*.xml
+
+# doxygen
+/doxygen/doxygen.conf
+/doxygen/doc/latex/*
+!/doxygen/doc/latex/refman.pdf
