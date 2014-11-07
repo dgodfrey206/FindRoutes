@@ -81,6 +81,20 @@ public:
 	std::list<Node *> getAllNodes();
 
 	/**
+	 * This function is necessary for GUI. //todo
+	 * @return Returns some kind of stl container in which
+	 * all nodes are stored in alphabetical order.
+	 */
+	std::list<Node *> getAllNodes();
+
+	/**
+	 * This function is necessary for GUI. //todo
+	 * @return Returns some kind of stl container in which
+	 * all nodes are stored in alphabetical order.
+	 */
+	std::list<Node *> getAllNodes();
+
+	/**
 	 * Used of debug in console purposes.
 	 * @param s Stream used for output.
 	 * @param n Reference to Network being printed.
