@@ -48,3 +48,5 @@
 /src/db/db.json
 /db/json
 
+#pdfs
+*.pdf
