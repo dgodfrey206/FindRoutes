@@ -41,5 +41,5 @@
 
 # doxygen
 /doxygen/doxygen.conf
-/doxygen/doc/latex/*
 !/doxygen/doc/latex/refman.pdf
+/doxygen/doc/latex
