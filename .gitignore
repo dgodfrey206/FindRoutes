@@ -1,3 +1,4 @@
+
 # Compiled Object files
 *.slo
 *.lo
@@ -47,4 +48,4 @@
 #db
 /src/db/db.json
 /db/json
-/doxygen/doc/html
+/doc
