@@ -2,11 +2,14 @@
 <ui version="4.0">
  <class>debugWindow</class>
  <widget class="QWidget" name="debugWindow">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>388</width>
+    <width>368</width>
     <height>244</height>
    </rect>
   </property>
@@ -18,6 +21,13 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QTextEdit" name="log"/>
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QTextBrowser" name="log"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
