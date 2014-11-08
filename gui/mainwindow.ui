@@ -75,7 +75,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QTimeEdit" name="RouteTime"/>
+           <widget class="QTimeEdit" name="routeTime"/>
           </item>
          </layout>
         </item>
@@ -148,7 +148,7 @@
      <x>0</x>
      <y>0</y>
      <width>769</width>
-     <height>23</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -164,6 +164,7 @@
     <property name="title">
      <string>Pomoc</string>
     </property>
+    <addaction name="actionHelp"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -180,10 +181,15 @@
   </action>
   <action name="actionDebug">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Debug</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Pokaż pomoc</string>
    </property>
   </action>
  </widget>
