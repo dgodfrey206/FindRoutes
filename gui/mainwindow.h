@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-<<<<<<< HEAD
 #include <QWindow>
 #include <QFileDialog>
 #include <QTime>
@@ -12,8 +11,9 @@
 #include "debugwindow.h"
 
 #include "../src/graph/Network.h"
-=======
->>>>>>> aadf5d30... QT GUI init commit
+#include "debugwindow.h"
+
+#include "../src/Network.h"
 
 namespace Ui {
 class MainWindow;
@@ -28,11 +28,10 @@ public:
     ~MainWindow();
 
 private:
-<<<<<<< HEAD
-
     void setupActions();
 
     void prepareGUI();//called after loading from file
+
     void prepareMap();//loads api key from API_KEY file and prepares map of city
     void updateMap();//refreshes map
     Ui::MainWindow *ui;
@@ -49,9 +48,20 @@ private slots:
     void showHelp();
 
     void findRoute();
-=======
     Ui::MainWindow *ui;
->>>>>>> aadf5d30... QT GUI init commit
+
+    Ui::MainWindow *ui;
+
+    debugWindow * debug;
+
+    Network * network;
+
+private slots:
+    void manageDebugWindow();
+    void loadFromFile();
+    void showHelp();
+
+    void findRoute();
 };
 
 #endif // MAINWINDOW_H
