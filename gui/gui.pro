@@ -4,17 +4,13 @@
 #
 #-------------------------------------------------
 
-<<<<<<< HEAD
 QT       += core gui webkit webkitwidgets
-=======
 QT       += core gui
->>>>>>> aadf5d30... QT GUI init commit
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = gui
 TEMPLATE = app
-<<<<<<< HEAD
 CONFIG += c++11
 
 SOURCES += main.cpp\
@@ -48,13 +44,30 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui \
     debugwindow.ui
-=======
-
+CONFIG += c++11
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    debugwindow.cpp \
+    ../src/jsoncpp/jsoncpp.cpp \
+    ../src/Edge.cpp \
+    ../src/Network.cpp \
+    ../src/Node.cpp \
+    ../src/Route.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    debugwindow.h \
+    ../src/jsoncpp/json/json-forwards.h \
+    ../src/jsoncpp/json/json.h \
+    ../src/Edge.h \
+    ../src/Network.h \
+    ../src/Node.h \
+    ../src/Route.h \
+    ../src/SimAnnealingAlg.h \
+    ../src/Solver.h \
+    ../src/TransportType.h
 
 FORMS    += mainwindow.ui
->>>>>>> aadf5d30... QT GUI init commit
+
+FORMS    += mainwindow.ui \
+    debugwindow.ui
