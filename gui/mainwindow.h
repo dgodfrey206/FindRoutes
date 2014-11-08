@@ -2,6 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QWindow>
+#include <QFileDialog>
+#include <QTime>
+#include <QDate>
+
+#include "debugwindow.h"
+
+#include "../src/Network.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,7 +24,23 @@ public:
     ~MainWindow();
 
 private:
+
+    void setupActions();
+
+    void prepareGUI();//called after loading from file
+
     Ui::MainWindow *ui;
+
+    debugWindow * debug;
+
+    Network * network;
+
+private slots:
+    void manageDebugWindow();
+    void loadFromFile();
+    void showHelp();
+
+    void findRoute();
 };
 
 #endif // MAINWINDOW_H
