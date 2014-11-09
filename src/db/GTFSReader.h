@@ -18,6 +18,8 @@
 #include <string>
 #include <sstream>
 
+#include <exception>
+
 #include "../graph/Network.h"
 
 #include "StopData.h"
@@ -37,7 +39,7 @@ public:
 private:
 	static std::vector<std::string> splitStrings(const std::string &s, char delim);
 
-	void loadStops(struct zip * z, Network * n);
+	void loadStops(struct zip * z);
 
 	std::vector<StopData *> stops;
 

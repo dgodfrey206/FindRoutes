@@ -29,18 +29,20 @@ Network* GTFSReader::readGTFS(std::string filename) {
 		return NULL;
 	}
 
-	//if we opened zip file successfully, we can create Network object and start populating it.
-	Network * network = new Network;
-
 	//load stops:
-	this->loadStops(z, network);
+	this->loadStops(z);
 
-	return network;
+	for(StopData * s: this->stops)
+	{
+		std::cout << *s << std::endl;
+	}
+
+	return NULL;
 }
 
-void GTFSReader::loadStops(struct zip* z, Network* n) {
+void GTFSReader::loadStops(struct zip* z) {
 	std::cout << "loadStops called." << std::endl;
-	if(n == NULL || z == NULL)
+	if(z == NULL)
 	{
 		std::cout << "Got empty pointer as argument, return." << std::endl;
 		return;
@@ -60,15 +62,24 @@ void GTFSReader::loadStops(struct zip* z, Network* n) {
 
 	std::string contents(c, st.size);
 	std::vector<std::string> stops = GTFSReader::splitStrings(contents, '\n');
+
 	unsigned int id = 0;
 
 	for(std::string s: stops)
 	{
 		std::vector<std::string> stopData = GTFSReader::splitStrings(s, ',');
 		int id = 0;
-		for(std::string d: stopData) std::cout << id++ << ". " << d << std::endl; //todo debug
+//		for(std::string d: stopData) std::cout << id++ << ". " << d << std::endl; //todo debug
 		//create StopData object and populate it
-		//this->stops.push_back(new StopData(stopData[2], id, std::stod(stopData[4]), std::stod(stopData[5])));
+		try
+		{
+			this->stops.push_back(new StopData(stopData[2], id, std::stod(stopData[4]), std::stod(stopData[5])));
+			this->stopIDsTranslate.insert(std::pair<std::string, unsigned int>(stopData[0], id++));
+		}
+		catch(std::invalid_argument & e)
+		{
+			continue;//first line, skip
+		}
 
 	}
 }
