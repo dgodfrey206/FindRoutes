@@ -13,11 +13,13 @@
 
 #include "RouteData.h"
 #include "StopData.h"
+#include "TripData.h"
 
 class DataReader{
 	public:
 		static std::vector<RouteData> readRoutes(std::string filename);
 		static std::vector<StopData>  readStops(std::string filename);
+		static std::vector<TripData>  readTrips(std::string filename);
 };
 
 

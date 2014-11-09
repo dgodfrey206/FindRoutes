@@ -66,3 +66,31 @@ std::vector<StopData> DataReader::readStops(std::string filename){
 		return result;
 	}
 }
+
+std::vector<TripData>  readTrips(std::string filename){
+	std::ifstream file(filename.c_str(),std::ios::in);
+	std::vector<TripData> result;
+
+	if(!file.is_open()){
+		std::cout<<"Otwarcie pliku "<<filename<<" nie powiod³o sie!"<<std::endl;
+		return result;
+	}else{
+		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		Json::Reader parser;
+		Json::Value root;
+
+		if( !parser.parse(file,root) ){
+			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			return result;
+		}else{
+			Json::Value trips = root["trips"];
+			for(unsigned int i=0; i<trips.size();i++){
+				std::vector<int> stops;
+				std::cout<<trips[i];
+				//Json::Value stop_sec = trips[i][];
+			}
+
+		}
+	}
+}
+
