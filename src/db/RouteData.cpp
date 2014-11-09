@@ -37,6 +37,16 @@ RouteData::~RouteData(){
 
 }
 
+bool RouteData::operator==(const RouteData src){
+	if( this->id != src.id){
+		return false;
+	}else if(this->name != src.name){
+		return false;
+	}else{
+		return true;
+	}
+}
+
 std::string RouteData::getName() const{
 	return this->name;
 }

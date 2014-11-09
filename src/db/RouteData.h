@@ -19,9 +19,9 @@ class RouteData{
 		~RouteData();
 		RouteData operator=(const RouteData src);
 		friend std::ostream& operator<<(std::ostream& output, const RouteData& src);
+		bool operator==(const RouteData src);
 		std::string getName() const;
 		unsigned int getId() const;
-
 	private:
 		std::string name;
 		unsigned int id;
