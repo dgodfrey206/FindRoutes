@@ -40,7 +40,7 @@ void Network::setSover(Solver * s) {
 	}
 }
 
-Route* Network::findRouteBetween(const Node * start, const Node * end) {
+Route* Network::findRouteBetween(const Node * start, const Node * end, const unsigned int maxSwitches) {
 	return NULL;
 }
 
