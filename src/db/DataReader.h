@@ -12,10 +12,12 @@
 #include <vector>
 
 #include "RouteData.h"
+#include "StopData.h"
 
 class DataReader{
 	public:
 		static std::vector<RouteData> readRoutes(std::string filename);
+		static std::vector<StopData>  readStops(std::string filename);
 };
 
 
