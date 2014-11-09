@@ -7,12 +7,6 @@
 
 #include "GTFSReader.h"
 
-GTFSReader::GTFSReader() {
-}
-
-GTFSReader::~GTFSReader() {
-}
-
 Network* GTFSReader::readGTFS(std::string filename) {
 
 	std::cout << "readGTFS called. Filename " << filename << std::endl;
@@ -31,11 +25,8 @@ Network* GTFSReader::readGTFS(std::string filename) {
 
 	//load stops:
 	this->loadStops(z);
-
-	for(StopData * s: this->stops)
-	{
-		std::cout << *s << std::endl;
-	}
+	this->loadRoutes(z);
+	this->loadTrips(z);
 
 	return NULL;
 }
@@ -63,14 +54,13 @@ void GTFSReader::loadStops(struct zip* z) {
 	std::string contents(c, st.size);
 	std::vector<std::string> stops = GTFSReader::splitStrings(contents, '\n');
 
-	unsigned int id = 0;
-
 	for(std::string s: stops)
 	{
+		unsigned int id =0;
 		std::vector<std::string> stopData = GTFSReader::splitStrings(s, ',');
-		int id = 0;
 //		for(std::string d: stopData) std::cout << id++ << ". " << d << std::endl; //todo debug
-		//create StopData object and populate it
+
+		//create RouteData object and populate it
 		try
 		{
 			this->stops.push_back(new StopData(stopData[2], id, std::stod(stopData[4]), std::stod(stopData[5])));
@@ -80,7 +70,90 @@ void GTFSReader::loadStops(struct zip* z) {
 		{
 			continue;//first line, skip
 		}
+	}
+}
 
+void GTFSReader::loadRoutes(struct zip* z) {
+	std::cout << "loadRoutes called." << std::endl;
+	if(z == NULL)
+	{
+		std::cout << "Got empty pointer as argument, return." << std::endl;
+		return;
+	}
+
+	zip_file * f;
+	struct zip_stat st;
+
+	zip_stat_init(&st);
+	zip_stat(z, "routes.txt", 0, &st);
+
+	char * c = new char[st.size];
+
+	f = zip_fopen(z, "routes.txt", 0);
+	zip_fread(f, c, st.size);
+	zip_fclose(f);
+
+	std::string contents(c, st.size);
+	std::vector<std::string> routes = GTFSReader::splitStrings(contents, '\n');
+
+	for(std::string r: routes)
+	{
+		std::vector<std::string> routeData = GTFSReader::splitStrings(r, ',');
+
+//		int id = 0;
+//		for(std::string d: routeData) std::cout << id++ << ". " << d << std::endl; //todo debug
+		//create RouteData object and populate it
+		try
+		{
+			this->routes.push_back(new RouteData(routeData[3], std::stoi(routeData[0])));
+		}
+		catch(std::invalid_argument & e)
+		{
+			continue;//first line, skip
+		}
+	}
+}
+
+void GTFSReader::loadTrips(struct zip* z) {
+	std::cout << "loadTrips called." << std::endl;
+	if(z == NULL)
+	{
+		std::cout << "Got empty pointer as argument, return." << std::endl;
+		return;
+	}
+
+	zip_file * f;
+	struct zip_stat st;
+
+	zip_stat_init(&st);
+	zip_stat(z, "trips.txt", 0, &st);
+
+	char * c = new char[st.size];
+
+	f = zip_fopen(z, "trips.txt", 0);
+	zip_fread(f, c, st.size);
+	zip_fclose(f);
+
+	std::string contents(c, st.size);
+	std::vector<std::string> trips = GTFSReader::splitStrings(contents, '\n');
+
+	unsigned int id = 0;
+
+	for(std::string t: trips)
+	{
+		std::vector<std::string> tripData = GTFSReader::splitStrings(t, ',');
+//		int i = 0;
+//		for(std::string d: tripData) std::cout << i++ << ". " << d << std::endl; //todo debug
+		//create TripData object and populate it
+		try
+		{
+			this->trips.push_back(new TripData(id, stoi(tripData[0]), std::vector<int>()));
+			this->tripIDsTranslate.insert(std::pair<std::string, unsigned int>(tripData[2], id++));
+		}
+		catch(std::invalid_argument & e)
+		{
+			continue;//first line, skip
+		}
 	}
 }
 
@@ -97,3 +170,22 @@ std::vector<std::string> GTFSReader::splitStrings(const std::string &s, char del
 	}
     return elems;
 }
+
+std::ostream & operator << (std::ostream & stream, const GTFSReader & reader)
+{
+	for(StopData * s: reader.stops)
+	{
+		stream << *s << std::endl;
+	}
+	for(RouteData * s: reader.routes)
+	{
+		stream << *s << std::endl;
+	}
+	for(TripData * s: reader.trips)
+	{
+		stream << *s << std::endl;
+	}
+
+	return stream;
+}
+

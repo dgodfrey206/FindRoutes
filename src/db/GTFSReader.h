@@ -23,11 +23,11 @@
 #include "../graph/Network.h"
 
 #include "StopData.h"
+#include "RouteData.h"
+#include "TripData.h"
 
 class GTFSReader {
 public:
-	GTFSReader();
-	~GTFSReader();
 
 	/**
 	 * Unpacks gtfs archive, creates network, deletes created in progress files.
@@ -36,14 +36,20 @@ public:
 	 */
 	Network * readGTFS(std::string filename);
 
+	friend std::ostream & operator << (std::ostream & stream, const GTFSReader & reader);
 private:
+	void loadStops(struct zip * z);
+	void loadRoutes(struct zip * z);
+	void loadTrips(struct zip * z);
+
 	static std::vector<std::string> splitStrings(const std::string &s, char delim);
 
-	void loadStops(struct zip * z);
-
 	std::vector<StopData *> stops;
+	std::vector<RouteData *> routes;
+	std::vector<TripData *> trips;
 
 	std::map<std::string, unsigned int> stopIDsTranslate;//in gtfs ids are std::string, in database - unsigned int;
+	std::map<std::string, unsigned int> tripIDsTranslate;//in gtfs ids are std::string, in database - unsigned int;
 };
 
 #endif /* SRC_DB_GTFSREADER_H_ */
