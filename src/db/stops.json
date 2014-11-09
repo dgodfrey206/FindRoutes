@@ -9,38 +9,38 @@
 	{
 		"id": 1,
 		"name": "przystanek nr 1", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "320.1",
+		"lng": "0.111"
 	},
 	{
 		"id": 2,
 		"name": "przystanek nr 2", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "0.21",
+		"lng": "0.321"
 	},
 	{
 		"id": 3,
 		"name": "przystanek nr 3", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "0.111",
+		"lng": "0.1332"
 	},
 	{
 		"id": 4,
 		"name": "przystanek nr 4", 
 		"lat": "0.1",
-		"lng": "0.1"
+		"lng": "13.1"
 	},
 	{
 		"id": 5,
 		"name": "przystanek nr 5", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "2.1",
+		"lng": "1.1"
 	},
 	{
 		"id": 6,
 		"name": "przystanek nr 6", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "4.1",
+		"lng": "2.1"
 	},
 	{
 		"id": 7,
@@ -51,26 +51,26 @@
 	{
 		"id": 8,
 		"name": "przystanek nr 8", 
-		"lat": "0.1",
+		"lat": "0.6",
 		"lng": "0.1"
 	},
 	{
 		"id": 9,
 		"name": "przystanek nr 9", 
 		"lat": "0.1",
-		"lng": "0.1"
+		"lng": "0.7"
 	},
 	{
 		"id": 10,
 		"name": "przystanek nr 10", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "23.1",
+		"lng": "213.1"
 	},
 	{
 		"id": 11,
 		"name": "przystanek nr 11", 
-		"lat": "0.1",
-		"lng": "0.1"
+		"lat": "5.1",
+		"lng": "61.1"
 	}
 	]
 }
