@@ -2,7 +2,7 @@
  * TripData.h
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 #ifndef DB_TRIPDATA_H_
@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
+//todo appendStopToSec(unsigned int id); would be nice to have
 class TripData{
 	public:
 		TripData();
