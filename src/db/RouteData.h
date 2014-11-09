@@ -2,7 +2,7 @@
  * RouteData.h
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 #ifndef DB_ROUTEDATA_H_
@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <string>
-
+//todo RouteData need to contain TransportType enum value or coresponding.
 class RouteData{
 	public:
 		RouteData();
