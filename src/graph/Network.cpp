@@ -112,6 +112,15 @@ std::list<Edge *> Network::getEdgesForNode(const Node* n) const {
 	return found;
 }
 
+std::list<Node*> Network::getAllNodes() {
+	std::list<Node *> nodes;
+	for(Node * n: this->nodes)
+	{
+		nodes.push_back(n);
+	}
+	return nodes;
+}
+
 Node * Network::getNodeCloseToPos(double lat, double lon) const {
 	double shortestDist, distance;
 	Node * closestNode = NULL;
