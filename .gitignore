@@ -43,3 +43,6 @@
 /doxygen/doxygen.conf
 !/doxygen/doc/latex/refman.pdf
 /doxygen/doc/latex
+
+#db
+/src/db/db.json
