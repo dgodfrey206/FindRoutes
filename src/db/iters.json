@@ -1,9 +1,0 @@
-{
-  "iters": {
-    "trip": 416,
-    "stop": 1366,
-    "service": 3,
-    "stop_times": 610911,
-    "route": 181
-  }
-}
