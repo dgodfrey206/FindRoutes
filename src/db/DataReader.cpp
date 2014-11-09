@@ -67,7 +67,7 @@ std::vector<StopData> DataReader::readStops(std::string filename){
 	}
 }
 
-std::vector<TripData>  readTrips(std::string filename){
+std::vector<TripData> DataReader::readTrips(std::string filename){
 	std::ifstream file(filename.c_str(),std::ios::in);
 	std::vector<TripData> result;
 
@@ -86,11 +86,16 @@ std::vector<TripData>  readTrips(std::string filename){
 			Json::Value trips = root["trips"];
 			for(unsigned int i=0; i<trips.size();i++){
 				std::vector<int> stops;
-				std::cout<<trips[i];
-				//Json::Value stop_sec = trips[i][];
+				Json::Value stop_sec = trips[i]["stop_sec"];
+				for(unsigned int j=0; j<stop_sec.size(); j++){
+					stops.push_back(stop_sec[j].asInt());
+				}
+				TripData tmp(trips[i]["id"].asInt(), trips[i]["route_id"].asInt(), stops);
+				result.push_back(tmp);
 			}
-
 		}
 	}
+
+	return result;
 }
 

@@ -42,11 +42,15 @@ TripData TripData::operator=(const TripData src){
 }
 
 std::ostream& operator<<(std::ostream& output, const TripData& src){
-	output<<"id="<<src.id<<" routeId="<<src.routeId<<" stops:";
+	output<<"id="<<src.id<<" routeId="<<src.routeId<<" stops: [";
 	for(unsigned int i=0;i<src.stopSec.size();i++){
-		output<<src.stopSec[i]<<"->";
+		if(i != src.stopSec.size() -1){
+			output<<src.stopSec[i]<<", ";
+		}else{
+			output<<src.stopSec[i]<<"]"<<std::endl;
+		}
+
 	}
-	output<<std::endl;
 	return output;
 }
 
