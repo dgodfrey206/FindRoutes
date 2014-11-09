@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setupActions();
 
     this->network = NULL;
+
+    this->prepareMap();
 }
 
 MainWindow::~MainWindow()
@@ -80,6 +82,42 @@ void MainWindow::prepareGUI()
 
     this->debug->append(QString("GUI repainted."));
 }
+void MainWindow::prepareMap()
+{
+    QFile apiFile("API_KEY");
+    apiFile.open(QIODevice::ReadOnly);
+    QTextStream stream(&apiFile);
+    QString line = stream.readLine();
+    if(line.length() == 0)
+    {
+        this->debug->append("No api key found");
+    }
+    else
+    {
+        this->debug->append("API key loaded.");
+        this->apiKey = line;
+    }
+
+    this->ui->map->setHtml(QString("<center><iframe width=\"600\" height=\"450\" frameborder=\"0\" style=\"border:0\" \
+                               src=\"https://www.google.com/maps/embed/v1/view?zoom=11&center=50.0647%2C19.9450&key=" + this->apiKey + "\"> \
+                                </iframe></center>"));
+
+    this->updateMap();
+
+}
+
+void MainWindow::updateMap()
+{
+    if(this->ui->map)
+    {
+        this->ui->map->update();
+        this->debug->append("Map refreshed.");
+    }
+    else
+    {
+        this->debug->append("Map does not exists.");
+    }
+}
 
 void MainWindow::showHelp()
 {
@@ -133,7 +171,7 @@ void MainWindow::findRoute()
         return;
     }
 
-    Route * solution = this->network->findRouteBetween(startNode, endNode);
+    Route * solution = this->network->findRouteBetween(startNode, endNode, this->ui->numSwitches->value());
 
     if(solution && solution->getLength() != 0)
     {
