@@ -8,8 +8,8 @@
 #ifndef SRC_SOLVER_H_
 #define SRC_SOLVER_H_
 
-#include "Network.h"
-#include "Route.h"
+#include "../graph/Network.h"
+#include "../graph/Route.h"
 
 class Network; //forward declaration
 

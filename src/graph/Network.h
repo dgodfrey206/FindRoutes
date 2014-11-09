@@ -17,7 +17,7 @@
 #include "Edge.h"
 #include "TransportType.h"
 #include "Route.h"
-#include "Solver.h"
+#include "../algorithm/Solver.h"
 
 /**
  * main class, contains information
