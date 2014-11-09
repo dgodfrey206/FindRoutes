@@ -8,6 +8,9 @@
 #ifndef DB_STOPDATA_H_
 #define DB_STOPDATA_H_
 
+#include <string>
+#include <iostream>
+
 class StopData{
 	public:
 		StopData();
@@ -16,6 +19,7 @@ class StopData{
 		~StopData();
 		StopData operator=(const StopData src);
 		friend std::ostream& operator<<(std::ostream& output, const StopData& src);
+		bool operator==(const StopData src);
 		std::string getName() const;
 		unsigned int getId() const;
 		double getLat() const;
