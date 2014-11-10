@@ -20,11 +20,12 @@
 
 #include <exception>
 
-#include "../../graph/Network.h" //todo remove this
 
 #include "./StopData.h"
 #include "./RouteData.h"
 #include "./TripData.h"
+#include "StopTimeData.h"
+#include "ServiceData.h"
 
 class GTFSReader {
 public:
@@ -34,7 +35,14 @@ public:
 	 * @param filename Path to gtfs file.
 	 * @return Pointer to created Network.
 	 */
-	Network * readGTFS(std::string filename);
+	void readGTFS(std::string filename);
+
+	std::vector<RouteData>    getRoutes();
+	std::vector<StopData>     getStops();
+	std::vector<TripData>     getTrips();
+	std::vector<StopTimeData> getStopTimes();
+	std::vector<ServiceData>  getServices();
+
 
 	friend std::ostream & operator << (std::ostream & stream, const GTFSReader & reader);
 private:
@@ -44,9 +52,11 @@ private:
 
 	static std::vector<std::string> splitStrings(const std::string &s, char delim);
 
-	std::vector<StopData *> stops;
-	std::vector<RouteData *> routes;
-	std::vector<TripData *> trips;
+	std::vector<StopData> stops;
+	std::vector<RouteData> routes;
+	std::vector<TripData> trips;
+	std::vector<StopTimeData> stopTimes;
+	std::vector<ServiceData> services;
 
 	std::map<std::string, unsigned int> stopIDsTranslate;//in gtfs ids are std::string, in database - unsigned int;
 	std::map<std::string, unsigned int> tripIDsTranslate;//in gtfs ids are std::string, in database - unsigned int;

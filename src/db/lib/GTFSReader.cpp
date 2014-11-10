@@ -7,7 +7,7 @@
 
 #include "GTFSReader.h"
 
-Network* GTFSReader::readGTFS(std::string filename) {
+void GTFSReader::readGTFS(std::string filename) {
 
 	std::cout << "readGTFS called. Filename " << filename << std::endl;
 	//open zip archive
@@ -20,7 +20,7 @@ Network* GTFSReader::readGTFS(std::string filename) {
 		std::cout << "Err value: " << error << std::endl;
 		zip_error_to_str(errorBuffer, 100, 0, error);
 		std::cout << "Err msg: " << errorBuffer << std::endl;
-		return NULL;
+		return;
 	}
 
 	//load stops:
@@ -28,7 +28,7 @@ Network* GTFSReader::readGTFS(std::string filename) {
 	this->loadRoutes(z);
 	this->loadTrips(z);
 
-	return NULL;
+	return;
 }
 
 void GTFSReader::loadStops(struct zip* z) {
@@ -63,7 +63,7 @@ void GTFSReader::loadStops(struct zip* z) {
 		//create RouteData object and populate it
 		try
 		{
-			this->stops.push_back(new StopData(stopData[2], id, std::stod(stopData[4]), std::stod(stopData[5])));
+			this->stops.push_back(StopData(stopData[2], id, std::stod(stopData[4]), std::stod(stopData[5])));
 			this->stopIDsTranslate.insert(std::pair<std::string, unsigned int>(stopData[0], id++));
 		}
 		catch(std::invalid_argument & e)
@@ -105,7 +105,7 @@ void GTFSReader::loadRoutes(struct zip* z) {
 		//create RouteData object and populate it
 		try
 		{
-			this->routes.push_back(new RouteData(routeData[3], std::stoi(routeData[0])));
+			this->routes.push_back(RouteData(routeData[3], std::stoi(routeData[0])));
 		}
 		catch(std::invalid_argument & e)
 		{
@@ -147,7 +147,7 @@ void GTFSReader::loadTrips(struct zip* z) {
 		//create TripData object and populate it
 		try
 		{
-			this->trips.push_back(new TripData(id, stoi(tripData[0]), tripData[2], std::vector<int>()));
+			this->trips.push_back(TripData(id, stoi(tripData[0]), tripData[2], std::vector<int>()));
 			this->tripIDsTranslate.insert(std::pair<std::string, unsigned int>(tripData[2], id++));
 		}
 		catch(std::invalid_argument & e)
@@ -173,19 +173,38 @@ std::vector<std::string> GTFSReader::splitStrings(const std::string &s, char del
 
 std::ostream & operator << (std::ostream & stream, const GTFSReader & reader)
 {
-	for(StopData * s: reader.stops)
+	for(StopData s: reader.stops)
 	{
-		stream << *s << std::endl;
+		stream << s << std::endl;
 	}
-	for(RouteData * s: reader.routes)
+	for(RouteData s: reader.routes)
 	{
-		stream << *s << std::endl;
+		stream << s << std::endl;
 	}
-	for(TripData * s: reader.trips)
+	for(TripData s: reader.trips)
 	{
-		stream << *s << std::endl;
+		stream << s << std::endl;
 	}
 
 	return stream;
 }
 
+std::vector<RouteData> GTFSReader::getRoutes() {
+	return this->routes;
+}
+
+std::vector<StopData> GTFSReader::getStops() {
+	return this->stops;
+}
+
+std::vector<TripData> GTFSReader::getTrips() {
+	return this->trips;
+}
+
+std::vector<StopTimeData> GTFSReader::getStopTimes() {
+	return this->stopTimes;
+}
+
+std::vector<ServiceData> GTFSReader::getServices() {
+	return this->services;
+}
