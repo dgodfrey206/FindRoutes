@@ -20,11 +20,11 @@
 
 #include <exception>
 
-#include "../graph/Network.h"
+#include "../../graph/Network.h" //todo remove this
 
-#include "./lib/StopData.h"
-#include "./lib/RouteData.h"
-#include "./lib/TripData.h"
+#include "./StopData.h"
+#include "./RouteData.h"
+#include "./TripData.h"
 
 class GTFSReader {
 public:
