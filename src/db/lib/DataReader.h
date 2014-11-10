@@ -16,7 +16,6 @@
 #include "TripData.h"
 #include "StopTimeData.h"
 #include "ServiceData.h"
-#include "ItersData.h"
 
 class DataReader{
 	public:
@@ -25,7 +24,6 @@ class DataReader{
 		static std::vector<TripData>     readTrips(std::string filename);
 		static std::vector<StopTimeData> readStopTimes(std::string filename);
 		static std::vector<ServiceData>  readServices(std::string filename);
-		static ItersData readIters(std::string filename);
 };
 
 

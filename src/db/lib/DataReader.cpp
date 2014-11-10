@@ -155,31 +155,3 @@ std::vector<ServiceData> DataReader::readServices(std::string filename){
 		}
 
 }
-
-ItersData DataReader::readIters(std::string filename){
-	std::ifstream file(filename.c_str(),std::ios::in);
-	ItersData result;
-	Json::Value root;
-	if(!file.is_open()){
-		std::cerr<<"Could not open file: "<<filename<<std::endl;
-		return result;
-	}else{
-		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
-		Json::Reader parser;
-
-		if( !parser.parse(file,root) ){
-			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
-			return result;
-		}else{
-			Json::Value services = root["iters"];
-			result.routesNumber = services["route"].asUInt();
-			result.servicesNumber = services["service"].asUInt();
-			result.stopTimesNumber = services["stop_times"].asUInt();
-			result.tripsNumber = services["trip"].asUInt();
-
-		}
-		return result;
-	}
-
-}
-

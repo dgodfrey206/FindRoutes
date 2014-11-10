@@ -10,7 +10,7 @@
 #include "lib/DataReader.h"
 
 DataBase::DataBase():routesFile("../db/json/routes.json"), tripsFile("../db/json/trips.json"), stopsFile("../db/json/stops.json"),
-					stopTimesFile("../db/json/stop_times.json"), servicesFile("../db/json/services.json"), itersFile("../db/json/iters.json"){
+					stopTimesFile("../db/json/stop_times.json"), servicesFile("../db/json/services.json") {
 
 	this->routes = DataReader::readRoutes(this->routesFile);
 	if(routes.empty()){
@@ -51,7 +51,6 @@ DataBase::DataBase():routesFile("../db/json/routes.json"), tripsFile("../db/json
 		std::cerr<<"services vector is ready"<<std::endl;
 	}
 
-	this->data = DataReader::readIters(this->itersFile);
 }
 
 DataBase::~DataBase(){

@@ -17,7 +17,6 @@
 #include "lib/StopData.h"
 #include "lib/StopTimeData.h"
 #include "lib/ServiceData.h"
-#include "lib/ItersData.h"
 
 class DataBase{
 	public:
@@ -29,7 +28,6 @@ class DataBase{
 		std::vector<StopData> stops;
 		std::vector<StopTimeData> stopTimes;
 		std::vector<ServiceData> services;
-		ItersData data;
 
 	private:
 		const std::string routesFile;
