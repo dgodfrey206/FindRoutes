@@ -16,7 +16,7 @@ class TripData{
 	public:
 		TripData();
 		TripData(const TripData& src);
-		TripData(unsigned int id, unsigned int routeId, std::vector<int> stopSec);
+		TripData(unsigned int id, unsigned int routeId,std::string name,std::vector<int> stopSec);
 		~TripData();
 		TripData operator=(const TripData src);
 		friend std::ostream& operator<<(std::ostream& output, const TripData& src);
@@ -24,10 +24,12 @@ class TripData{
 		unsigned int getId() const;
 		unsigned int getRouteId() const;
 		std::vector<int> getStopSec() const;
+		std::string getName() const;
 	private:
 		unsigned int id;
 		unsigned int routeId;
 		std::vector<int> stopSec;
+		std::string name;
 };
 
 #endif /* DB_TRIPDATA_H_ */

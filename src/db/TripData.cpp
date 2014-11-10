@@ -17,12 +17,14 @@ TripData::TripData(const TripData& src){
 	this->id = src.id;
 	this->routeId = src.routeId;
 	this->stopSec = src.stopSec;
+	this->name = src.name;
 }
 
-TripData::TripData(unsigned int id, unsigned int routeId, std::vector<int> stopSec){
+TripData::TripData(unsigned int id, unsigned int routeId, std::string name, std::vector<int> stopSec){
 	this->id = id;
 	this->routeId = routeId;
 	this->stopSec = stopSec;
+	this->name = name;
 }
 
 TripData::~TripData(){
@@ -37,12 +39,13 @@ TripData TripData::operator=(const TripData src){
 		this->routeId = src.routeId;
 		this->stopSec.clear();
 		this->stopSec = src.stopSec;
+		this->name = src.name;
 		return *this;
 	}
 }
 
 std::ostream& operator<<(std::ostream& output, const TripData& src){
-	output<<"id="<<src.id<<" routeId="<<src.routeId<<" stops: [";
+	output<<"name="<<src.name<<" id="<<src.id<<" routeId="<<src.routeId<<" stops: [";
 	for(unsigned int i=0;i<src.stopSec.size();i++){
 		if(i != src.stopSec.size() -1){
 			output<<src.stopSec[i]<<", ";
@@ -71,4 +74,8 @@ unsigned int TripData::getRouteId() const{
 }
 std::vector<int> TripData::getStopSec() const{
 	return this->stopSec;
+}
+
+std::string TripData::getName() const{
+	return this->name;
 }
