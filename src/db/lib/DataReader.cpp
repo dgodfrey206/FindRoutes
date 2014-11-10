@@ -6,8 +6,7 @@
  */
 
 #include "DataReader.h"
-
-#include "../jsoncpp/json/json.h"
+#include "../../jsoncpp/json/json.h"
 
 #include <fstream>
 #include <iostream>
@@ -18,10 +17,10 @@ std::vector<RouteData> DataReader::readRoutes(std::string filename){
 	std::vector<RouteData> result;
 	result.clear();
 	if(!file.is_open()){
-		std::cout<<"Otwarcie pliku "<<filename<<" nie powiod這 sie!"<<std::endl;
+		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
 
 		Json::Reader parser;
 		Json::Value root;
@@ -45,10 +44,10 @@ std::vector<StopData> DataReader::readStops(std::string filename){
 	std::vector<StopData> result;
 	//result.clear();
 	if(!file.is_open()){
-		std::cout<<"Otwarcie pliku "<<filename<<" nie powiod這 sie!"<<std::endl;
+		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
 		Json::Reader parser;
 		Json::Value root;
 
@@ -72,10 +71,10 @@ std::vector<TripData> DataReader::readTrips(std::string filename){
 	std::vector<TripData> result;
 
 	if(!file.is_open()){
-		std::cout<<"Otwarcie pliku "<<filename<<" nie powiod這 sie!"<<std::endl;
+		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
 		Json::Reader parser;
 		Json::Value root;
 
@@ -104,10 +103,10 @@ std::vector<StopTimeData> DataReader::readStopTimes(std::string filename){
 	std::vector<StopTimeData> result;
 
 	if(!file.is_open()){
-		std::cout<<"Otwarcie pliku "<<filename<<" nie powiod這 sie!"<<std::endl;
+		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
 		Json::Reader parser;
 		Json::Value root;
 		if( !parser.parse(file,root) ){
@@ -136,10 +135,10 @@ std::vector<ServiceData> DataReader::readServices(std::string filename){
 	std::vector<ServiceData> result;
 
 		if(!file.is_open()){
-			std::cout<<"Otwarcie pliku "<<filename<<" nie powiodlo sie!"<<std::endl;
+			std::cerr<<"Could not open file: "<<filename<<std::endl;
 			return result;
 		}else{
-			std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+			std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
 			Json::Reader parser;
 			Json::Value root;
 			if( !parser.parse(file,root) ){
@@ -162,10 +161,10 @@ ItersData DataReader::readIters(std::string filename){
 	ItersData result;
 	Json::Value root;
 	if(!file.is_open()){
-		std::cout<<"Otwarcie pliku "<<filename<<" nie powiodlo sie!"<<std::endl;
+		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
 		Json::Reader parser;
 
 		if( !parser.parse(file,root) ){

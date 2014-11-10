@@ -5,8 +5,8 @@
  *      Author: Rafa³ Prusak
  */
 
-#ifndef DB_DATAREADER_H_
-#define DB_DATAREADER_H_
+#ifndef DB_LIB_DATAREADER_H_
+#define DB_LIB_DATAREADER_H_
 
 #include <string>
 #include <vector>
@@ -29,4 +29,4 @@ class DataReader{
 };
 
 
-#endif /* DB_DATAREADER_H_ */
+#endif /* DB_LIB_DATAREADER_H_ */
