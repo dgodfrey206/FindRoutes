@@ -22,9 +22,9 @@
 
 #include "../graph/Network.h"
 
-#include "StopData.h"
-#include "RouteData.h"
-#include "TripData.h"
+#include "./lib/StopData.h"
+#include "./lib/RouteData.h"
+#include "./lib/TripData.h"
 
 class GTFSReader {
 public:

@@ -142,12 +142,12 @@ void GTFSReader::loadTrips(struct zip* z) {
 	for(std::string t: trips)
 	{
 		std::vector<std::string> tripData = GTFSReader::splitStrings(t, ',');
-//		int i = 0;
-//		for(std::string d: tripData) std::cout << i++ << ". " << d << std::endl; //todo debug
+		int i = 0;
+		for(std::string d: tripData) std::cout << i++ << ". " << d << std::endl; //todo debug
 		//create TripData object and populate it
 		try
 		{
-			this->trips.push_back(new TripData(id, stoi(tripData[0]), std::vector<int>()));
+			this->trips.push_back(new TripData(id, stoi(tripData[0]), tripData[2], std::vector<int>()));
 			this->tripIDsTranslate.insert(std::pair<std::string, unsigned int>(tripData[2], id++));
 		}
 		catch(std::invalid_argument & e)
