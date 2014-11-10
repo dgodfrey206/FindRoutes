@@ -18,10 +18,21 @@ DataBase::DataBase(DataBase::LoadMethod method, std::string path)
 	if(method == DataBase::LoadMethod::JSON) this->loadJSON();
 	else if(method == DataBase::LoadMethod::GTFS) this->loadGTFS();
 	else return;
+
+	this->validate();
 }
 
 void DataBase::loadGTFS() {
-	return;
+
+	GTFSReader reader;
+	reader.readGTFS(this->path);
+
+	this->routes = reader.getRoutes();
+	this->stops = reader.getStops();
+	this->trips = reader.getTrips();
+	this->stopTimes = reader.getStopTimes();
+	this->services = reader.getServices();
+
 }
 
 void DataBase::loadJSON() {
@@ -33,13 +44,19 @@ void DataBase::loadJSON() {
 	const std::string servicesFile = this->path + "/" + "services.json";
 
 	this->routes = DataReader::readRoutes(routesFile);
+	this->trips = DataReader::readTrips(tripsFile);
+	this->stops = DataReader::readStops(stopsFile);
+	this->stopTimes = DataReader::readStopTimes(stopTimesFile);
+	this->services = DataReader::readServices(servicesFile);
+}
+
+void DataBase::validate() {
+
 	if(routes.empty()){
 		std::cerr<<"routes vector is empty!"<<std::endl;
 	}else{
 		std::cerr<<"routes vector is ready"<<std::endl;
 	}
-
-	this->trips = DataReader::readTrips(tripsFile);
 
 	if(trips.empty()){
 		std::cerr<<"trips vector is empty!"<<std::endl;
@@ -47,15 +64,11 @@ void DataBase::loadJSON() {
 		std::cerr<<"trips vector is ready"<<std::endl;
 	}
 
-	this->stops = DataReader::readStops(stopsFile);
-
 	if(stops.empty()){
 		std::cerr<<"stops vector is empty!"<<std::endl;
 	}else{
 		std::cerr<<"stops vector is ready"<<std::endl;
 	}
-
-	this->stopTimes = DataReader::readStopTimes(stopTimesFile);
 
 	if(stopTimes.empty()){
 		std::cerr<<"stop times vector is empty!"<<std::endl;
@@ -63,14 +76,11 @@ void DataBase::loadJSON() {
 		std::cerr<<"stop times vector is ready"<<std::endl;
 	}
 
-	this->services = DataReader::readServices(servicesFile);
-
 	if(services.empty()){
 		std::cerr<<"services vector is empty!"<<std::endl;
 	}else{
 		std::cerr<<"services vector is ready"<<std::endl;
 	}
-
 
 }
 

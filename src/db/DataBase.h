@@ -39,6 +39,8 @@ class DataBase{
 
 		void loadGTFS();
 		void loadJSON();
+
+		void validate();
 };
 
 
