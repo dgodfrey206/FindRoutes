@@ -5,13 +5,13 @@
  *      Author: Rafa³ Prusak
  */
 
-#ifndef DB_STOPTIMEDATA_H_
-#define DB_STOPTIMEDATA_H_
+#ifndef DB_LIB_STOPTIMEDATA_H_
+#define DB_LIB_STOPTIMEDATA_H_
 
 #include <iostream>
 #include <string>
-
 #include "Time.h"
+
 
 class StopTimeData{
 public:
@@ -39,4 +39,4 @@ public:
 
 
 
-#endif /* DB_STOPTIMEDATA_H_ */
+#endif /* DB_LIB_STOPTIMEDATA_H_ */

@@ -5,8 +5,8 @@
  *      Author: Rafa³ Prusak
  */
 
-#ifndef DB_TIME_H_
-#define DB_TIME_H_
+#ifndef DB_LIB_TIME_H_
+#define DB_LIB_TIME_H_
 
 #include <iostream>
 
@@ -32,4 +32,4 @@ class Time{
 };
 
 
-#endif /* DB_TIME_H_ */
+#endif /* DB_LIB_TIME_H_ */

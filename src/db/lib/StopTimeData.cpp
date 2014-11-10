@@ -6,6 +6,7 @@
  */
 
 #include "StopTimeData.h"
+
 #include <cstdlib>
 
 StopTimeData::StopTimeData(){

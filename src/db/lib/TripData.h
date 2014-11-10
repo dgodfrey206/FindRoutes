@@ -5,8 +5,8 @@
  *      Author: Rafa� Prusak
  */
 
-#ifndef DB_TRIPDATA_H_
-#define DB_TRIPDATA_H_
+#ifndef DB_LIB_TRIPDATA_H_
+#define DB_LIB_TRIPDATA_H_
 
 #include <iostream>
 #include <string>
@@ -32,4 +32,4 @@ class TripData{
 		std::string name;
 };
 
-#endif /* DB_TRIPDATA_H_ */
+#endif /* DB_LIB_TRIPDATA_H_ */

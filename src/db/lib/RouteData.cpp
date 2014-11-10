@@ -5,7 +5,7 @@
  *      Author: Rafa³ Prusak
  */
 
-#include "../db/RouteData.h"
+#include "RouteData.h"
 
 RouteData::RouteData(){
 	this->id = 0;

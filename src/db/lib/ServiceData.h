@@ -5,8 +5,8 @@
  *      Author: Rafa³ Prusak
  */
 
-#ifndef DB_SERVICEDATA_H_
-#define DB_SERVICEDATA_H_
+#ifndef DB_LIB_SERVICEDATA_H_
+#define DB_LIB_SERVICEDATA_H_
 
 #include <iostream>
 #include <string>
@@ -28,4 +28,4 @@ class ServiceData{
 };
 
 
-#endif /* DB_SERVICEDATA_H_ */
+#endif /* DB_LIB_SERVICEDATA_H_ */

@@ -5,8 +5,8 @@
  *      Author: Rafa³ Prusak
  */
 
-#ifndef DB_STOPDATA_H_
-#define DB_STOPDATA_H_
+#ifndef DB_LIB_STOPDATA_H_
+#define DB_LIB_STOPDATA_H_
 
 #include <string>
 #include <iostream>
@@ -33,4 +33,4 @@ class StopData{
 
 
 
-#endif /* DB_STOPDATA_H_ */
+#endif /* DB_LIB_STOPDATA_H_ */

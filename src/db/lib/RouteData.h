@@ -5,8 +5,8 @@
  *      Author: Rafa� Prusak
  */
 
-#ifndef DB_ROUTEDATA_H_
-#define DB_ROUTEDATA_H_
+#ifndef DB_LIB_ROUTEDATA_H_
+#define DB_LIB_ROUTEDATA_H_
 
 #include <iostream>
 #include <string>
@@ -29,4 +29,4 @@ class RouteData{
 
 
 
-#endif /* DB_ROUTEDATA_H_ */
+#endif /* DB_LIB_ROUTEDATA_H_ */
