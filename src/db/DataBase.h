@@ -2,7 +2,7 @@
  * DataBase.h
  *
  *  Created on: 10 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 #ifndef DB_DATABASE_H_
@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include <string>
-
 
 #include "lib/RouteData.h"
 #include "lib/TripData.h"
@@ -20,8 +19,12 @@
 
 class DataBase{
 	public:
-		DataBase();
-		~DataBase();
+		enum LoadMethod {
+			JSON = 0,
+			GTFS = 1
+		};
+//		DataBase();
+		DataBase(DataBase::LoadMethod method, std::string path);
 
 		std::vector<RouteData> routes;
 		std::vector<TripData> trips;
@@ -29,13 +32,13 @@ class DataBase{
 		std::vector<StopTimeData> stopTimes;
 		std::vector<ServiceData> services;
 
+
+
 	private:
-		const std::string routesFile;
-		const std::string tripsFile;
-		const std::string stopsFile;
-		const std::string stopTimesFile;
-		const std::string servicesFile;
-		const std::string itersFile;
+		const std::string path;
+
+		void loadGTFS();
+		void loadJSON();
 };
 
 
