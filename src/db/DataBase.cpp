@@ -11,9 +11,9 @@
 #include "lib/GTFSReader.h"
 
 
-DataBase::DataBase(DataBase::LoadMethod method, std::string path)
+DataBase::DataBase(DataBase::LoadMethod method, std::string p)
 	:
-	path(path)
+	path(p + ((p.back() == '/') ? "" : "/"))
 {
 	if(method == DataBase::LoadMethod::JSON) this->loadJSON();
 	else if(method == DataBase::LoadMethod::GTFS) this->loadGTFS();
