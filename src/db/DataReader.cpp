@@ -90,12 +90,44 @@ std::vector<TripData> DataReader::readTrips(std::string filename){
 				for(unsigned int j=0; j<stop_sec.size(); j++){
 					stops.push_back(stop_sec[j].asInt());
 				}
-				TripData tmp(trips[i]["id"].asInt(), trips[i]["route_id"].asInt(), stops);
+				TripData tmp(trips[i]["id"].asInt(), trips[i]["route_id"].asInt(),trips[i]["name"].asString() ,stops);
 				result.push_back(tmp);
 			}
 		}
 	}
 
+	return result;
+}
+
+std::vector<StopTimeData> DataReader::readStopTimes(std::string filename){
+	std::ifstream file(filename.c_str(),std::ios::in);
+	std::vector<StopTimeData> result;
+
+	if(!file.is_open()){
+		std::cout<<"Otwarcie pliku "<<filename<<" nie powiod³o sie!"<<std::endl;
+		return result;
+	}else{
+		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		Json::Reader parser;
+		Json::Value root;
+		if( !parser.parse(file,root) ){
+			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			return result;
+		}else{
+			Json::Value stopTimes = root["stop_times"];
+			for(unsigned int i=0; i<stopTimes.size();i++){
+
+				StopTimeData temp(stopTimes[i]["id"].asInt(), stopTimes[i]["stop_id"].asUInt(),
+								  stopTimes[i]["service_id"].asUInt(), stopTimes[i]["trip_id"].asUInt(),
+								  stopTimes[i]["name"].asString());
+				/*
+				std::cout<<stopTimes[i]["stop_id"].asUInt()<<std::endl;
+				std::cout<<temp;*/
+				//StopTimeData temp(stopTimes[i]["id"].asUInt(),0,0,0,stopTimes[i]["name"].asString());
+				result.push_back(temp);
+			}
+		}
+	}
 	return result;
 }
 
