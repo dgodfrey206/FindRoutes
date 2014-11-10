@@ -131,3 +131,56 @@ std::vector<StopTimeData> DataReader::readStopTimes(std::string filename){
 	return result;
 }
 
+std::vector<ServiceData> DataReader::readServices(std::string filename){
+	std::ifstream file(filename.c_str(),std::ios::in);
+	std::vector<ServiceData> result;
+
+		if(!file.is_open()){
+			std::cout<<"Otwarcie pliku "<<filename<<" nie powiodlo sie!"<<std::endl;
+			return result;
+		}else{
+			std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+			Json::Reader parser;
+			Json::Value root;
+			if( !parser.parse(file,root) ){
+				std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+				return result;
+			}else{
+				Json::Value services = root["services"];
+				for(unsigned int i=0; i<services.size();i++){
+					ServiceData temp(services[i]["id"].asUInt(), services[i]["name"].asString());
+					result.push_back(temp);
+				}
+			}
+			return result;
+		}
+
+}
+
+ItersData DataReader::readIters(std::string filename){
+	std::ifstream file(filename.c_str(),std::ios::in);
+	ItersData result;
+	Json::Value root;
+	if(!file.is_open()){
+		std::cout<<"Otwarcie pliku "<<filename<<" nie powiodlo sie!"<<std::endl;
+		return result;
+	}else{
+		std::cout<<"Otwarto poprawnie plik "<<filename<<std::endl;
+		Json::Reader parser;
+
+		if( !parser.parse(file,root) ){
+			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			return result;
+		}else{
+			Json::Value services = root["iters"];
+			result.routesNumber = services["route"].asUInt();
+			result.servicesNumber = services["service"].asUInt();
+			result.stopTimesNumber = services["stop_times"].asUInt();
+			result.tripsNumber = services["trip"].asUInt();
+
+		}
+		return result;
+	}
+
+}
+
