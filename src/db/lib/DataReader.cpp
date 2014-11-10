@@ -20,7 +20,7 @@ std::vector<RouteData> DataReader::readRoutes(std::string filename){
 		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
+		std::cerr<<"File "<<filename<<" is now opened"<<std::endl;
 
 		Json::Reader parser;
 		Json::Value root;
@@ -35,6 +35,8 @@ std::vector<RouteData> DataReader::readRoutes(std::string filename){
 				result.push_back(temp);
 			}
 		}
+		file.close();
+		std::cerr<<"File "<<filename<<"file is closed"<<std::endl;
 		return result;
 	}
 }
@@ -47,7 +49,7 @@ std::vector<StopData> DataReader::readStops(std::string filename){
 		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
+		std::cerr<<"File "<<filename<<" is now opened"<<std::endl;
 		Json::Reader parser;
 		Json::Value root;
 
@@ -61,7 +63,8 @@ std::vector<StopData> DataReader::readStops(std::string filename){
 				result.push_back(temp);
 			}
 		}
-
+		file.close();
+		std::cerr<<"File "<<filename<<"file is closed"<<std::endl;
 		return result;
 	}
 }
@@ -74,7 +77,7 @@ std::vector<TripData> DataReader::readTrips(std::string filename){
 		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
+		std::cerr<<"File "<<filename<<" is now opened"<<std::endl;
 		Json::Reader parser;
 		Json::Value root;
 
@@ -93,9 +96,11 @@ std::vector<TripData> DataReader::readTrips(std::string filename){
 				result.push_back(tmp);
 			}
 		}
+		file.close();
+		std::cerr<<"File "<<filename<<"file is closed"<<std::endl;
+		return result;
 	}
 
-	return result;
 }
 
 std::vector<StopTimeData> DataReader::readStopTimes(std::string filename){
@@ -106,7 +111,7 @@ std::vector<StopTimeData> DataReader::readStopTimes(std::string filename){
 		std::cerr<<"Could not open file: "<<filename<<std::endl;
 		return result;
 	}else{
-		std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
+		std::cerr<<"File "<<filename<<" is now opened"<<std::endl;
 		Json::Reader parser;
 		Json::Value root;
 		if( !parser.parse(file,root) ){
@@ -119,15 +124,14 @@ std::vector<StopTimeData> DataReader::readStopTimes(std::string filename){
 				StopTimeData temp(stopTimes[i]["id"].asInt(), stopTimes[i]["stop_id"].asUInt(),
 								  stopTimes[i]["service_id"].asUInt(), stopTimes[i]["trip_id"].asUInt(),
 								  stopTimes[i]["name"].asString());
-				/*
-				std::cout<<stopTimes[i]["stop_id"].asUInt()<<std::endl;
-				std::cout<<temp;*/
-				//StopTimeData temp(stopTimes[i]["id"].asUInt(),0,0,0,stopTimes[i]["name"].asString());
 				result.push_back(temp);
 			}
 		}
+		file.close();
+		std::cerr<<"File "<<filename<<"file is closed"<<std::endl;
+		return result;
 	}
-	return result;
+
 }
 
 std::vector<ServiceData> DataReader::readServices(std::string filename){
@@ -138,7 +142,7 @@ std::vector<ServiceData> DataReader::readServices(std::string filename){
 			std::cerr<<"Could not open file: "<<filename<<std::endl;
 			return result;
 		}else{
-			std::cerr<<"File "<<filename<<"is now opened"<<std::endl;
+			std::cerr<<"File "<<filename<<" is now opened"<<std::endl;
 			Json::Reader parser;
 			Json::Value root;
 			if( !parser.parse(file,root) ){
@@ -151,6 +155,8 @@ std::vector<ServiceData> DataReader::readServices(std::string filename){
 					result.push_back(temp);
 				}
 			}
+			file.close();
+			std::cerr<<"File "<<filename<<"file is closed"<<std::endl;
 			return result;
 		}
 
