@@ -45,7 +45,7 @@ StopData StopData::operator=(const StopData src){
 }
 
 std::ostream& operator<<(std::ostream& output, const StopData& src){
-	output<<src.getName()<<" -- id ="<<src.getId()<<" lat="<<src.getLat()<<" lng="<<src.getLng()<<std::endl;
+	output<<"name="<<src.getName()<<" id="<<src.getId()<<" lat="<<src.getLat()<<" lng="<<src.getLng()<<std::endl;
 	return output;
 }
 
