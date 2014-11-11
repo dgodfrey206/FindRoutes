@@ -25,7 +25,7 @@ class DataBase{
 		};
 //		DataBase();
 		DataBase(DataBase::LoadMethod method, std::string path);
-
+		void printTimeTable();		//combo!
 		std::vector<RouteData> routes;
 		std::vector<TripData> trips;
 		std::vector<StopData> stops;

@@ -41,7 +41,7 @@ std::ostream& operator<<(std::ostream& stream, const Node& n)
 	stream << "[" << std::setw(4) << std::right << n.getID();
 	stream << "]--[" << std::setw(8) << std::right << n.getLatitude();
 	stream << "]-[" << std::setw(8) << std::right << n.getLongtitude();
-	stream << "] " << std::setw(49) << std::right << n.getName();
+	stream << "] " << std::setw(49) << std::left << n.getName();
 
 	return stream;
 }
