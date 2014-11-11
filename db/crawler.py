@@ -24,6 +24,7 @@ def crawler():
         name:
         lon:
         lat:
+        p: #value inherited from html, used for connecting routes to proper stops
     routes:
         id:
         name:
@@ -80,94 +81,135 @@ def crawler():
     )
     database['iters']['service'] += 1
 
+    #load stops to database
+    stopsPath = root + "/przystan.htm"
+
+    with open(stopsPath, encoding="iso-8859-2") as f:
+        debug('  Opened file ' + stopsPath)
+        html = str(f.readlines())
+    soup = BeautifulSoup(html)
+
+    for stop in soup.find_all("li"):
+        txt = stop.find('a')['href']
+        number = re.findall(r'\d+', txt)[0]
+        name = stop.text
+        database['stops'].append(
+            {
+                'id': database['iters']['stop'],
+                'name': str(name),
+                'p': number
+            }
+        )
+        database['iters']['stop'] += 1
+        debug("    Added stop " + name + " to db")
+
     dirs = sorted(os.listdir(root))
-    for dir in dirs: #dir contanis one route data
+
+    for dir in dirs:
         if not is_number(dir):
             debug("Skipped file " + dir)
             continue #skip not matching files
-        currenturl = root + os.sep + dir
 
+        #add route to database
+        database['routes'].append(
+            {
+                'id': database['iters']['route'],
+                'name': dir
+            }
+        )
+        curRouteID = database['iters']['route']
+        database['iters']['route'] += 1
+
+        debug("    Added route " + dir + " to db")
+
+
+
+        currenturl = root + os.sep + dir
         debug("Working on dir " + currenturl)
 
         files = sorted(os.listdir(currenturl))
 
-        startStop = None #checked so we can notice if direction has changed
-        currentTripId = None
-        startOfRoute = True
+        directions = []
+        #match only files in format: _route_/_route_w_direction.htm
+        for f in files:
+            if re.match(r'\d{3,4}w\d{3,4}.htm', f):
+                directions.append(f)
 
-        # we are only interested if files: _num_t_num_.htm, containing
-        # route data for one stop
-        for file in files:
-            fullurl = currenturl + os.sep + file
+        tripID = 0
 
-            if re.match(r'\d{3,4}t\d{3,4}.htm', file):
-                debug(' Matched file ' + fullurl)
+        for direction in directions:
+            fullpath = currenturl + os.sep + direction
 
-                with open(fullurl, encoding="iso-8859-2") as f:
-                    debug('  Opened file ' + file)
+            with open(fullpath, encoding="iso-8859-2") as f:
+                debug('  Opened file ' + fullpath)
+                html = str(f.readlines())
+
+            soup = BeautifulSoup(html)
+
+
+            #create trip for route
+            database['trips'].append(
+                {
+                    'id': database['iters']['trip'],
+                    'route_id': curRouteID,
+                    'name': 'Trip' + str(curRouteID) + '-' + str(tripID),
+                    'stop_sec': []
+                }
+            )
+            currentTripID = database['iters']['trip']
+            database['iters']['trip'] += 1
+            debug('    Added trip to db')
+
+
+            stops = soup.find_all('li')
+            for s in stops:
+                stopName = s.text
+                stopPVal = s.find_all('a')
+
+                if len(stopPVal) == 3: #normal stop
+                    stopPVal = re.findall(r'\d+', stopPVal[2]['href'])[0]
+
+                    found, stopID = getIdWhereParam('p', stopPVal, database['stops'])
+
+                    if not found:
+                        debug('Stop was not found by p value, aborting.')
+
+                    database['trips'][currentTripID]['stop_sec'].append(stopID)
+
+                elif len(stopPVal) == 0:
+                    #last stop
+
+                    if stopName.endswith('(NŻ) - na żądanie'):
+                        stopName = stopName.split('(NŻ) - na żądanie')[0]
+
+                    if stopName.endswith('  NŻ'):
+                        stopName = stopName.split('  NŻ')[0]
+
+                    if stopName.endswith(' -- GRANICA TARYF.'):
+                        stopName = stopName.split(' -- GRANICA TARYF.')[0]
+
+
+                    found, stopID = getIdWhereName(stopName, database['stops'])
+
+                    if not found:
+                        debug(['Last stop was not found by name, aborting.', stopName])
+                        debug(database)
+
+                        return
+
+                    database['trips'][currentTripID]['stop_sec'].append(stopID)
+                    break
+
+
+                #manage stop times
+                stopFile = root + os.sep + dir + os.sep + s.find_all('a', {'target': 'R'})[0]['href']
+
+                with open(stopFile, encoding="iso-8859-2") as f:
+                    debug('  Opened file ' + stopFile)
                     html = str(f.readlines())
+                stopTimesSoup = BeautifulSoup(html)
 
-                soup = BeautifulSoup(html)
-
-                route = soup.find('font', {'class': 'fontline'}).text
-                stop = soup.find('font', {'class': 'fontstop'}).text
-                fullline = soup.find('font', {'class': 'fontroute'}).text
-                firstStop = fullline.split('-')[0]
-
-                debug('   Route: ' + route)
-                debug('   Stop: ' + stop)
-                debug('   First stop: ' + firstStop)
-
-                #add route to db if necessary
-                found, curRouteID = getIdWhereName(route, database['routes'])
-                if not found:
-                    database['routes'].append(
-                        {
-                            'id': database['iters']['route'],
-                            'name': str(route)
-                        }
-                    )
-                    curRouteID = database['iters']['route']
-                    database['iters']['route'] += 1
-
-                    debug("    Added route " + route + " to db")
-
-                 #add stop to db if necessary
-                found, curStopID = getIdWhereName(stop, database['stops'])
-                if not found:
-                    database['stops'].append(
-                        {
-                            'id': database['iters']['stop'],
-                            'name': str(stop)
-                        }
-                    )
-                    curStopID = database['iters']['stop']
-                    database['iters']['stop'] += 1
-
-                    debug("    Added stop " + stop + " to db")
-
-                if startStop != firstStop:
-                    #first file for route opened or dir has changed
-                    startStop = firstStop
-
-                    currentTripId = database['iters']['trip']
-                    database['trips'].append(
-                        {
-                            'id': database['iters']['trip'],
-                            'route_id': curRouteID,
-                            'name': 'Trip' + str(currentTripId),
-                            'stop_sec': []
-                        }
-                    )
-                    database['iters']['trip'] += 1
-                    debug('    Added trip to db')
-                    startOfRoute = True
-
-                #append stop to trip
-                database['trips'][currentTripId]['stop_sec'].append(curStopID)
-
-                #manage stoptimes for stop
-                timetable = soup.find('td', {'class': 'celldepart'})
+                timetable = stopTimesSoup.find('td', {'class': 'celldepart'})
                 trs = timetable.find_all('tr', {'align': None})#skip first, as it contains only headlines
                 for row in trs:
                     try:
@@ -187,8 +229,8 @@ def crawler():
 
                             database['stop_times'].append({
                                 'id': database['iters']['stop_times'],
-                                'stop_id': curStopID,
-                                'trip_id': currentTripId,
+                                'stop_id': stopID,
+                                'trip_id': currentTripID,
                                 'service_id': service_id,
                                 'name': '{:0>2}:{}'.format(hour, el)
                             })
@@ -198,10 +240,11 @@ def crawler():
                         service_id += 1
                 debug('    Added stop times for route and stop')
 
-                startOfRoute = False
+            tripID += 1
+            if tripID == 2:
+                #behave like nothing else can happen
+                break
 
-            else:
-                debug(' Skipped file ' + fullurl)
 
     debug('\n\n****Entire database****')
     debug(database)
@@ -211,11 +254,14 @@ def crawler():
         pickle.dump(database, f)
 
 def getIdWhereName(name, array):
+    return getIdWhereParam('name', name, array)
+
+def getIdWhereParam(param, value, array):
     if array is None:
         return False, None
 
     for el in array:
-        if el['name'] == str(name):
+        if el[param] == str(value):
             return True, el['id']
 
     return False, None
