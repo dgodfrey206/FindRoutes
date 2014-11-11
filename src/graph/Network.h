@@ -1,5 +1,5 @@
 /*
- * Network.h
+http://open.spotify.com/track/0QervLYxa3WBLkSTLkcGNw * Network.h
  *
  *  Created on: 20 paź 2014
  *      Author: Wojtek Gumuła
@@ -18,6 +18,7 @@
 #include "TransportType.h"
 #include "Route.h"
 #include "../algorithm/Solver.h"
+#include "../db/DataBase.h"
 
 /**
  * main class, contains information
@@ -46,6 +47,10 @@ public:
 	 */
 	~Network();
 
+	/**
+	 * Creates Network from database
+	 */
+	Network(DataBase& dataB);
 
 	/**
 	 * Load database entries from given file.

@@ -26,6 +26,10 @@ Network::Network(std::string filename) {
 Network::~Network() {
 	//todo
 
+	for(Node* e: this->nodes){
+		delete e;
+	}
+
 	delete this->solver;
 }
 
@@ -138,6 +142,19 @@ Node * Network::getNodeCloseToPos(double lat, double lon) const {
 	}
 
 	return closestNode;
+}
+
+
+Network::Network(DataBase& dataB){
+	this->edges = std::set<Edge *>();
+	this->nodes = std::set<Node *>();
+	this->solver = NULL;
+	std::cerr<<"stops number:"<<dataB.stops.size()<<std::endl;
+
+	for(unsigned int i=0; i<dataB.stops.size(); i++){
+		Node* temp = new Node(dataB.stops[i].getId(),dataB.stops[i].getName(),dataB.stops[i].getLat(), dataB.stops[i].getLng());
+		this->addNode(temp);
+	}
 }
 
 
