@@ -89,9 +89,21 @@ std::vector<TripData> DataReader::readTrips(std::string filename){
 			for(unsigned int i=0; i<trips.size();i++){
 				std::vector<int> stops;
 				Json::Value stop_sec = trips[i]["stop_sec"];
-				for(unsigned int j=0; j<stop_sec.size(); j++){
-					stops.push_back(stop_sec[j].asInt());
+				unsigned int j = 0;
+				stops.push_back(stop_sec[j].asInt());
+				for(j =1; j<stop_sec.size(); j++){
+					if(stop_sec[j].asInt() != stop_sec[j-1].asInt()){
+						stops.push_back(stop_sec[j].asInt());
+					}
 				}
+				/*
+				if(stop_sec[0].asUInt() == stop_sec[1].asUInt()){
+					j=1;
+				}else{
+					j=0;
+				}*/
+
+
 				TripData tmp(trips[i]["id"].asInt(), trips[i]["route_id"].asInt(),trips[i]["name"].asString() ,stops);
 				result.push_back(tmp);
 			}
