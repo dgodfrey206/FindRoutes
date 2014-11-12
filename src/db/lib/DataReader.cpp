@@ -35,7 +35,7 @@ std::vector<RouteData> DataReader::readRoutes(std::string filename, bool oneFile
 		}
 		else
 		{
-			Json::Value routes = (oneFile ? root["routes"] : root); //see header for explaination
+			Json::Value & routes = (oneFile ? root["routes"] : root); //see header for explaination
 			for(unsigned int i=0; i<routes.size();i++)
 			{
 				RouteData temp(routes[i]["name"].asString(), routes[i]["id"].asInt());
@@ -68,7 +68,7 @@ std::vector<StopData> DataReader::readStops(std::string filename, bool oneFile){
 			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
-			Json::Value stops = (oneFile ? root["stops"] : root);
+			Json::Value & stops = (oneFile ? root["stops"] : root);
 			for(unsigned int i=0; i<stops.size();i++){
 				StopData temp(stops[i]["name"].asString(), stops[i]["id"].asUInt(), atof(stops[i]["lat"].asString().c_str()), atof(stops[i]["lng"].asString().c_str()));
 				result.push_back(temp);
@@ -98,7 +98,7 @@ std::vector<TripData> DataReader::readTrips(std::string filename, bool oneFile){
 			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
-			Json::Value trips = (oneFile ? root["trips"] : root);
+			Json::Value & trips = (oneFile ? root["trips"] : root);
 			for(unsigned int i=0; i<trips.size();i++){
 				std::vector<int> stops;
 				Json::Value stop_sec = trips[i]["stop_sec"];
@@ -145,7 +145,7 @@ std::vector<StopTimeData> DataReader::readStopTimes(std::string filename, bool o
 			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
-			Json::Value stopTimes = (oneFile ? root["stop_times"] : root);
+			Json::Value & stopTimes = (oneFile ? root["stop_times"] : root);
 			for(unsigned int i=0; i<stopTimes.size();i++){
 
 				StopTimeData temp(stopTimes[i]["id"].asInt(), stopTimes[i]["stop_id"].asUInt(),
@@ -178,7 +178,7 @@ std::vector<ServiceData> DataReader::readServices(std::string filename, bool one
 			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
-			Json::Value services = (oneFile ? root["services"] : root);
+			Json::Value & services = (oneFile ? root["services"] : root);
 			for(unsigned int i=0; i<services.size();i++){
 				ServiceData temp(services[i]["id"].asUInt(), services[i]["name"].asString());
 				result.push_back(temp);
