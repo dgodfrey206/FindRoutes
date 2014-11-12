@@ -15,12 +15,9 @@
 
 int main()
 {
-	std::string path = "../db/json/";
-	path = path + ((path.back() == '/') ? "" : "/");
-	std::cout << path << std::endl;
+	std::string path = "../db/json";
 
-
-	DataBase db(DataBase::LoadMethod::JSON, "../db/json");
+	DataBase db(DataBase::LoadMethod::MULTJSON, "../db/json");
 
 	Network net(db);
 

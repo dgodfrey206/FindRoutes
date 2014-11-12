@@ -36,7 +36,7 @@ class DataBase{
 
 
 	private:
-		const std::string path;
+		std::string path;
 
 		void loadGTFS();
 		void loadJSON();

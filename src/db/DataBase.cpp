@@ -12,9 +12,17 @@
 
 
 DataBase::DataBase(DataBase::LoadMethod method, std::string p)
-	:
-	path(p + ((p.back() == '/') ? "" : "/"))
 {
+
+	if(method == DataBase::LoadMethod::MULTJSON && p.back() != '/')
+	{
+		this->path = p + "/";
+	}
+	else
+	{
+		this->path = p;
+	}
+
 	if(method == DataBase::LoadMethod::MULTJSON) this->loadJSON();
 	else if(method == DataBase::LoadMethod::GTFS) this->loadGTFS();
 	else if(method == DataBase::LoadMethod::JSON) this->loadOneJSON();
@@ -44,22 +52,22 @@ void DataBase::loadJSON() {
 	const std::string stopTimesFile = this->path + "stop_times.json";
 	const std::string servicesFile = this->path + "services.json";
 
-	this->routes = DataReader::readRoutes(routesFile);
-	this->trips = DataReader::readTrips(tripsFile);
-	this->stops = DataReader::readStops(stopsFile);
-	this->stopTimes = DataReader::readStopTimes(stopTimesFile);
-	this->services = DataReader::readServices(servicesFile);
+	this->routes = DataReader::readRoutes(routesFile, false);
+	this->trips = DataReader::readTrips(tripsFile, false);
+	this->stops = DataReader::readStops(stopsFile, false);
+	this->stopTimes = DataReader::readStopTimes(stopTimesFile, false);
+	this->services = DataReader::readServices(servicesFile, false);
 }
 
 void DataBase::loadOneJSON() {
 
-	std::string file = this->path + "db.json";
+	std::string file = this->path;
 
-	this->routes = DataReader::readRoutes(file);
-	this->trips = DataReader::readTrips(file);
-	this->stops = DataReader::readStops(file);
-	this->stopTimes = DataReader::readStopTimes(file);
-	this->services = DataReader::readServices(file);
+	this->routes = DataReader::readRoutes(file, true);
+	this->trips = DataReader::readTrips(file, true);
+	this->stops = DataReader::readStops(file, true);
+	this->stopTimes = DataReader::readStopTimes(file, true);
+	this->services = DataReader::readServices(file, true);
 }
 
 void DataBase::validate() {
