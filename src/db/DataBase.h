@@ -22,7 +22,7 @@ class DataBase{
 		enum LoadMethod {
 			JSON = 0,
 			GTFS = 1,
-			ONEJSON = 2
+			MULTJSON = 2
 		};
 //		DataBase();
 		DataBase(DataBase::LoadMethod method, std::string path);

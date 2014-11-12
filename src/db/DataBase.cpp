@@ -15,9 +15,9 @@ DataBase::DataBase(DataBase::LoadMethod method, std::string p)
 	:
 	path(p + ((p.back() == '/') ? "" : "/"))
 {
-	if(method == DataBase::LoadMethod::JSON) this->loadJSON();
+	if(method == DataBase::LoadMethod::MULTJSON) this->loadJSON();
 	else if(method == DataBase::LoadMethod::GTFS) this->loadGTFS();
-	else if(method == DataBase::LoadMethod::ONEJSON) this->loadOneJSON();
+	else if(method == DataBase::LoadMethod::JSON) this->loadOneJSON();
 	else return;
 
 	this->validate();
