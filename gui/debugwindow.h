@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QTextStream>
 
+#include <iostream>
+
 namespace Ui {
 class debugWindow;
 }

@@ -14,6 +14,7 @@
 #include "debugwindow.h"
 
 #include "../src/Network.h"
+#include "../src/db/DataBase.h"
 
 namespace Ui {
 class MainWindow;

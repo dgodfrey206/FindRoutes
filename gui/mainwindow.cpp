@@ -57,10 +57,14 @@ void MainWindow::loadFromFile()
         this->network = NULL;
     }
 
+
     QString filename = QFileDialog::getExistingDirectory(this, tr("test"), ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    DataBase db(DataBase::LoadMethod::JSON, filename.toStdString());
+
     this->debug->append(QString("Loading database from directory ") + filename);
-    this->network = new Network();
-    this->network->loadFromFile(filename.toStdString());
+    this->network = new Network(db);
+
     this->debug->append(QString("Database loaded successfully"));
 
     this->prepareGUI();
