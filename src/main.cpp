@@ -9,22 +9,30 @@
 #include <fstream>
 #include <string>
 
-#include "db/DataReader.h"
+#include "db/DataBase.h"
+
+#include "graph/Network.h"
 
 int main()
 {
-	std::string stopsFile("../db/stops.json");
-	std::vector<StopData> stopsVector = DataReader::readStops(stopsFile);
+	std::string path = "../db/json/";
+	path = path + ((path.back() == '/') ? "" : "/");
+	std::cout << path << std::endl;
 
-	if( stopsVector.empty()){
-		std::cout<<"zwrócono pusty wektor!"<<std::endl;
-	}else{
-		for(unsigned int i=0; i<stopsVector.size(); i++){
-			std::cout<<stopsVector[i];
-		}
+
+	DataBase db(DataBase::LoadMethod::JSON, "../db/json");
+
+	Network net(db);
+
+
+	for(Node * n: net.getAllNodes())
+	{
+		std::cout << "At " << n << ":" << std::endl;
+		std::cout << "ID\t" << n->getID() << std::endl;
+		std::cout << "Name\t" << n->getName() << std::endl;
+		std::cout << "Lat:\t" << n->getLatitude() << std::endl;
+		std::cout << "Lon:\t" << n->getLongtitude() << std::endl;
 	}
-
-
 }
 
 

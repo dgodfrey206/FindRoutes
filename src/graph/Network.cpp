@@ -149,11 +149,13 @@ Network::Network(DataBase& dataB){
 	this->edges = std::set<Edge *>();
 	this->nodes = std::set<Node *>();
 	this->solver = NULL;
-	std::cerr<<"stops number:"<<dataB.stops.size()<<std::endl;
+
+	Node* temp = NULL;
 
 	for(unsigned int i=0; i<dataB.stops.size(); i++){
-		Node* temp = new Node(dataB.stops[i].getId(),dataB.stops[i].getName(),dataB.stops[i].getLat(), dataB.stops[i].getLng());
-		this->addNode(temp);
+		temp = new Node(dataB.stops[i].getId(),dataB.stops[i].getName(),dataB.stops[i].getLat(), dataB.stops[i].getLng());
+
+		if(temp) this->addNode(temp);
 	}
 }
 
