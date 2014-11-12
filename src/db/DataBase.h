@@ -21,7 +21,8 @@ class DataBase{
 	public:
 		enum LoadMethod {
 			JSON = 0,
-			GTFS = 1
+			GTFS = 1,
+			ONEJSON = 2
 		};
 //		DataBase();
 		DataBase(DataBase::LoadMethod method, std::string path);
@@ -39,6 +40,7 @@ class DataBase{
 
 		void loadGTFS();
 		void loadJSON();
+		void loadOneJSON();
 
 		void validate();
 };

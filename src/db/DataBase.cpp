@@ -17,6 +17,7 @@ DataBase::DataBase(DataBase::LoadMethod method, std::string p)
 {
 	if(method == DataBase::LoadMethod::JSON) this->loadJSON();
 	else if(method == DataBase::LoadMethod::GTFS) this->loadGTFS();
+	else if(method == DataBase::LoadMethod::ONEJSON) this->loadOneJSON();
 	else return;
 
 	this->validate();
@@ -37,11 +38,11 @@ void DataBase::loadGTFS() {
 
 void DataBase::loadJSON() {
 
-	const std::string routesFile = this->path + "/" + "routes.json";
-	const std::string tripsFile = this->path + "/" + "trips.json";
-	const std::string stopsFile = this->path + "/" + "stops.json";
-	const std::string stopTimesFile = this->path + "/" + "stop_times.json";
-	const std::string servicesFile = this->path + "/" + "services.json";
+	const std::string routesFile = this->path + "routes.json";
+	const std::string tripsFile = this->path + "trips.json";
+	const std::string stopsFile = this->path + "stops.json";
+	const std::string stopTimesFile = this->path + "stop_times.json";
+	const std::string servicesFile = this->path + "services.json";
 
 	this->routes = DataReader::readRoutes(routesFile);
 	this->trips = DataReader::readTrips(tripsFile);
@@ -50,36 +51,47 @@ void DataBase::loadJSON() {
 	this->services = DataReader::readServices(servicesFile);
 }
 
+void DataBase::loadOneJSON() {
+
+	std::string file = this->path + "db.json";
+
+	this->routes = DataReader::readRoutes(file);
+	this->trips = DataReader::readTrips(file);
+	this->stops = DataReader::readStops(file);
+	this->stopTimes = DataReader::readStopTimes(file);
+	this->services = DataReader::readServices(file);
+}
+
 void DataBase::validate() {
 
 	if(routes.empty()){
 		std::cerr<<"routes vector is empty!"<<std::endl;
 	}else{
-		std::cerr<<"routes vector is ready"<<std::endl;
+		std::cerr<<"Routes vector is ready, contains " << this->routes.size() << " entries."<<std::endl;
 	}
 
 	if(trips.empty()){
 		std::cerr<<"trips vector is empty!"<<std::endl;
 	}else{
-		std::cerr<<"trips vector is ready"<<std::endl;
+		std::cerr<<"Trips vector is ready, contains " << this->trips.size() << " entries."<<std::endl;
 	}
 
 	if(stops.empty()){
 		std::cerr<<"stops vector is empty!"<<std::endl;
 	}else{
-		std::cerr<<"stops vector is ready"<<std::endl;
+		std::cerr<<"Stops vector is ready, contains " << this->stops.size() << " entries."<<std::endl;
 	}
 
 	if(stopTimes.empty()){
 		std::cerr<<"stop times vector is empty!"<<std::endl;
 	}else{
-		std::cerr<<"stop times vector is ready"<<std::endl;
+		std::cerr<<"Stop times vector is ready, contains " << this->stopTimes.size() << " entries."<<std::endl;
 	}
 
 	if(services.empty()){
 		std::cerr<<"services vector is empty!"<<std::endl;
 	}else{
-		std::cerr<<"services vector is ready"<<std::endl;
+		std::cerr<<"Services vector is ready, contains " << this->services.size() << " entries."<<std::endl;
 	}
 
 }
@@ -93,7 +105,7 @@ void DataBase::printTimeTable(){
 		std::cout<<"linia: "<<this->routes[route_id].getName()<<std::endl;
 
 		if(this->trips[trip_id].getStopSec().size() <= 4){
-			std::cerr<<"mo¿liwy blad w trip: "<<trip_id<<std::endl;
+			std::cerr<<"moï¿½liwy blad w trip: "<<trip_id<<std::endl;
 		}
 
 		for(unsigned int stop=0; stop<this->trips[trip_id].getStopSec().size();stop++){
