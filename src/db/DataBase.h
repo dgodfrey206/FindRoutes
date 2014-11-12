@@ -33,7 +33,7 @@ class DataBase{
 		std::vector<StopTimeData> stopTimes;
 		std::vector<ServiceData> services;
 
-
+		bool isValid();
 
 	private:
 		std::string path;

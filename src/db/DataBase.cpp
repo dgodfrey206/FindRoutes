@@ -104,6 +104,11 @@ void DataBase::validate() {
 
 }
 
+bool DataBase::isValid()
+{
+	return (!this->stops.empty() && !this->routes.empty() && !this->trips.empty()
+			&& !this->services.empty() && !this->stopTimes.empty());
+}
 
 void DataBase::printTimeTable(){
 	for(unsigned int trip_id=0; trip_id<this->trips.size(); trip_id++){
