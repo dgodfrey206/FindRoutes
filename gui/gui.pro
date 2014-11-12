@@ -13,12 +13,20 @@ TARGET = gui
 TEMPLATE = app
 CONFIG += c++11
 
+LIBS += -lzip
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     debugwindow.cpp \
-    ../src/db/DataReader.cpp \
-    ../src/db/RouteData.cpp \
-    ../src/db/StopData.cpp \
+    ../src/db/lib/DataReader.cpp \
+    ../src/db/lib/GTFSReader.cpp \
+    ../src/db/lib/RouteData.cpp \
+    ../src/db/lib/ServiceData.cpp \
+    ../src/db/lib/StopData.cpp \
+    ../src/db/lib/StopTimeData.cpp \
+    ../src/db/lib/Time.cpp \
+    ../src/db/lib/TripData.cpp \
+    ../src/db/DataBase.cpp \
     ../src/graph/Edge.cpp \
     ../src/graph/Network.cpp \
     ../src/graph/Node.cpp \
@@ -30,9 +38,15 @@ HEADERS  += mainwindow.h \
     debugwindow.h \
     ../src/algorithm/SimAnnealingAlg.h \
     ../src/algorithm/Solver.h \
-    ../src/db/DataReader.h \
-    ../src/db/RouteData.h \
-    ../src/db/StopData.h \
+    ../src/db/lib/DataReader.h \
+    ../src/db/lib/GTFSReader.h \
+    ../src/db/lib/RouteData.h \
+    ../src/db/lib/ServiceData.h \
+    ../src/db/lib/StopData.h \
+    ../src/db/lib/StopTimeData.h \
+    ../src/db/lib/Time.h \
+    ../src/db/lib/TripData.h \
+    ../src/db/DataBase.h \
     ../src/graph/Edge.h \
     ../src/graph/Network.h \
     ../src/graph/Node.h \
