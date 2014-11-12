@@ -156,7 +156,15 @@
     <property name="title">
      <string>Plik</string>
     </property>
-    <addaction name="actionLoad"/>
+    <widget class="QMenu" name="menuLoad">
+     <property name="title">
+      <string>Załaduj bazę z pliku</string>
+     </property>
+     <addaction name="actionLoadGTFS"/>
+     <addaction name="actionLoadJSON"/>
+     <addaction name="actionLoadMulJSON"/>
+    </widget>
+    <addaction name="menuLoad"/>
     <addaction name="actionDebug"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -170,11 +178,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
   </widget>
-  <action name="actionLoad">
-   <property name="text">
-    <string>Załaduj bazę z pliku</string>
-   </property>
-  </action>
   <action name="actionQuit">
    <property name="text">
     <string>Zakończ</string>
@@ -191,6 +194,26 @@
   <action name="actionHelp">
    <property name="text">
     <string>Pokaż pomoc</string>
+   </property>
+  </action>
+  <action name="actionTest">
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
+  <action name="actionLoadGTFS">
+   <property name="text">
+    <string>GTFS</string>
+   </property>
+  </action>
+  <action name="actionLoadJSON">
+   <property name="text">
+    <string>JSON</string>
+   </property>
+  </action>
+  <action name="actionLoadMulJSON">
+   <property name="text">
+    <string>Wiele JSON</string>
    </property>
   </action>
  </widget>

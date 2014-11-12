@@ -45,7 +45,7 @@ private:
 
 private slots:
     void manageDebugWindow();
-    void loadFromFile();
+    void loadFromFile(DataBase::LoadMethod m);
     void showHelp();
 
     void findRoute();
@@ -63,6 +63,12 @@ private slots:
     void showHelp();
 
     void findRoute();
+
+    void loadGTFS();
+    void loadJSON();
+    void loadMulJSON();
+
+    void showRouteOnMap(Route * r);
 };
 
 #endif // MAINWINDOW_H

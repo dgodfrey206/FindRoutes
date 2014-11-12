@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->network = NULL;
 
     this->prepareMap();
+
 }
 
 MainWindow::~MainWindow()
@@ -28,7 +29,11 @@ MainWindow::~MainWindow()
 void MainWindow::setupActions()
 {
     connect(this->ui->actionDebug, SIGNAL(triggered()), this, SLOT(manageDebugWindow()));
-    connect(this->ui->actionLoad, SIGNAL(triggered()), this, SLOT(loadFromFile()));
+
+    connect(this->ui->actionLoadGTFS, SIGNAL(triggered()), this, SLOT(loadGTFS()));
+    connect(this->ui->actionLoadJSON, SIGNAL(triggered()), this, SLOT(loadJSON()));
+    connect(this->ui->actionLoadMulJSON, SIGNAL(triggered()), this, SLOT(loadMulJSON()));
+
     connect(this->ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
     connect(this->ui->actionHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
     connect(this->ui->search, SIGNAL(clicked()), this, SLOT(findRoute()));
@@ -49,7 +54,7 @@ void MainWindow::manageDebugWindow()
     }
 }
 
-void MainWindow::loadFromFile()
+void MainWindow::loadFromFile(DataBase::LoadMethod method)
 {
     if(this->network)
     {
@@ -57,17 +62,83 @@ void MainWindow::loadFromFile()
         this->network = NULL;
     }
 
+    QString filename;
+    if(method == DataBase::LoadMethod::GTFS)
+    {
+        //filename = QFileDialog::getExistingDirectory(this, tr("test"), ".", QFileDialog::Sh | QFileDialog::DontResolveSymlinks);
+        filename = QFileDialog::getOpenFileName(this, tr("Select .zip file containing GTFS database"), "ping");
+    }
+    else if(method == DataBase::LoadMethod::JSON)
+    {
+        filename = QFileDialog::getOpenFileName(this, tr("Select .json file containing database"), "ping");
+    }
+    else if(method == DataBase::LoadMethod::MULTJSON)
+    {
+        filename = QFileDialog::getExistingDirectory(this, tr("Select directory containing json files"), ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    }
+    else
+    {
+        this->debug->append("Unsuspected behavior while loading database.");
+    }
 
-    QString filename = QFileDialog::getExistingDirectory(this, tr("test"), ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    this->debug->append(QString("Given path: ") + filename);
+    DataBase db(method, filename.toStdString());
 
-    DataBase db(DataBase::LoadMethod::JSON, filename.toStdString());
+    if(!db.isValid())
+    {
+        this->debug->append("Database invalid!");
+    }
+    else
+    {
+        this->network = new Network(db);
 
-    this->debug->append(QString("Loading database from directory ") + filename);
-    this->network = new Network(db);
+        this->debug->append(QString("Database loaded successfully"));
 
-    this->debug->append(QString("Database loaded successfully"));
+        this->prepareGUI();
 
-    this->prepareGUI();
+
+
+        //todo debuging purposes only
+        int i = 0;
+        Node * begin;
+        Node * end;
+        Route * r = new Route;
+        for(Node * n: network->getAllNodes())
+        {
+            if(i == 0)
+            {
+                i++;
+                end = n;
+                continue;
+            }
+            else
+            {
+                begin = end;
+                end = n;
+                r->addEdge(new Edge(i-1, begin, end, 1, TransportType::BUS));
+                i++;
+            }
+            if(i == 6) break;
+
+        }
+
+        this->showRouteOnMap(r);
+    }
+}
+
+void MainWindow::loadGTFS()
+{
+    this->loadFromFile(DataBase::LoadMethod::GTFS);
+}
+
+void MainWindow:: loadJSON()
+{
+    this->loadFromFile(DataBase::LoadMethod::JSON);
+}
+
+void MainWindow::loadMulJSON()
+{
+    this->loadFromFile(DataBase::LoadMethod::MULTJSON);
 }
 
 void MainWindow::prepareGUI()
@@ -180,7 +251,8 @@ void MainWindow::findRoute()
     if(solution && solution->getLength() != 0)
     {
         this->debug->append(QString("Found solution."));
-        //todo, do somethind;
+
+        this->showRouteOnMap(solution);
     }
     else
     {
@@ -314,5 +386,15 @@ void MainWindow::findRoute()
     else
     {
         this->debug->append(QString("No solution has been found."));
+
+void MainWindow::showRouteOnMap(Route * r)
+{
+    this->debug->append("Showing route on map.");
+    for(auto it = r->begin(); it != r->end(); it++)
+    {
+        this->debug->append("Adding points into map");
+        double lon = (*it)->getStartNode()->getLongtitude();
+        double lat = (*it)->getStartNode()->getLatitude();
+        this->debug->append(QString("Coords: ") + QString::number(lat) + ' ' + QString::number(lon));
     }
 }
