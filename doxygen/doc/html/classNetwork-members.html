@@ -70,7 +70,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Friends</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Friends</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,17 +88,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="classNetwork.html">Network</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#a07040bad8143a6280359dc50ae8eb5cd">findRouteBetween</a>(const Node *start, const Node *end)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classNetwork.html#a3f5ada94c21af066118aab11ed06b03d">loadFromFile</a>(std::string f)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#a3cc2fb4f8fa4d507077e8da85ce5a1c8">Network</a>()</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classNetwork.html#ae31c3a6729817632007a66518978f842">Network</a>(std::string f)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#a14a73fa004ca1f7087223b43ed81ba6b">findRouteBetween</a>(const Node *start, const Node *end, const unsigned int maxSwitches)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classNetwork.html#accf948dcd6aa056dcbb1fbdf5ee8b6f7">getAllNodes</a>()</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#a3f5ada94c21af066118aab11ed06b03d">loadFromFile</a>(std::string f)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classNetwork.html#a3cc2fb4f8fa4d507077e8da85ce5a1c8">Network</a>()</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#ae31c3a6729817632007a66518978f842">Network</a>(std::string f)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classNetwork.html#a7dcec8aa50c18ff3a19d773c3c0fc6bc">Network</a>(DataBase &amp;dataB)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#a6f20541ab6836a2f8c0971c6037f0e14">operator&lt;&lt;</a>(std::ostream &amp;s, const Network &amp;n)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"><span class="mlabel">friend</span></td></tr>
   <tr><td class="entry"><a class="el" href="classNetwork.html#aa69082c063c2b97ab97a15d86d1e3bb2">setSover</a>(Solver *s)</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classNetwork.html#a7a4e19cdb4bf0c7ecf82baa643831492">~Network</a>()</td><td class="entry"><a class="el" href="classNetwork.html">Network</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Nov 7 2014 11:07:02 for RouteFinder by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Nov 14 2014 17:58:23 for RouteFinder by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

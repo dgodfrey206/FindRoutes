@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['edge',['Edge',['../classEdge.html',1,'']]]
+  ['database',['DataBase',['../classDataBase.html',1,'']]],
+  ['datareader',['DataReader',['../classDataReader.html',1,'']]]
 ];
