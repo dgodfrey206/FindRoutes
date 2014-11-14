@@ -17,13 +17,54 @@
 #include "StopTimeData.h"
 #include "ServiceData.h"
 
+/**
+ * DataReader reads data from one or multiple json files.
+ * If oneFile is set, functions assume that whole database is contained in given file,
+ * otherwise, assume given file contains only neccesary data
+ * and so std::vector sth = root; (no root['sth'] is needed.)
+ */
 class DataReader{
-	public:
-		static std::vector<RouteData>    readRoutes(std::string filename, bool oneFile = true); // if oneFile is set, functions assume that whole
-		static std::vector<StopData>     readStops(std::string filename, bool oneFile = true);	// database is contained in given file.
-		static std::vector<TripData>     readTrips(std::string filename, bool oneFile = true);	// otherwise, assume given file contains only neccesary data
-		static std::vector<StopTimeData> readStopTimes(std::string filename, bool oneFile = true);	// and so std::vector sth = root; (no root['sth'] is needed.)
-		static std::vector<ServiceData>  readServices(std::string filename, bool oneFile = true);
+public:
+
+	/**
+	 * Function loading routes from given file.
+	 * @param filename path to file.
+	 * @param oneFile Defines if all data is being loaded from oneFile.
+	 * @return vector containing RouteData.
+	 */
+	static std::vector<RouteData>    readRoutes(std::string filename, bool oneFile = true);
+
+	/**
+	 * Function loading stops from given file.
+	 * @param filename path to file.
+	 * @param oneFile Defines if all data is being loaded from oneFile.
+	 * @return vector containing StopData.
+	 */
+	static std::vector<StopData>     readStops(std::string filename, bool oneFile = true);
+
+	/**
+	 * Function loading trips from given file.
+	 * @param filename path to file.
+	 * @param oneFile Defines if all data is being loaded from oneFile.
+	 * @return vector containing TripData.
+	 */
+	static std::vector<TripData>     readTrips(std::string filename, bool oneFile = true);
+
+	/**
+	 * Function loading stop times from given file.
+	 * @param filename path to file.
+	 * @param oneFile Defines if all data is being loaded from oneFile.
+	 * @return vector containing StopTimeData.
+	 */
+	static std::vector<StopTimeData> readStopTimes(std::string filename, bool oneFile = true);
+
+	/**
+	 * Function loading services from given file.
+	 * @param filename path to file.
+	 * @param oneFile Defines if all data is being loaded from oneFile.
+	 * @return vector containing ServiceData.
+	 */
+	static std::vector<ServiceData>  readServices(std::string filename, bool oneFile = true);
 };
 
 

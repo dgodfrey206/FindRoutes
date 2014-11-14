@@ -123,8 +123,6 @@ void DataBase::printTimeTable(){
 
 		for(unsigned int stop=0; stop<this->trips[trip_id].getStopSec().size();stop++){
 
-
-
 			unsigned int stop_id = (this->trips[trip_id].getStopSec()[stop]);
 			std::cout<< this->stops[stop_id].getName()<<std::endl;
 			for(unsigned int stop_time=0; stop_time< this->stopTimes.size();stop_time++){

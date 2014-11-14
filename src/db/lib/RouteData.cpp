@@ -2,7 +2,7 @@
  * RouteData.cpp
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 #include "RouteData.h"
@@ -22,7 +22,7 @@ RouteData::RouteData(std::string name,unsigned int id){
 	this->name = name;
 }
 
-RouteData RouteData::operator=(const RouteData src){
+RouteData& RouteData::operator=(const RouteData& src){
 	this->name = src.name;
 	this->id = src.id;
 	return *this;
@@ -37,7 +37,7 @@ RouteData::~RouteData(){
 
 }
 
-bool RouteData::operator==(const RouteData src){
+bool RouteData::operator==(const RouteData & src){
 	if( this->id != src.id){
 		return false;
 	}else if(this->name != src.name){

@@ -27,23 +27,50 @@
 #include "StopTimeData.h"
 #include "ServiceData.h"
 
+/**
+ * GTFSReader reads data from GTFS format zip archive. It is compatible with
+ * DataReader class.
+ */
 class GTFSReader {
 public:
 
 	/**
 	 * Unpacks gtfs archive, creates network, deletes created in progress files.
 	 * @param filename Path to gtfs file.
-	 * @return Pointer to created Network.
 	 */
 	void readGTFS(std::string filename);
 
+	/**
+	 * @return vector containing RouteData.
+	 */
 	std::vector<RouteData>    getRoutes();
+
+	/**
+	 * @return vector containing StopData.
+	 */
 	std::vector<StopData>     getStops();
+
+	/**
+	 * @return vector containing TripData.
+	 */
 	std::vector<TripData>     getTrips();
+
+	/**
+	 * @return vector containing StopTimeData.
+	 */
 	std::vector<StopTimeData> getStopTimes();
+
+	/**
+	 * @return vector containing ServiceData.
+	 */
 	std::vector<ServiceData>  getServices();
 
-
+	/**
+	 * Helper output function.
+	 * @param stream Stream
+	 * @param reader Outputed object.
+	 * @return Reference to given stream.
+	 */
 	friend std::ostream & operator << (std::ostream & stream, const GTFSReader & reader);
 private:
 	void loadStops(struct zip * z);

@@ -11,20 +11,71 @@
 #include <iostream>
 #include <string>
 //todo RouteData need to contain TransportType enum value or coresponding.
+
+/**
+ * Class containing data about routes when database is being created.
+ * Then converted into Route object.
+ */
 class RouteData{
-	public:
-		RouteData();
-		RouteData(const RouteData& src);
-		RouteData(std::string name,unsigned int id);
-		~RouteData();
-		RouteData operator=(const RouteData src);
-		friend std::ostream& operator<<(std::ostream& output, const RouteData& src);
-		bool operator==(const RouteData src);
-		std::string getName() const;
-		unsigned int getId() const;
-	private:
-		std::string name;
-		unsigned int id;
+public:
+
+	/**
+	 * Default constructor.
+	 */
+	RouteData();
+
+	/**
+	 * Copying constructor.
+	 * @param src Object being copied.
+	 */
+	RouteData(const RouteData& src);
+
+	/**
+	 * Constructor.
+	 * @param name Name of route.
+	 * @param id id of route.
+	 */
+	RouteData(std::string name,unsigned int id);
+
+	/**
+	 * Destructor.
+	 */
+	~RouteData();
+
+	/**
+	 * Assignment operator.
+	 * @param src Reference object being assigned.
+	 * @return Reference to self.
+	 */
+	RouteData& operator=(const RouteData & src);
+
+	/**
+	 * Helper output function.
+	 * @param output Stream
+	 * @param src Outputed object.
+	 * @return Reference to given stream.
+	 */
+	friend std::ostream& operator<<(std::ostream& output, const RouteData& src);
+
+	/**
+	 * Comparation operator.
+	 * @param src Reference to compared object.
+	 * @return True if name and is are equal.
+	 */
+	bool operator==(const RouteData & src);
+
+	/**
+	 * @return Returns name value.
+	 */
+	std::string getName() const;
+
+	/**
+	 * @return return id value.
+	 */
+	unsigned int getId() const;
+private:
+	std::string name;
+	unsigned int id;
 };
 
 
