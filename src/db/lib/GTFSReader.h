@@ -76,6 +76,9 @@ private:
 	void loadStops(struct zip * z);
 	void loadRoutes(struct zip * z);
 	void loadTrips(struct zip * z);
+	void loadServices(struct zip * z);
+	void loadStopTimes(struct zip * z);
+
 
 	static std::vector<std::string> splitStrings(const std::string &s, char delim);
 
@@ -87,6 +90,8 @@ private:
 
 	std::map<std::string, unsigned int> stopIDsTranslate;//in gtfs ids are std::string, in database - unsigned int;
 	std::map<std::string, unsigned int> tripIDsTranslate;//in gtfs ids are std::string, in database - unsigned int;
+	std::map<std::string, unsigned int> serviceIDsTranslate;
+
 };
 
 #endif /* SRC_DB_GTFSREADER_H_ */

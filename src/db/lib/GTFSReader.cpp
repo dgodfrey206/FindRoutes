@@ -27,6 +27,7 @@ void GTFSReader::readGTFS(std::string filename) {
 	this->loadStops(z);
 	this->loadRoutes(z);
 	this->loadTrips(z);
+	this->loadServices(z);
 
 	return;
 }
@@ -54,9 +55,10 @@ void GTFSReader::loadStops(struct zip* z) {
 	std::string contents(c, st.size);
 	std::vector<std::string> stops = GTFSReader::splitStrings(contents, '\n');
 
+	unsigned int id = 0;
 	for(std::string s: stops)
 	{
-		unsigned int id =0;
+
 		std::vector<std::string> stopData = GTFSReader::splitStrings(s, ',');
 
 		//create RouteData object and populate it
@@ -67,6 +69,7 @@ void GTFSReader::loadStops(struct zip* z) {
 		}
 		catch(std::invalid_argument & e)
 		{
+			std::cerr << e.what() << std::endl;
 			continue;//first line, skip
 		}
 	}
@@ -151,6 +154,62 @@ void GTFSReader::loadTrips(struct zip* z) {
 			continue;//first line, skip
 		}
 	}
+}
+
+void GTFSReader::loadServices(struct zip* z) {
+	std::cout << "loadServices called." << std::endl;
+	if(z == NULL)
+	{
+		std::cout << "Got empty pointer as argument, return." << std::endl;
+		return;
+	}
+
+	zip_file * f;
+	struct zip_stat st;
+
+	zip_stat_init(&st);
+	zip_stat(z, "calendar.txt", 0, &st);
+
+	char * c = new char[st.size];
+
+	f = zip_fopen(z, "calendar.txt", 0);
+	zip_fread(f, c, st.size);
+	zip_fclose(f);
+
+	std::string contents(c, st.size);
+	std::vector<std::string> services = GTFSReader::splitStrings(contents, '\n');
+
+	unsigned int id = 0;
+	for(std::string s: services)
+	{
+		std::cout << s << std::endl;
+		std::vector<std::string> params = GTFSReader::splitStrings(s, ',');
+		//create ServiceData object and populate it
+		try
+		{
+			unsigned operationalDays = 0;
+			for(int i = 0; i < 7; i++)
+			{
+				operationalDays += stoi(params[i + 1]) << i;
+			}
+
+			if(operationalDays == 0)
+			{
+				std::cout << "Service with no working days, passing.";
+				continue;
+			}
+
+			this->services.push_back(ServiceData(id, params[0], operationalDays));
+			this->serviceIDsTranslate.insert(std::pair<std::string, unsigned>(params[0], id++));
+		}
+		catch(std::invalid_argument & e)
+		{
+			continue;//first line, skip
+		}
+	}
+}
+
+void GTFSReader::loadStopTimes(struct zip* z) {
 }
 
 std::vector<std::string> GTFSReader::splitStrings(const std::string &s, char delim) {
