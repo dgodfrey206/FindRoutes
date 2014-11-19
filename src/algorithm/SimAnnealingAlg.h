@@ -27,7 +27,7 @@ public:
 	 * @param n Pointer to Network in which Route is being searched for.
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
-	virtual Route* solve(const Network * n, const Node * start, const Node * end);
+	virtual Route* solve(const Network * n, Node * start, Node * end);
 	void setParams(double Tstart, double Tend, double k, double alpha);
 
 private:
@@ -40,8 +40,8 @@ private:
 
 
 	double getRandom();
-	double getAzimuth(Node * s, Node * e, Node * marker); //return cosine of angle
-	Route * getFistSolution(const Network * n, const Node * start, const Node * end);
+	double getAzimuth(const Node * s, const Node * e, const Node * marker); //return cosine of angle
+	Route * getFistSolution(const Network * n, Node * start, Node * end);
 };
 
 #endif /* SRC_SIMANNEALINGALG_H_ */

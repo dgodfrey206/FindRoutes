@@ -23,7 +23,7 @@ SimAnnealingAlg::~SimAnnealingAlg()
 
 }
 
-Route* SimAnnealingAlg::solve(const Network * n, const Node * start, const Node * end) {
+Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end) {
 
 	//k - number of iteration
 	//T0 - starting temperature
@@ -51,7 +51,7 @@ void SimAnnealingAlg::setParams(double Tstart, double Tend, double k, double alp
 	this->alpha = alpha;
 }
 
-double SimAnnealingAlg::getAzimuth(Node* from, Node* to, Node * marker) {
+double SimAnnealingAlg::getAzimuth(const Node* from, const Node* to, const Node * marker) {
 	//compute cosine of angle between two vectors, [from, marker] and [from, to]
 	double lenASq, lenBSq, lenCSq;
 	lenBSq = pow((from->getLatitude() - to->getLatitude()), 2) - pow((from->getLongtitude() - to->getLongtitude()), 2);
@@ -61,12 +61,40 @@ double SimAnnealingAlg::getAzimuth(Node* from, Node* to, Node * marker) {
 	return (lenASq + lenBSq + lenCSq)/(2 * pow(lenASq, 0.5) * pow(lenBSq, 0.5));
 }
 
-Route* SimAnnealingAlg::getFistSolution(const Network* n, const Node* start, const Node* end) {
+Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {
 	Node * currentNode = start;
 	Route * route = new Route;
 
 	while(*currentNode != *end)
 	{
+		double bestCosine = -1;
+		double cosine;
+		Edge * bestEdge = NULL;
 
+		for(Edge * e: n->getEdgesForNode(currentNode))
+		{
+			if(*(e->getEndNode()) == *end)
+			{
+				route->addEdge(e);
+				return route;
+			}
+
+			cosine = this->getAzimuth(currentNode, e->getEndNode(), end);
+			if(abs(cosine - 1) < abs(bestCosine - 1)) //if current cosine is closed to 1 than best
+			{
+				bestCosine = cosine;
+				bestEdge = e;
+			}
+		}
+
+		if(bestEdge != NULL)
+		{
+
+			route->addEdge(bestEdge);
+		}
+
+		currentNode = n->getNode(route->getEndNode()->getID());
 	}
+
+	return route;
 }
