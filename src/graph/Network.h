@@ -20,6 +20,8 @@ http://open.spotify.com/track/0QervLYxa3WBLkSTLkcGNw * Network.h
 #include "../algorithm/Solver.h"
 #include "../db/DataBase.h"
 
+class Solver; //forward declaration
+
 /**
  * main class, contains information
  * about nodes and edges between them.
@@ -82,30 +84,12 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& s, const Network& n);
 
-private:
-	std::set<Node *> nodes;
-	std::set<Edge *> edges;
-
 	/**
 	 * @param start Pointer to starting Node.
 	 * @param end Pointer to ending Node.
 	 * @return True if Edge from start to end exists in graph, false otherwise.
 	 */
 	bool isEdgeBetween(const Node * start, const Node * end) const; //returns true if edge between two nodes exists
-
-	/**
-	 * Adds given Node to graph.
-	 * @param n Pointer to Node.
-	 * @return true if Node was added to graph, false otherwise.
-	 */
-	bool addNode(Node * n); //adds Node if not exists
-
-	/**
-	 * Adds given Edge to graph.
-	 * @param e Pointer to Edge.
-	 * @return true if Edge was added to graph, false otherwise.
-	 */
-	bool addEdge(Edge * e); //adds Edge if not exists
 
 	/**
 	 *	@param id Id of desired Node.
@@ -131,9 +115,26 @@ private:
 	 * @return Returns pointer to Node being closest to given geographic position.
 	 */
 	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
+
+private:
+	std::set<Node *> nodes;
+	std::set<Edge *> edges;
+
+	/**
+	 * Adds given Node to graph.
+	 * @param n Pointer to Node.
+	 * @return true if Node was added to graph, false otherwise.
+	 */
+	bool addNode(Node * n); //adds Node if not exists
+
+	/**
+	 * Adds given Edge to graph.
+	 * @param e Pointer to Edge.
+	 * @return true if Edge was added to graph, false otherwise.
+	 */
+	bool addEdge(Edge * e); //adds Edge if not exists
+
 	void createIncidenceMatrix();
-
-
 
 	Solver * solver;
 
