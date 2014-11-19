@@ -82,13 +82,13 @@ public:
 	friend std::ostream& operator<<(std::ostream& s, const Edge& e);
 
 	void addConnection(Time departureTime, Time arrivalTime,unsigned int tripId);
-
+	std::vector<Connection> connections;
 
 private:
 	unsigned int id;
 	const Node * start;
 	const Node * end;
-	std::vector<Connection> connections;
+
 };
 
 #endif /* SRC_EDGE_H_ */

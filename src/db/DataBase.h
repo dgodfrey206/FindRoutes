@@ -30,7 +30,8 @@ class DataBase{
 		enum LoadMethod {
 			JSON = 0,
 			GTFS = 1,
-			MULTJSON = 2
+			MULTJSON = 2,
+			EMPTY = 3
 		};
 
 		/**
@@ -76,6 +77,7 @@ class DataBase{
 		 * @return true if all vectors got populated with data, false otherwise.
 		 */
 
+		//stopTimesTable[trip][stop_in_sec][number]
 		std::vector<std::vector<std::vector<Time>>>	stopTimesTable;
 		bool isValid();
 
