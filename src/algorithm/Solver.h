@@ -10,6 +10,7 @@
 
 #include "../graph/Network.h"
 #include "../graph/Route.h"
+#include "../graph/Node.h"
 
 class Network; //forward declaration
 
@@ -18,18 +19,29 @@ class Network; //forward declaration
  * Those shall inherit from Solver class.
  * Solver needs to implement solve method,
  * which gets Network map as
+ *
+ * USAGE:
+ * int main() {
+ * 		Solver * solver;
+ * 		solver = new SimAnnealingAlg;
+ * 		solver->setParams(...);
+ * 		Network net = new Network;
+ * 		...
+ * 		net.setSolver(solver);
+ * 		//in Network:
+ * 		// this->solver->solve();
+ * }
  */
 class Solver {
 public:
-	virtual ~Solver();
-
+	virtual ~Solver() {};
 	/**
 	 * Method used in Network class for finding best connection between points.
 	 * This method need to be implemented in any class inheriting from Solver class.
 	 * @param n Pointer to Network in which Route is being searched for.
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
-	virtual Route* solve(const Network * n) = 0;
+	virtual Route* solve(const Network * n, const Node * start, const Node * end) = 0;
 };
 
 
