@@ -50,7 +50,7 @@ public:
 	 * @param src Reference object being assigned.
 	 * @return Reference to self.
 	 */
-	TripData operator=(const TripData src);
+	TripData& operator=(const TripData& src);
 
 	/**
 	 * Helper output function.

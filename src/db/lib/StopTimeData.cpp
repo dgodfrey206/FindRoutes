@@ -2,7 +2,7 @@
  * StopTimeData.cpp
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 #include "StopTimeData.h"
@@ -38,7 +38,7 @@ StopTimeData::~StopTimeData(){
 
 }
 
-StopTimeData StopTimeData::operator=(const StopTimeData src){
+StopTimeData& StopTimeData::operator=(const StopTimeData& src){
 	if(this == &src){
 		return *this;
 	}else{

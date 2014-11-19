@@ -2,7 +2,7 @@
  * ServiceData.cpp
  *
  *  Created on: 10 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 #include "ServiceData.h"
 
@@ -25,7 +25,7 @@ ServiceData::~ServiceData(){
 
 }
 
-ServiceData ServiceData::operator=(const ServiceData src){
+ServiceData& ServiceData::operator=(const ServiceData& src){
 	this->id = src.id;
 	this->name = src.name;
 	return *this;

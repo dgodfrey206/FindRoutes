@@ -2,7 +2,7 @@
  * StopData.cpp
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 #include "StopData.h"
@@ -32,7 +32,7 @@ StopData::~StopData(){
 
 }
 
-StopData StopData::operator=(const StopData src){
+StopData& StopData::operator=(const StopData& src){
 	if(this == & src){
 		return *this;
 	}else{

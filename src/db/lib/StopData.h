@@ -47,7 +47,7 @@ public:
 	 * @param src Reference object being assigned.
 	 * @return Reference to self.
 	 */
-	StopData operator=(const StopData src);
+	StopData& operator=(const StopData& src);
 
 	/**
 	 * Helper output function.

@@ -45,7 +45,7 @@ public:
 	 * @param src Reference object being assigned.
 	 * @return Reference to self.
 	 */
-	ServiceData operator=(const ServiceData src);
+	ServiceData& operator=(const ServiceData& src);
 
 	/**
 	 * Comparation operator.

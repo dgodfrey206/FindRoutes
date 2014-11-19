@@ -2,7 +2,7 @@
  * TripData.cpp
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 
@@ -31,7 +31,7 @@ TripData::~TripData(){
 
 }
 
-TripData TripData::operator=(const TripData src){
+TripData& TripData::operator=(const TripData& src){
 	if(this == &src){
 		return *this;
 	}else{
