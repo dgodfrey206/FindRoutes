@@ -162,6 +162,8 @@ def crawler():
 
 
             stops = soup.find_all('li')
+            visitedStops = []
+
             for s in stops:
                 stopName = s.text
                 stopPVal = s.find_all('a')
@@ -174,7 +176,10 @@ def crawler():
                     if not found:
                         debug('Stop was not found by p value, aborting.')
 
-                    database['trips'][currentTripID]['stop_sec'].append(stopID)
+                    if stopID not in database['trips'][currentTripID]['stop_sec']:
+                        database['trips'][currentTripID]['stop_sec'].append(stopID)
+                    else:
+                        continue
 
                 elif len(stopPVal) == 0:
                     #last stop
@@ -197,7 +202,8 @@ def crawler():
 
                         return
 
-                    database['trips'][currentTripID]['stop_sec'].append(stopID)
+                    if stopID not in database['trips'][currentTripID]['stop_sec']:
+                        database['trips'][currentTripID]['stop_sec'].append(stopID)
                     break
 
 
@@ -211,6 +217,7 @@ def crawler():
 
                 timetable = stopTimesSoup.find('td', {'class': 'celldepart'})
                 trs = timetable.find_all('tr', {'align': None})#skip first, as it contains only headlines
+
                 for row in trs:
                     try:
                         hour = row.find('td', {'class', 'cellhour'}).text
@@ -246,8 +253,8 @@ def crawler():
                 break
 
 
-    debug('\n\n****Entire database****')
-    debug(database)
+    #debug('\n\n****Entire database****')
+    #debug(database)
 
     #binary write database to file
     with open('db.pickle', 'wb') as f:
