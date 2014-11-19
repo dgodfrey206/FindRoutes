@@ -182,7 +182,6 @@ void GTFSReader::loadServices(struct zip* z) {
 	unsigned int id = 0;
 	for(std::string s: services)
 	{
-		std::cout << s << std::endl;
 		std::vector<std::string> params = GTFSReader::splitStrings(s, ',');
 		//create ServiceData object and populate it
 		try
