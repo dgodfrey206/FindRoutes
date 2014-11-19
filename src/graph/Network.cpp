@@ -31,7 +31,7 @@ void Network::createIncidenceMatrix() {
 		this->incidenceMatrix[e->getStartNode()->getID()][e->getEndNode()->getID()] = true;
 	}
 }
-
+/*
 Network::Network(std::string filename) {
 	this->edges = std::set<Edge *>();
 	this->nodes = std::set<Node *>();
@@ -42,7 +42,7 @@ Network::Network(std::string filename) {
 
 	this->incidenceMatrix = NULL;
 	this->createIncidenceMatrix();
-}
+}*/
 
 Network::Network(DataBase& dataB){
 	this->edges = std::set<Edge *>();

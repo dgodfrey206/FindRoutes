@@ -40,7 +40,7 @@ public:
 	 * Network object constructor in which {@link Network::loadFromFile()} method is being called.
 	 * @param f Name of file from which database is loaded.
 	 */
-	Network(std::string f);
+	//Network(std::string f);
 
 	/**
 	 * Destructs all objects in Network and itself.
@@ -132,6 +132,8 @@ private:
 	 */
 	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
 	void createIncidenceMatrix();
+
+
 
 	Solver * solver;
 
