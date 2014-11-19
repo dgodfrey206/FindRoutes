@@ -68,7 +68,7 @@ public:
 	Route * findRouteBetween(const Node * start, const Node * end, const unsigned int maxSwitches);
 
 	/**
-	 * This function is necessary for GUI. //todo
+	 * This function is necessary for GUI.
 	 * @return Returns some kind of stl container in which
 	 * all nodes are stored in alphabetical order.
 	 */

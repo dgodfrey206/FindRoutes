@@ -58,7 +58,6 @@ void GTFSReader::loadStops(struct zip* z) {
 	{
 		unsigned int id =0;
 		std::vector<std::string> stopData = GTFSReader::splitStrings(s, ',');
-//		for(std::string d: stopData) std::cout << id++ << ". " << d << std::endl; //todo debug
 
 		//create RouteData object and populate it
 		try
@@ -100,8 +99,6 @@ void GTFSReader::loadRoutes(struct zip* z) {
 	{
 		std::vector<std::string> routeData = GTFSReader::splitStrings(r, ',');
 
-//		int id = 0;
-//		for(std::string d: routeData) std::cout << id++ << ". " << d << std::endl; //todo debug
 		//create RouteData object and populate it
 		try
 		{
@@ -142,8 +139,7 @@ void GTFSReader::loadTrips(struct zip* z) {
 	for(std::string t: trips)
 	{
 		std::vector<std::string> tripData = GTFSReader::splitStrings(t, ',');
-		int i = 0;
-		for(std::string d: tripData) std::cout << i++ << ". " << d << std::endl; //todo debug
+
 		//create TripData object and populate it
 		try
 		{
