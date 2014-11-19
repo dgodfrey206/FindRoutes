@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <string>
-
+#include <bitset> //for binary output
 /**
  * Class containing data about services when database is being created.
  */
@@ -33,7 +33,7 @@ public:
 	 * @param name Name of route.
 	 * @param id id of route.
 	 */
-	ServiceData(unsigned int id, std::string name);
+	ServiceData(unsigned int id, std::string name, unsigned operationalDays);
 
 	/**
 	 * Destructor.
@@ -63,18 +63,34 @@ public:
 	friend std::ostream& operator<<(std::ostream& output, const ServiceData& src);
 
 	/**
-	 * @return Returns name value.
+	 * @return Returns id value.
 	 */
 	unsigned int getId();
 
 	/**
-	 * @return return id value.
+	 * @return return name value.
 	 */
 	std::string getName();
+
+	/**
+	 * @return return days value.
+	 */
+	unsigned getDays();
 
 private:
 	unsigned int id;
 	std::string name;
+	unsigned operationalDays; //bitwise sum of DAYS flags casted to int
+
+	enum DAYS {
+		MONDAY = 0x01,
+		TUESDAY = 0x02,
+		WEDNESDAY = 0x04,
+		THURSDAY = 0x08,
+		FRIDAY = 0x10,
+		SATURDAY = 0x20,
+		SUNDAY = 0x40
+	};
 };
 
 
