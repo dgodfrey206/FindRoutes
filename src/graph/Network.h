@@ -95,13 +95,13 @@ public:
 	 *	@param id Id of desired Node.
 	 *	@return Pointer to desired Node if exists in graph, NULL otherwise.
 	 */
-	Node * getNode(unsigned int id); //get Node by id
+	Node * getNode(unsigned int id) const; //get Node by id
 
 	/**
 	 *	@param id Id of desired Edge.
 	 *	@return Pointer to desired Edge if exists in graph, NULL otherwise.
 	 */
-	Edge * getEdge(unsigned int id); //get Edge by id
+	Edge * getEdge(unsigned int id) const; //get Edge by id
 
 	/**
 	 * @param n Pointer to given Node.
