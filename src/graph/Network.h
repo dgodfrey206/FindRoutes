@@ -1,8 +1,8 @@
 /*
 http://open.spotify.com/track/0QervLYxa3WBLkSTLkcGNw * Network.h
  *
- *  Created on: 20 paź 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 20 October 2014
+ *      Author: David Godfrey
  */
 
 #ifndef SRC_NETWORK_H_
@@ -135,6 +135,7 @@ private:
 	bool addEdge(Edge * e); //adds Edge if not exists
 
 	void createIncidenceMatrix();
+	unsigned int calculateEdgeId(unsigned int startId, unsigned int endId);
 
 	Solver * solver;
 

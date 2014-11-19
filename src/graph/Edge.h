@@ -10,7 +10,9 @@
 
 #include "Node.h"
 #include "TransportType.h"
-
+#include "../db/lib/Time.h"
+#include "Connection.h"
+#include <vector>
 /**
  * Object used for storage of one connections.
  * Includes info about start and end positions,
@@ -26,18 +28,12 @@ public:
 	 * @param weight Given weight.
 	 * @param type Enumerated value describing type of route.
 	 */
-	Edge(unsigned int id, Node* start, Node* end,
-			const double weight, const TransportType type);
+	Edge(unsigned int id, Node* start, Node* end);
 
 	/**
 	 * @return Returns id of itself.
 	 */
 	unsigned int getID() const;
-
-	/**
-	 * @return Returns weight of itself.
-	 */
-	double getWeight() const;
 
 	/**
 	 * @return Returns pointer to starting Node.
@@ -48,23 +44,6 @@ public:
 	 * @return Returns pointer to ending Node.
 	 */
 	const Node * getEndNode() const;
-
-	/**
-	 * @return Returns TransportType enum value describing type.
-	 */
-	TransportType getType() const;
-
-	/**
-	 * Sets weight to given.
-	 * @param w Given weight value. Should be greater than 0.
-	 */
-	void setWeight(double w);
-
-	/**
-	 * Sets type to given.
-	 * @param t Given type value. Should be not equal to UNKNOWN.
-	 */
-	void setType(TransportType t);
 
 	/**
 	 * Compares itself id with given edge id.
@@ -102,13 +81,14 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& s, const Edge& e);
 
+	void addConnection(Time departureTime, Time arrivalTime,unsigned int tripId);
+
+
 private:
 	unsigned int id;
 	const Node * start;
 	const Node * end;
-	double weight;
-	TransportType type;
-
+	std::vector<Connection> connections;
 };
 
 #endif /* SRC_EDGE_H_ */

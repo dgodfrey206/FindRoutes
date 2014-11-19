@@ -36,7 +36,7 @@ double Route::getWeight() const {
 
 	double weight = 0;
 	for(std::list<const Edge *>::const_iterator it = this->route.begin(); it != this->route.end(); it++)
-		weight += (*it)->getWeight();
+		//weight += (*it)->getWeight();
 	return weight;
 }
 
@@ -197,13 +197,6 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 	{
 		stream << "[" << std::setw(5) << std::right << (*pos)->getStartNode()->getID() << "]->";
 		stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() << "]-";
-
-		if((*pos)->getType() == BUS)
-			stream << "[" << std::setw(4) << std::right << "BUS";
-		else if((*pos)->getType() == TRAM)
-			stream << "[" << std::setw(4) << std::right << "TRAM";
-		else
-			stream << "[" << std::setw(4) << std::right << "UNKN";
 
 		stream << "]-[" <<std::setw(5) << std::right << (*pos)->getID() << "]";
 		stream << " " << std::setw(23) << std::right <<(*pos)->getStartNode()->getName();

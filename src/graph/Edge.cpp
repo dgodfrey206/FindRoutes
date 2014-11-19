@@ -7,22 +7,16 @@
 
 #include "Edge.h"
 
-Edge::Edge(unsigned int id, Node* start, Node* end, double weight, TransportType type)
+Edge::Edge(unsigned int id, Node* start, Node* end)
 	:
 	id(id),
 	start(start),
-	end(end),
-	weight(weight),
-	type(type)
+	end(end)
 {
 }
 
 unsigned int Edge::getID() const {
 	return this->id;
-}
-
-double Edge::getWeight() const {
-	return this->weight;
 }
 
 const Node* Edge::getStartNode() const {
@@ -31,18 +25,6 @@ const Node* Edge::getStartNode() const {
 
 const Node* Edge::getEndNode() const {
 	return this->end;
-}
-
-TransportType Edge::getType() const {
-	return this->type;
-}
-
-void Edge::setWeight(double weight) {
-	this->weight = weight;
-}
-
-void Edge::setType(TransportType type) {
-	this->type = type;
 }
 
 bool Edge::operator ==(const Edge& e) const {
@@ -59,11 +41,8 @@ bool Edge::operator !=(const Edge& e) const {
 
 Edge& Edge::operator =(const Edge& e) {
 	this->id = e.getID();
-	this->type = e.getType();
-	this->weight = e.getWeight();
 	this->start = e.getStartNode();
 	this->end = e.getEndNode();
-
 	return *this;
 }
 
@@ -76,18 +55,13 @@ std::ostream& operator<<(std::ostream& stream, const Edge& e)
 	stream << "Edge:" << std::endl;
 	stream << "[" << std::setw(4) << std::right << e.getStartNode()->getID() << "]->";
 	stream << "[" << std::setw(4) << std::right << e.getEndNode()->getID() << "]-";
-
-	if(e.getType() == BUS)
-		stream << "[" << std::setw(4) << std::right << "BUS";
-	else if(e.getType() == TRAM)
-		stream << "[" << std::setw(4) << std::right << "TRAM";
-	else
-		stream << "[" << std::setw(4) << std::right << "UNKN";
-
 	stream << "]-[" << std::setw(5) << std::right << e.getID();
-	stream << "]-[" << std::setw(7) << std::right << e.getWeight() << "]";
 	stream << " " << std::setw(19) << std::right <<e.getStartNode()->getName();
 	stream << " " << std::setw(19) << std::right <<e.getEndNode()->getName();
 
 	return stream;
+}
+
+void Edge::addConnection(Time departureTime, Time arrivalTime,unsigned int tripId){
+	this->connections.push_back(Connection(departureTime,arrivalTime,tripId));
 }
