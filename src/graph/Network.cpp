@@ -26,14 +26,9 @@ void Network::createIncidenceMatrix() {
 	for (unsigned int i = 0; i < numNodes; i++) {
 		this->incidenceMatrix[i] = new bool[numNodes];
 	}
-	for (Edge* e : this->edges) {
-		try {
-			this->incidenceMatrix[e->getStartNode()->getID()][e->getEndNode()->getID()] =
-					true;
-		} catch (...) //todo
-		{
-			std::cerr << "Index out of range." << std::endl;
-		}
+	for (Edge* e : this->edges)
+	{
+		this->incidenceMatrix[e->getStartNode()->getID()][e->getEndNode()->getID()] = true;
 	}
 }
 
@@ -111,14 +106,7 @@ bool Network::isEdgeBetween(const Node * start, const Node * end) const {
 	}
 
 	return false;*/
-	try
-	{
-		return this->incidenceMatrix[start->getID()][end->getID()];
-	}
-	catch(...)
-	{
-		return false;
-	}
+	return this->incidenceMatrix[start->getID()][end->getID()];
 }
 
 bool Network::addNode(Node * n) {
