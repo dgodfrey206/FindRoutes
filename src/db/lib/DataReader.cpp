@@ -180,7 +180,7 @@ std::vector<ServiceData> DataReader::readServices(std::string filename, bool one
 		}else{
 			Json::Value & services = (oneFile ? root["services"] : root);
 			for(unsigned int i=0; i<services.size();i++){
-				ServiceData temp(services[i]["id"].asUInt(), services[i]["name"].asString());
+				ServiceData temp(services[i]["id"].asUInt(), services[i]["name"].asString(), 0);
 				result.push_back(temp);
 			}
 		}
