@@ -50,7 +50,7 @@ public:
 	 * @param src Reference object being assigned.
 	 * @return Reference to self.
 	 */
-	Time operator=(Time src);
+	Time& operator=(const Time& src);
 
 	/**
 	 * Comparation operator.
@@ -107,8 +107,7 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& output, const Time src);
 private:
-	unsigned int hour;
-	unsigned int minute;
+	unsigned int minutes;
 };
 
 

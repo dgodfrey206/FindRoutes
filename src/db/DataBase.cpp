@@ -118,13 +118,14 @@ void DataBase::printTimeTable(){
 		//std::cout<<"linia: "<<this->routes[route_id].getName()<<std::endl;
 
 		if(this->trips[trip_id].getStopSec().size() <= 4){
-			std::cerr<<"mozliwy blad w trip: "<<trip_id<<std::endl;
+			//std::cerr<<"mozliwy blad w trip: "<<trip_id<<std::endl;
 		}
 		std::vector<std::vector<Time>> _stops_in_sec;
 		for(unsigned int stop=0; stop<this->trips[trip_id].getStopSec().size();stop++){
 			unsigned int stop_id = (this->trips[trip_id].getStopSec()[stop]);
 			//std::cout<< this->stops[stop_id].getName()<<std::endl;
 			std::vector<Time> _times;
+			_times.clear();
 			for(unsigned int stop_time=0; stop_time< this->stopTimes.size();stop_time++){
 				if( (this->stopTimes[stop_time].getServiceId() == 0) 	&&
 					(this->stopTimes[stop_time].getStopId() == stop_id) &&

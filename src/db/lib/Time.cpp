@@ -2,7 +2,7 @@
  * Time.cpp
  *
  *  Created on: 9 lis 2014
- *      Author: Rafa³ Prusak
+ *      Author: Rafaï¿½ Prusak
  */
 
 
@@ -10,37 +10,32 @@
 #include <iomanip>
 
 Time::Time(){
-	this->hour = 0;
-	this->minute = 0;
+	this->minutes = 0;
 }
 
 Time::Time(unsigned int hour, unsigned int minute){
-	this->hour = hour % 24;
-	this->minute = minute % 60;
+	this->minutes = (60*hour + minute) % (60*24);
 }
 
 Time::Time(unsigned int minutes){
-	this->hour = minutes / 60;
-	this->minute = minutes % 60;
+	this->minutes = minutes % (60*24);
 }
 
 Time::Time(const Time& src){
-	this->hour = src.hour;
-	this->minute = src.minute;
+	this->minutes = src.minutes;
 }
 
 Time::~Time(){
 
 }
 
-Time Time::operator=(const Time src){
-	this->hour = src.hour;
-	this->minute = src.minute;
+Time& Time::operator=(const Time& src){
+	this->minutes = src.minutes;
 	return *this;
 }
 
 bool Time::operator==(const Time src){
-	if( (this->hour == src.hour) && (this->minute == src.minute) ){
+	if( (this->minutes == src.minutes) ){
 		return true;
 	}else{
 		return false;
@@ -53,49 +48,49 @@ bool Time::operator!=(const Time src){
 
 
 bool Time::operator>(const Time src){
-	if(this->hour > src.hour){
+	if(this->minutes > src.minutes ){
 		return true;
-	}else if(this->hour == src.hour) {
-		if(this->minute > src.minute){
-			return true;
-		}else{
-			return false;
-		}
 	}else{
 		return false;
 	}
 }
 
 bool Time::operator<(const Time src){
-	return !( (this->operator >(src)) || (this->operator ==(src)) );
+	if(this->minutes < src.minutes ){
+			return true;
+	}else{
+		return false;
+	}
 }
 
 Time Time::operator+(const Time src){
-	return Time((this->hour)+(src.hour), (this->minute)+(src.minute));
+	if(this->minutes + src.minutes < 60*24)
+		return Time(this->minutes + src.minutes);
+	else
+		return Time(0);
 }
 
 Time Time::operator-(const Time src){
-	if(*this > src){
-		return Time((this->hour)-(src.hour), (this->minute)-(src.minute));
-	}else{
-		return Time((src.hour)-(this->hour), (src.minute)- (this->minute));
-	}
+	if(this->minutes - src.minutes < 0)
+		return Time(0);
+	else
+		return Time(this->minutes - src.minutes < 0);
 }
 
 Time::operator int(){
-	return (this->hour) * 60 + this->minute;
+	return (this->minutes);
 }
 
 std::ostream& operator<<(std::ostream& output, const Time src){
-	if(src.hour < 10){
-		output<<0<<src.hour<<":";
+	if((src.minutes / 60) < 10){
+		output<<0<<(src.minutes / 60)<<":";
 	}else{
-		output<<std::setw(2)<<src.hour<<":";
+		output<<std::setw(2)<<(src.minutes / 60)<<":";
 	}
-	if(src.minute <10){
-		output<<"0"<<src.minute;
+	if( (src.minutes % 60) <10){
+		output<<"0"<<(src.minutes % 60);
 	}else{
-		output<<std::setw(2)<<src.minute;
+		output<<std::setw(2)<<(src.minutes % 60);
 	}
 	return output;
 }

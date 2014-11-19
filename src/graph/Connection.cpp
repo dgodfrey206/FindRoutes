@@ -8,8 +8,8 @@
 #include "Connection.h"
 
 Connection::Connection(){
-	this->departureTime = Time(0, 0);
-	this->arrivalTime =  Time(0, 0);
+	this->departureTime = Time(0);
+	this->arrivalTime =  Time(0);
 	this->tripId = 0;
 }
 
