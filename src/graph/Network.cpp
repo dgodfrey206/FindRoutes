@@ -62,7 +62,6 @@ Network::Network(DataBase& dataB){
 }
 
 Network::~Network() {
-	//todo
 
 	for(Node* e: this->nodes){
 		delete e;
@@ -80,9 +79,6 @@ Network::~Network() {
 	}
 
 	delete this->solver;
-}
-
-void Network::loadFromFile(std::string filename) {
 }
 
 void Network::setSover(Solver * s) {

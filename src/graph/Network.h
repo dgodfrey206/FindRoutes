@@ -24,7 +24,7 @@ http://open.spotify.com/track/0QervLYxa3WBLkSTLkcGNw * Network.h
  * main class, contains information
  * about nodes and edges between them.
  * Should be created from file containing
- * data in GTFS or other format. //todo
+ * data in GTFS or other format.
  * loadFromFile method should load "db/db.ext" file
  * and save it to inner variables.
  */
@@ -51,12 +51,6 @@ public:
 	 * Creates Network from database
 	 */
 	Network(DataBase& dataB);
-
-	/**
-	 * Load database entries from given file.
-	 * @param f Filename from which database is being loaded.
-	 */
-	void loadFromFile(std::string f);
 
 	/**
 	 * Set solved used in {@link Network::findRouteBetween()} method.
