@@ -137,8 +137,15 @@ private:
 	 * @return Returns pointer to Node being closest to given geographic position.
 	 */
 	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
+	void createIncidenceMatrix();
 
 	Solver * solver;
+
+	/**
+	 * two dimensional bool array containing data about connections
+	 * for matrix[i][j], true means there is connection between node.id == i to node.id ==j.
+	 */
+	bool ** incidenceMatrix;
 };
 
 #endif /* SRC_NETWORK_H_ */

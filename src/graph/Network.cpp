@@ -12,6 +12,29 @@ Network::Network() {
 	this->nodes = std::set<Node *>();
 
 	this->solver = NULL;
+
+	this->incidenceMatrix = NULL;
+}
+
+void Network::createIncidenceMatrix() {
+	unsigned int numNodes = this->nodes.size();
+
+	if(numNodes == 0)
+		return;
+
+	this->incidenceMatrix = new bool*[numNodes];
+	for (unsigned int i = 0; i < numNodes; i++) {
+		this->incidenceMatrix[i] = new bool[numNodes];
+	}
+	for (Edge* e : this->edges) {
+		try {
+			this->incidenceMatrix[e->getStartNode()->getID()][e->getEndNode()->getID()] =
+					true;
+		} catch (...) //todo
+		{
+			std::cerr << "Index out of range." << std::endl;
+		}
+	}
 }
 
 Network::Network(std::string filename) {
@@ -21,6 +44,26 @@ Network::Network(std::string filename) {
 	this->solver = NULL;
 
 	this->loadFromFile(filename);
+
+	this->incidenceMatrix = NULL;
+	this->createIncidenceMatrix();
+}
+
+Network::Network(DataBase& dataB){
+	this->edges = std::set<Edge *>();
+	this->nodes = std::set<Node *>();
+	this->solver = NULL;
+
+	Node* temp = NULL;
+
+	for(unsigned int i=0; i<dataB.stops.size(); i++){
+		temp = new Node(dataB.stops[i].getId(),dataB.stops[i].getName(),dataB.stops[i].getLat(), dataB.stops[i].getLng());
+
+		if(temp) this->addNode(temp);
+	}
+
+	this->incidenceMatrix = NULL;
+	this->createIncidenceMatrix();
 }
 
 Network::~Network() {
@@ -28,6 +71,17 @@ Network::~Network() {
 
 	for(Node* e: this->nodes){
 		delete e;
+	}
+
+	if(this->incidenceMatrix != NULL)
+	{
+		unsigned int nodes = this->nodes.size();
+		for(unsigned int i = 0; i < nodes; i++)
+		{
+			if(this->incidenceMatrix[i] != NULL)
+				delete [] this->incidenceMatrix[i];
+		}
+		delete [] this->incidenceMatrix;
 	}
 
 	delete this->solver;
@@ -143,20 +197,3 @@ Node * Network::getNodeCloseToPos(double lat, double lon) const {
 
 	return closestNode;
 }
-
-
-Network::Network(DataBase& dataB){
-	this->edges = std::set<Edge *>();
-	this->nodes = std::set<Node *>();
-	this->solver = NULL;
-
-	Node* temp = NULL;
-
-	for(unsigned int i=0; i<dataB.stops.size(); i++){
-		temp = new Node(dataB.stops[i].getId(),dataB.stops[i].getName(),dataB.stops[i].getLat(), dataB.stops[i].getLng());
-
-		if(temp) this->addNode(temp);
-	}
-}
-
-
