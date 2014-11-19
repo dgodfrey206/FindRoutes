@@ -104,13 +104,21 @@ Route* Network::findRouteBetween(const Node * start, const Node * end, const uns
 
 bool Network::isEdgeBetween(const Node * start, const Node * end) const {
 
-	for(Edge * e: this->edges)
+	/*for(Edge * e: this->edges)
 	{
 		if(*(e->getStartNode()) == *start && *(e->getEndNode()) == *end)
 			return true;
 	}
 
-	return false;
+	return false;*/
+	try
+	{
+		return this->incidenceMatrix[start->getID()][end->getID()];
+	}
+	catch(...)
+	{
+		return false;
+	}
 }
 
 bool Network::addNode(Node * n) {
