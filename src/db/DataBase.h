@@ -75,6 +75,8 @@ class DataBase{
 		 * Method checking validity of loaded database.
 		 * @return true if all vectors got populated with data, false otherwise.
 		 */
+
+		std::vector<std::vector<std::vector<Time>>>	stopTimesTable;
 		bool isValid();
 
 	private:

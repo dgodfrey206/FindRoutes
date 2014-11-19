@@ -8,7 +8,7 @@
 #ifndef SRC_DB_GTFSREADER_H_
 #define SRC_DB_GTFSREADER_H_
 
-#include "zip.h" //fix for not working on windows
+#include <zip.h>
 #include <zlib.h>
 
 #include <iostream> //debug
