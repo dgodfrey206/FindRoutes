@@ -10,6 +10,9 @@
 
 #include "Solver.h"
 
+#include <random>
+#include <cmath>
+
 /**
  * Simulated Annealing Algorithm used for finding routes.
  * See doc folder for more information.
@@ -24,7 +27,21 @@ public:
 	 * @param n Pointer to Network in which Route is being searched for.
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
-	virtual Route* solve(const Network * n);
+	virtual Route* solve(const Network * n, const Node * start, const Node * end);
+	void setParams(double Tstart, double Tend, double k, double alpha);
+
+private:
+	std::default_random_engine generator;
+	std::uniform_real_distribution<> distribution;
+	double Tstart;
+	double Tend;
+	double k;
+	double alpha;
+
+
+	double getRandom();
+	double getAzimuth(Node * s, Node * e, Node * marker); //return cosine of angle
+	Route * getFistSolution(const Network * n, const Node * start, const Node * end);
 };
 
 #endif /* SRC_SIMANNEALINGALG_H_ */
