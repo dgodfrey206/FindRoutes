@@ -7,12 +7,24 @@
 
 #include "Edge.h"
 
+Edge::Edge():id(0),start(NULL),end(NULL){
+	connections = std::vector<Connection>();
+};
+
 Edge::Edge(unsigned int id, Node* start, Node* end)
 	:
 	id(id),
 	start(start),
 	end(end)
 {
+	connections = std::vector<Connection>();
+}
+
+Edge::Edge(const Edge& e){
+	this->id = e.getID();
+	this->start = e.getStartNode();
+	this->end = e.getEndNode();
+	this->connections = e.connections;
 }
 
 unsigned int Edge::getID() const {
@@ -43,6 +55,7 @@ Edge& Edge::operator =(const Edge& e) {
 	this->id = e.getID();
 	this->start = e.getStartNode();
 	this->end = e.getEndNode();
+	this->connections = e.connections;
 	return *this;
 }
 
@@ -55,13 +68,13 @@ std::ostream& operator<<(std::ostream& stream, const Edge& e)
 	stream << "Edge:" << std::endl;
 	stream << "[" << std::setw(4) << std::right << e.getStartNode()->getID() << "]->";
 	stream << "[" << std::setw(4) << std::right << e.getEndNode()->getID() << "]-";
-	stream << "]-[" << std::setw(5) << std::right << e.getID();
-	stream << " " << std::setw(19) << std::right <<e.getStartNode()->getName();
-	stream << " " << std::setw(19) << std::right <<e.getEndNode()->getName();
-
+	stream << "]-[" << std::setw(10) << std::right << e.getID()<<"]";
+	stream << " " << std::setw(19) << std::left <<e.getStartNode()->getName();
+	stream << " " << std::setw(19) << std::left <<e.getEndNode()->getName();
 	return stream;
 }
 
 void Edge::addConnection(Time departureTime, Time arrivalTime,unsigned int tripId){
 	this->connections.push_back(Connection(departureTime,arrivalTime,tripId));
 }
+

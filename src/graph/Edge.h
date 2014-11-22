@@ -20,6 +20,7 @@
  */
 class Edge {
 public:
+	Edge();
 	/**
 	 * Constructor of Edge object.
 	 * @param id Identificator of object.
@@ -29,6 +30,8 @@ public:
 	 * @param type Enumerated value describing type of route.
 	 */
 	Edge(unsigned int id, Node* start, Node* end);
+
+	Edge(const Edge& e);
 
 	/**
 	 * @return Returns id of itself.
@@ -81,9 +84,10 @@ public:
 	 */
 	friend std::ostream& operator<<(std::ostream& s, const Edge& e);
 
-	void addConnection(Time departureTime, Time arrivalTime,unsigned int tripId);
-	std::vector<Connection> connections;
 
+	void addConnection(Time departureTime, Time arrivalTime,unsigned int tripId);
+
+	std::vector<Connection> connections;
 private:
 	unsigned int id;
 	const Node * start;
