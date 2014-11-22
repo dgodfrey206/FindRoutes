@@ -19,6 +19,7 @@ http://open.spotify.com/track/0QervLYxa3WBLkSTLkcGNw * Network.h
 #include "Route.h"
 #include "../algorithm/Solver.h"
 #include "../db/DataBase.h"
+#include "../db/lib/Time.h"
 
 class Solver; //forward declaration
 
@@ -30,6 +31,19 @@ class Solver; //forward declaration
  * loadFromFile method should load "db/db.ext" file
  * and save it to inner variables.
  */
+
+struct edgePointerCompare{
+	bool operator()(Edge* e1,Edge* e2) const{
+		return (e1->getID()<e2->getID());
+	}
+};
+
+struct nodePointerCompare{
+	bool operator()(Node* n1,Node* n2) const{
+		return (n1->getID()<n2->getID());
+	}
+};
+
 class Network {
 public:
 	/**
@@ -77,6 +91,13 @@ public:
 	std::list<Node *> getAllNodes();
 
 	/**
+	 * For debug.
+	 * @return Returns some kind of stl container in which
+	 * all edges are stored.
+	 */
+	std::list<Edge *> getAllEdges();
+
+	/**
 	 * Used of debug in console purposes.
 	 * @param s Stream used for output.
 	 * @param n Reference to Network being printed.
@@ -101,7 +122,7 @@ public:
 	 *	@param id Id of desired Edge.
 	 *	@return Pointer to desired Edge if exists in graph, NULL otherwise.
 	 */
-	Edge * getEdge(unsigned int id) const; //get Edge by id
+	Edge* getEdge(unsigned int id) const; //get Edge by id
 
 	/**
 	 * @param n Pointer to given Node.
@@ -117,8 +138,8 @@ public:
 	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
 
 private:
-	std::set<Node *> nodes;
-	std::set<Edge *> edges;
+	std::set<Node *, nodePointerCompare> nodes;
+	std::set<Edge *, edgePointerCompare> edges;
 
 	/**
 	 * Adds given Node to graph.
@@ -134,8 +155,17 @@ private:
 	 */
 	bool addEdge(Edge * e); //adds Edge if not exists
 
+	/*
+	 * Creates an incidence Matrix
+	 * */
 	void createIncidenceMatrix();
-	unsigned int calculateEdgeId(unsigned int startId, unsigned int endId);
+	/*
+	 * Calculates edge id form incident nodes ids
+	 * Can be used if findEdge function
+	 * @param startId id of node wher edge starts
+	 * @param endId id of node where edge ends
+	 * */
+unsigned int calculateEdgeId(unsigned int startId, unsigned int endId);
 
 	Solver * solver;
 
