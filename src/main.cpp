@@ -6,30 +6,35 @@
  */
 
 #include <iostream>
-#include <fstream>
 #include <string>
 
 #include "db/DataBase.h"
-
 #include "graph/Network.h"
+#include "algorithm/DfsAlg.h"
 
 int main()
 {
 	std::string path = "../db/json";
-
 	DataBase db(DataBase::LoadMethod::MULTJSON, "../db/json");
-
 	Network net(db);
 
+	unsigned int startId, endId;
 
-	for(Node * n: net.getAllNodes())
-	{
-		std::cout << "At " << n << ":" << std::endl;
-		std::cout << "ID\t" << n->getID() << std::endl;
-		std::cout << "Name\t" << n->getName() << std::endl;
-		std::cout << "Lat:\t" << n->getLatitude() << std::endl;
-		std::cout << "Lon:\t" << n->getLongtitude() << std::endl;
-	}
+	for(auto node: net.getAllNodes())
+		std::cout<<*node<<std::endl;
+
+	std::cerr<<"type start node id: ";
+	std::cin>> startId;
+	Node* startNode = net.getNode(startId);
+	std::cerr<<"chosen start node: "<<startNode ->getName()<<std::endl;
+	std::cerr<<"type end node id: ";
+	std::cin>> endId;
+	Node* endNode = net.getNode(endId);
+	std::cerr<<"chosen end node: "<<endNode ->getName()<<std::endl;
+
+	net.setSover(new DsfAlg());
+	net.findRouteBetween(startNode,endNode,100);
 }
+
 
 
