@@ -43,11 +43,6 @@ class DataBase{
 		DataBase(DataBase::LoadMethod method, std::string path);
 
 		/**
-		 * Dunno...
-		 */
-		void printTimeTable();		//combo!
-
-		/**
 		 * std::vector object containing loaded RouteData.
 		 */
 		std::vector<RouteData> routes;
@@ -76,18 +71,13 @@ class DataBase{
 		 * Method checking validity of loaded database.
 		 * @return true if all vectors got populated with data, false otherwise.
 		 */
-
-		//stopTimesTable[trip][stop_in_sec][number]
-		std::vector<std::vector<std::vector<Time>>>	stopTimesTable;
 		bool isValid();
 
 	private:
 		std::string path;
-
 		void loadGTFS();
 		void loadJSON();
 		void loadOneJSON();
-
 		void validate();
 };
 

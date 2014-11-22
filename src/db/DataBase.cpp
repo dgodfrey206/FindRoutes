@@ -110,37 +110,4 @@ bool DataBase::isValid()
 			&& !this->services.empty() && !this->stopTimes.empty());
 }
 
-void DataBase::printTimeTable(){
-	for(unsigned int trip_id=0; trip_id<this->trips.size(); trip_id++){
-
-		//std::cout<<"trasa: "<<this->trips[trip_id].getName()<<std::endl;
-		unsigned int route_id = (this->trips[trip_id].getRouteId());
-		//std::cout<<"linia: "<<this->routes[route_id].getName()<<std::endl;
-
-		if(this->trips[trip_id].getStopSec().size() <= 4){
-			//std::cerr<<"mozliwy blad w trip: "<<trip_id<<std::endl;
-		}
-		std::vector<std::vector<Time>> _stops_in_sec;
-		for(unsigned int stop=0; stop<this->trips[trip_id].getStopSec().size();stop++){
-			unsigned int stop_id = (this->trips[trip_id].getStopSec()[stop]);
-			//std::cout<< this->stops[stop_id].getName()<<std::endl;
-			std::vector<Time> _times;
-			_times.clear();
-			for(unsigned int stop_time=0; stop_time< this->stopTimes.size();stop_time++){
-				if( (this->stopTimes[stop_time].getServiceId() == 0) 	&&
-					(this->stopTimes[stop_time].getStopId() == stop_id) &&
-					(this->stopTimes[stop_time].getTripId() == trip_id)){
-						//std::cout<<this->stopTimes[stop_time].getStopTime()<<" ";
-						_times.push_back(this->stopTimes[stop_time].getStopTime());
-				}
-			}
-			//std::cout<<std::endl;
-			_stops_in_sec.push_back(_times);
-		}
-		//std::cout<<std::endl;
-		this->stopTimesTable.push_back(_stops_in_sec);
-	}
-
-}
-
 
