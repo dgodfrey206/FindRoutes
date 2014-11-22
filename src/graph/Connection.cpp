@@ -19,6 +19,24 @@ Connection::Connection(Time departureTime, Time arrivalTime,unsigned int tripId)
 	this->tripId = tripId;
 }
 
+Connection::Connection(const Connection& con){
+	this->departureTime = con.departureTime;
+	this->arrivalTime = con.arrivalTime;
+	this->tripId = con.tripId;
+}
+
+Connection& Connection::operator=(const Connection& con){
+	this->departureTime = con.departureTime;
+	this->arrivalTime = con.arrivalTime;
+	this->tripId = con.tripId;
+	return *this;
+}
+
+std::ostream& operator<<(std::ostream& output, Connection con){
+	output<<con.departureTime<<" - "<<con.arrivalTime<<" trip: "<<con.tripId;
+	return output;
+}
+
 Time Connection::getDepartureTime() const{
 	return this->departureTime;
 }
