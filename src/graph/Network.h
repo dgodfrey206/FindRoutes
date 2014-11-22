@@ -81,21 +81,21 @@ public:
 	 * @param maxSwitches Defines number of maximum transfers permited during trip.
 	 * @return Pointer to Route between given nodes, NULL if no route can be found.
 	 */
-	Route * findRouteBetween(const Node * start, const Node * end, const unsigned int maxSwitches);
+	Route * findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches);
 
 	/**
 	 * This function is necessary for GUI.
 	 * @return Returns some kind of stl container in which
 	 * all nodes are stored in alphabetical order.
 	 */
-	std::list<Node *> getAllNodes();
+	std::list<Node *> getAllNodes() const;
 
 	/**
 	 * For debug.
 	 * @return Returns some kind of stl container in which
 	 * all edges are stored.
 	 */
-	std::list<Edge *> getAllEdges();
+	std::list<Edge *> getAllEdges()const;
 
 	/**
 	 * Used of debug in console purposes.
@@ -137,6 +137,12 @@ public:
 	 */
 	Node * getNodeCloseToPos(double latitude, double longtitude) const; //returns node close do desired position
 
+	/**
+	 * two dimensional bool array containing data about connections
+	 * for matrix[i][j], true means there is connection between node.id == i to node.id ==j.
+	 */
+	bool ** incidenceMatrix;
+
 private:
 	std::set<Node *, nodePointerCompare> nodes;
 	std::set<Edge *, edgePointerCompare> edges;
@@ -168,12 +174,6 @@ private:
 unsigned int calculateEdgeId(unsigned int startId, unsigned int endId);
 
 	Solver * solver;
-
-	/**
-	 * two dimensional bool array containing data about connections
-	 * for matrix[i][j], true means there is connection between node.id == i to node.id ==j.
-	 */
-	bool ** incidenceMatrix;
 };
 
 #endif /* SRC_NETWORK_H_ */

@@ -68,9 +68,13 @@ std::ostream& operator<<(std::ostream& stream, const Edge& e)
 	stream << "Edge:" << std::endl;
 	stream << "[" << std::setw(4) << std::right << e.getStartNode()->getID() << "]->";
 	stream << "[" << std::setw(4) << std::right << e.getEndNode()->getID() << "]-";
-	stream << "]-[" << std::setw(10) << std::right << e.getID()<<"]";
+	stream << "[" << std::setw(8) << std::right << e.getID()<<"]";
 	stream << " " << std::setw(19) << std::left <<e.getStartNode()->getName();
 	stream << " " << std::setw(19) << std::left <<e.getEndNode()->getName();
+	stream << std::endl;
+	for(Connection c: e.connections){
+		std::cout<< c <<std::endl;
+	}
 	return stream;
 }
 

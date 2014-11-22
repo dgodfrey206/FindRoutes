@@ -16,55 +16,49 @@ Network::Network() {
 }
 
 void Network::createIncidenceMatrix() {
+	std::cerr<<"Network::createIncidenceMatrix(): creating incidence matrix"<<std::endl;
 	unsigned int numNodes = this->nodes.size();
 
-	if(numNodes == 0)
+	if(numNodes == 0){
+		std::cerr<<"Network::createIncidenceMatrix(): creating incidence matrix failed, no nodes found"<<std::endl;
 		return;
-
+	}
 	this->incidenceMatrix = new bool*[numNodes];
 	for (unsigned int i = 0; i < numNodes; i++) {
 		this->incidenceMatrix[i] = new bool[numNodes];
+	}
+	for(unsigned int i = 0; i < numNodes; i++){
+		for(unsigned int j = 0; j < numNodes; j++){
+			incidenceMatrix[i][j] = false;
+		}
 	}
 	for (Edge* e : this->edges)
 	{
 		this->incidenceMatrix[e->getStartNode()->getID()][e->getEndNode()->getID()] = true;
 	}
+	std::cerr<<"Network::createIncidenceMatrix(): incidence matrix done"<<std::endl;
 
 }
-/*
-Network::Network(std::string filename) {
-	this->edges = std::set<Edge *>();
-	this->nodes = std::set<Node *>();
-
-	this->solver = NULL;
-
-	this->loadFromFile(filename);
-
-	this->incidenceMatrix = NULL;
-	this->createIncidenceMatrix();
-}*/
 
 Network::Network(DataBase& dataB){
 	/*this->edges = std::set<Edge *, Network::edgePointerCompare>();
 	this->nodes = std::set<Node *, Network::nodePointerCompare>();*/
 	this->solver = NULL;
+	this->incidenceMatrix = NULL;
 
-	std::cerr<<"Network.h: creating netork from database"<<std::endl;
-	std::cerr<<"Network.h: creating nodes"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): creating netork from database"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): creating nodes"<<std::endl;
 	for(unsigned int i=0; i<dataB.stops.size(); i++){
 		Node* new_node = NULL;
 		new_node = new Node(dataB.stops[i].getId(),dataB.stops[i].getName(),dataB.stops[i].getLat(), dataB.stops[i].getLng());
 		if(new_node) this->addNode(new_node);
 	}
-	std::cerr<<"Network.h: nodes done, network contains "<<this->nodes.size()<<" nodes"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): nodes done, network contains "<<this->nodes.size()<<" nodes"<<std::endl;
 
-	//creating table:
-	//stopTimesTable[trip][stop_in_sec][number]
-	std::cerr<<"Network.h: connecting times with stop sequences"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): connecting times with stop sequences"<<std::endl;
 	std::vector<std::vector<std::vector<Time>>>	stopTimesTable;
 
 	for(unsigned int trip_id=0; trip_id<dataB.trips.size(); trip_id++){
-		unsigned int route_id = (dataB.trips[trip_id].getRouteId());
 		std::vector<std::vector<Time>> _stops_in_sec;
 		for(unsigned int stop=0; stop<dataB.trips[trip_id].getStopSec().size();stop++){
 			unsigned int stop_id = (dataB.trips[trip_id].getStopSec()[stop]);
@@ -80,9 +74,9 @@ Network::Network(DataBase& dataB){
 		}
 		stopTimesTable.push_back(_stops_in_sec);
 	}
-	std::cerr<<"Network.h: done"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): done"<<std::endl;
 
-	std::cerr<<"Network.h: creating edges"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): creating edges"<<std::endl;
 	for(auto trip: dataB.trips){
 		std::vector<int> stopSec = trip.getStopSec();
 		for(unsigned int stop=1; stop<stopSec.size(); stop++){
@@ -138,18 +132,26 @@ Network::Network(DataBase& dataB){
 					}
 				}
 			}
+
 		}
 	}
-	std::cerr<<"Network.h: edges done, network contains "<<this->edges.size()<<" edges"<<std::endl;
 
+	std::cerr<<"Network::Network(DataBase& dataB): edges done, network contains "<<this->edges.size()<<" edges"<<std::endl;
 
-	for(Edge* e: this->edges){
-		std::cout<<*e<<std::endl;
+	createIncidenceMatrix();
+
+	unsigned int numNodes = this->nodes.size();
+	for(unsigned int i = 0; i < numNodes; i++){
+		for(unsigned int j = 0; j < numNodes; j++){
+			if(incidenceMatrix[i][j])
+				std::cout<<1<<" ";
+			else
+				std::cout<<0<<" ";
+		}
+		std::cout<<std::endl;
 	}
-	//std::cout<<tmp->getID();
-	this->incidenceMatrix = NULL;
-	//this->createIncidenceMatrix();
-	std::cerr<<"Network.h: network created"<<std::endl;
+
+	std::cerr<<"Network::Network(DataBase& dataB): network created"<<std::endl;
 }
 
 Network::~Network() {
@@ -184,8 +186,8 @@ void Network::setSover(Solver * s) {
 	}
 }
 
-Route* Network::findRouteBetween(const Node * start, const Node * end, const unsigned int maxSwitches) {
-	return NULL;
+Route* Network::findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches) {
+	return this->solver->solve(this,start,end);
 }
 
 bool Network::isEdgeBetween(const Node * start, const Node * end) const {
@@ -217,19 +219,16 @@ bool Network::addEdge(Edge* e) {
 }
 
 Node * Network::getNode(unsigned int id) const {
-	if(this->nodes.size() <= id)
-		return NULL;
-
 	Node * tempNode = new Node(id, "temp", 0, 0);
 
 	auto it = this->nodes.find(tempNode);
 
-	if(it == this->nodes.end())
+	if(it == this->nodes.end()){
 		return NULL;
-
-	delete tempNode;
-
-	return *it;
+	}else{
+		delete tempNode;
+		return *it;
+	}
 }
 
 Edge* Network::getEdge(unsigned int id) const {
@@ -254,7 +253,7 @@ std::list<Edge *> Network::getEdgesForNode(const Node* n) const {
 	return found;
 }
 
-std::list<Node*> Network::getAllNodes() {
+std::list<Node*> Network::getAllNodes()const{
 	std::list<Node *> nodes;
 	for(Node * n: this->nodes)
 	{
@@ -263,7 +262,7 @@ std::list<Node*> Network::getAllNodes() {
 	return nodes;
 }
 
-std::list<Edge *> Network::getAllEdges(){
+std::list<Edge *> Network::getAllEdges()const{
 	std::list<Edge *> edges;
 	for(Edge * e: this->edges)
 	{
