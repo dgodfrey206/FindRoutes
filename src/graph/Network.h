@@ -72,7 +72,7 @@ public:
 	 * Set solved used in {@link Network::findRouteBetween()} method.
 	 * @param s Pointer to Solver being used.
 	 */
-	void setSover(Solver * s);// todosetSolver(Route & (*ptr)(const Network &))?;
+	void setSolver(Solver * s);// todosetSolver(Route & (*ptr)(const Network &))?;
 
 	/**
 	 * Searches for Route beetween two given points.

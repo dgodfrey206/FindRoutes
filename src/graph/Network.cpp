@@ -167,7 +167,7 @@ Network::~Network() {
 	delete this->solver;
 }
 
-void Network::setSover(Solver * s) {
+void Network::setSolver(Solver * s) {
 	if(s != NULL && s != this->solver)
 	{
 		delete this->solver;

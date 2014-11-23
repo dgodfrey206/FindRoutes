@@ -75,8 +75,9 @@ bool Route::addEdge(const Edge * e) {
 	/*
 	 * add edge to the end of route
 	 */
-	if((this->getLength() != 0) && (*this->route.back()->getEndNode()) != (*e->getStartNode()))
+	/*if((this->getLength() != 0) && (*this->route.back()->getEndNode()) != (*e->getStartNode()))
 		return false;
+		*/
 	this->route.push_back(e);
 	return true;
 }
@@ -199,11 +200,11 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 		stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() << "]-";
 
 		stream << "]-[" <<std::setw(5) << std::right << (*pos)->getID() << "]";
-		stream << " " << std::setw(23) << std::right <<(*pos)->getStartNode()->getName();
-		stream << " " << std::setw(23) << std::right <<(*pos)->getEndNode()->getName() << std::endl;
+		stream << " " << std::setw(23) << std::left <<(*pos)->getStartNode()->getName();
+		stream << " " << std::setw(23) << std::left <<(*pos)->getEndNode()->getName() << std::endl;
 	}
-	stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
-	stream << std::endl << std::setw(15) << std::left << "Total weight: [" << std::setw(10) << std::right << r.getWeight() << "]";
+	//stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
+	//stream << std::endl << std::setw(15) << std::left << "Total weight: [" << std::setw(10) << std::right << r.getWeight() << "]";
 
 	return stream;
 }
