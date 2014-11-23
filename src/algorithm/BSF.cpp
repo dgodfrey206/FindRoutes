@@ -5,11 +5,11 @@
  *      Author: rafal
  */
 
-#include "BFS.h"
 #include "Solver.h"
 #include <vector>
 #include <list>
 #include <queue>
+#include "BSF.h"
 
 BsfAlg::BsfAlg(){
 
@@ -54,15 +54,23 @@ Route* BsfAlg::solve(const Network * n, Node * start, Node * end){
 	}
 
 	std::vector<unsigned int> resultVector;
-
 	while( v != startNodeId){
-		std::cerr<<v<<" "<<n->getNode(v)->getName()<<std::endl;
 		resultVector.push_back(v);
 		v = P[v];
 	}
 	resultVector.push_back(v);
-	std::cerr<<v<<" "<<n->getNode(v)->getName()<<std::endl;
 
-	return NULL;
+	Route* resultRoute;
+	resultRoute = new Route();
+
+	for( auto it = resultVector.rbegin()+1; it != resultVector.rend(); it++ ){
+		//std::cerr<<*it<<" "<<n->getNode(*it)->getName()<<std::endl;
+		unsigned int edgeId = n->calculateEdgeId( n->getNode(*(it-1))->getID() ,n->getNode(*it)->getID());
+		Edge* newEdge = n->getEdge(edgeId);
+		//std::cerr<<*newEdge<<std::endl;
+		resultRoute->addEdge(newEdge);
+	}
+
+	return resultRoute;
 }
 

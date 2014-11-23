@@ -5,8 +5,8 @@
  *      Author: rafal
  */
 
-#ifndef ALGORITHM_DFSALG_H_
-#define ALGORITHM_DFSALG_H_
+#ifndef ALGORITHM_DSF_H_
+#define ALGORITHM_DSF_H_
 
 #include "Solver.h"
 
@@ -19,4 +19,4 @@ public:
 
 
 
-#endif /* ALGORITHM_DFSALG_H_ */
+#endif /* ALGORITHM_DSF_H_ */

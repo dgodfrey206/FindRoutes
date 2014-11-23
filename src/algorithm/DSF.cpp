@@ -5,7 +5,8 @@
  *      Author: rafal
  */
 
-#include "DfsAlg.h"
+#include "DSF.h"
+
 #include <vector>
 #include <list>
 #include <stack>
@@ -62,9 +63,11 @@ Route* DsfAlg::solve(const Network * n,Node * start,Node * end){
 	}
 	resultVector.push_back(v);
 	std::cerr<<v<<" "<<n->getNode(v)->getName()<<std::endl;
-/*
+
+	/*
 	Route* resultRoute;
 	resultRoute = new Route();
+//todo solver should return Route*
 	for(unsigned int i=1; i<resultVector.size();i++){
 		unsigned int edgeId = n->calculateEdgeId(resultVector[i-1],resultVector[i]);
 		resultRoute->addEdge(n->getEdge(edgeId));

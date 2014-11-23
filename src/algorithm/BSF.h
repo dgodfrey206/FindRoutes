@@ -5,8 +5,8 @@
  *      Author: rafal
  */
 
-#ifndef ALGORITHM_BFS_H_
-#define ALGORITHM_BFS_H_
+#ifndef ALGORITHM_BSF_H_
+#define ALGORITHM_BSF_H_
 
 #include "Solver.h"
 
@@ -18,4 +18,4 @@ public:
 };
 
 
-#endif /* ALGORITHM_BFS_H_ */
+#endif /* ALGORITHM_BSF_H_ */
