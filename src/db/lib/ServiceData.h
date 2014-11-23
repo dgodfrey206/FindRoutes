@@ -11,6 +11,15 @@
 #include <iostream>
 #include <string>
 #include <bitset> //for binary output
+
+
+// Forward declaration of class boost::serialization::access
+namespace boost {
+	namespace serialization {
+		class access;
+	}
+}
+
 /**
  * Class containing data about services when database is being created.
  */
@@ -91,6 +100,13 @@ private:
 		SATURDAY = 0x20,
 		SUNDAY = 0x40
 	};
+
+	friend class boost::serialization::access;
+
+	template<typename Archive>
+	void serialize(Archive& ar, const unsigned version) {
+		ar & id & name & operationalDays;  // Simply serialize the data members of Obj
+	}
 };
 
 

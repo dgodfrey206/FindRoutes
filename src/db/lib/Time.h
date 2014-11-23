@@ -10,6 +10,14 @@
 
 #include <iostream>
 
+
+// Forward declaration of class boost::serialization::access
+namespace boost {
+	namespace serialization {
+		class access;
+	}
+}
+
 /**
  * Class providing time functions used in timetable generation.
  */
@@ -108,6 +116,13 @@ public:
 	friend std::ostream& operator<<(std::ostream& output, const Time src);
 private:
 	unsigned int minutes;
+
+	friend class boost::serialization::access;
+
+	template<typename Archive>
+	void serialize(Archive& ar, const unsigned version) {
+		ar & minutes;  // Simply serialize the data members of Obj
+	}
 };
 
 

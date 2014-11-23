@@ -11,6 +11,14 @@
 #include <string>
 #include <iostream>
 
+
+// Forward declaration of class boost::serialization::access
+namespace boost {
+	namespace serialization {
+		class access;
+	}
+}
+
 /**
  * Class containing data about routes when database is being created.
  * Then convered into Route object.
@@ -88,6 +96,13 @@ private:
 	unsigned int id;
 	double lat;
 	double lng;
+
+	friend class boost::serialization::access;
+
+	template<typename Archive>
+	void serialize(Archive& ar, const unsigned version) {
+		ar & id & name & lat & lng;  // Simply serialize the data members of Obj
+	}
 };
 
 

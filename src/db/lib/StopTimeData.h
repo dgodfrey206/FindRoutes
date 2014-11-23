@@ -13,6 +13,13 @@
 #include "Time.h"
 
 
+// Forward declaration of class boost::serialization::access
+namespace boost {
+	namespace serialization {
+		class access;
+	}
+}
+
 /**
  * Class containing data about stopTimes when database is being created.
  */
@@ -105,6 +112,13 @@ private:
 	unsigned int tripId;
 	Time stoptime;
 	std::string name;
+
+	friend class boost::serialization::access;
+
+	template<typename Archive>
+	void serialize(Archive& ar, const unsigned version) {
+		ar & id & serviceId & stopId & tripId & stoptime & name;  // Simply serialize the data members of Obj
+	}
 };
 
 

@@ -11,8 +11,6 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <algorithm> //std::copy
-#include <iterator>  //std::istreambuf_iterator
 
 #include "lib/RouteData.h"
 #include "lib/TripData.h"
@@ -20,79 +18,133 @@
 #include "lib/StopTimeData.h"
 #include "lib/ServiceData.h"
 
-#include "../serialize/serialize.h"
+//#include "../serialize/serialize.h"
+
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <assert.h>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+
+
+// Forward declaration of class boost::serialization::access
+namespace boost {
+	namespace serialization {
+		class access;
+	}
+}
 
 /**
  * Database class, used to loading from files and then being converted into
  * Network object. Provides input from gtfs or json formats.
  */
 class DataBase{
-	public:
+public:
+
+/**
+ * Enum defining loading method being used.
+ */
+	enum LoadMethod {
+		JSON = 0,
+		GTFS = 1,
+		MULTJSON = 2,
+		SAVEDDB = 3,
+		EMPTY = 4
+	};
+	DataBase();
+	/**
+	 * Constructor.
+	 * @param method Defines load method being used.
+	 * @param path Provides path to files being loaded. If one file is being used
+	 * it needs to get path to file, otherwise - to directory containing files.
+	 */
+	DataBase(DataBase::LoadMethod method, std::string path);
 
 	/**
-	 * Enum defining loading method being used.
+	 * std::vector object containing loaded RouteData.
 	 */
-		enum LoadMethod {
-			JSON = 0,
-			GTFS = 1,
-			MULTJSON = 2,
-			SAVEDDB = 3,
-			EMPTY = 4
-		};
+	std::vector<RouteData> routes;
 
-		/**
-		 * Constructor.
-		 * @param method Defines load method being used.
-		 * @param path Provides path to files being loaded. If one file is being used
-		 * it needs to get path to file, otherwise - to directory containing files.
-		 */
-		DataBase(DataBase::LoadMethod method, std::string path);
+	/**
+	 * std::vector object containing loaded TripData.
+	 */
+	std::vector<TripData> trips;
 
-		/**
-		 * std::vector object containing loaded RouteData.
-		 */
-		std::vector<RouteData> routes;
+	/**
+	 * std::vector object containing loaded StopData.
+	 */
+	std::vector<StopData> stops;
 
-		/**
-		 * std::vector object containing loaded TripData.
-		 */
-		std::vector<TripData> trips;
+	/**
+	 * std::vector object containing loaded StopTimeData.
+	 */
+	std::vector<StopTimeData> stopTimes;
 
-		/**
-		 * std::vector object containing loaded StopData.
-		 */
-		std::vector<StopData> stops;
+	/**
+	 * std::vector object containing loaded ServiceData.
+	 */
+	std::vector<ServiceData> services;
 
-		/**
-		 * std::vector object containing loaded StopTimeData.
-		 */
-		std::vector<StopTimeData> stopTimes;
+	std::vector<std::vector<std::vector<Time>>> timeTable;
 
-		/**
-		 * std::vector object containing loaded ServiceData.
-		 */
-		std::vector<ServiceData> services;
+	/**
+	 * Method checking validity of loaded database.
+	 * @return true if all vectors got populated with data, false otherwise.
+	 */
+	bool isValid();
 
-		std::vector<std::vector<std::vector<Time>>> timeTable;
+	void saveToFile(const std::string p) const;
 
-		/**
-		 * Method checking validity of loaded database.
-		 * @return true if all vectors got populated with data, false otherwise.
-		 */
-		bool isValid();
+private:
+	std::string path;
+	void loadGTFS();
+	void loadJSON();
+	void loadOneJSON();
+	void loadSavedDB(const std::string p);
 
-		void saveToFile(const std::string p) const;
+	void createTimeTable();
 
-	private:
-		std::string path;
-		void loadGTFS();
-		void loadJSON();
-		void loadOneJSON();
-		void loadSavedDB(const std::string p);
+	void validate();
 
-		void createTimeTable();
+	//boost serialization:
+	friend class boost::serialization::access;
 
-		void validate();
+	template<typename Archive>
+	void serialize(Archive& ar, const unsigned version) {
+		ar & routes & trips & stops & stopTimes & services & timeTable;  // Simply serialize the data members of Obj
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<RouteData>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<TripData>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<StopData>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<StopTimeData>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<ServiceData>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<std::vector<std::vector<Time>>>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<std::vector<Time>>& objs, const unsigned version) {
+	  ar & objs;
+	}
+	template<typename Archive>
+	void serialize(Archive& ar, std::vector<Time>& objs, const unsigned version) {
+	  ar & objs;
+	}
 };
 
 

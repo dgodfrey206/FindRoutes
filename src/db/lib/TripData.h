@@ -11,6 +11,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <boost/serialization/vector.hpp>
+
+// Forward declaration of class boost::serialization::access
+namespace boost {
+	namespace serialization {
+		class access;
+	}
+}
+
 //todo appendStopToSec(unsigned int id); would be nice to have
 
 /**
@@ -91,6 +100,13 @@ private:
 	unsigned int routeId;
 	std::vector<int> stopSec;
 	std::string name;
+
+	friend class boost::serialization::access;
+
+	template<typename Archive>
+	void serialize(Archive& ar, const unsigned version) {
+		ar & id & name & routeId & stopSec;  // Simply serialize the data members of Obj
+	}
 };
 
 #endif /* DB_LIB_TRIPDATA_H_ */
