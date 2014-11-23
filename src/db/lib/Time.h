@@ -57,14 +57,14 @@ public:
 	 * @param src Reference to compared object.
 	 * @return True if given hours are equal.
 	 */
-	bool operator==(const Time src);
+	bool operator==(const Time& src) const;
 
 	/**
 	 * Comparation operator.
 	 * @param src Reference to compared object.
 	 * @return True if given hours are not equal.
 	 */
-	bool operator!=(const Time src);
+	bool operator!=(const Time& src) const;
 
 	/**
 	 * Greater than operator.

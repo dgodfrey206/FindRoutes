@@ -34,7 +34,7 @@ Time& Time::operator=(const Time& src){
 	return *this;
 }
 
-bool Time::operator==(const Time src){
+bool Time::operator==(const Time& src) const{
 	if( (this->minutes == src.minutes) ){
 		return true;
 	}else{
@@ -42,7 +42,7 @@ bool Time::operator==(const Time src){
 	}
 }
 
-bool Time::operator!=(const Time src){
+bool Time::operator!=(const Time& src) const{
 	return !(this->operator ==(src));
 }
 
