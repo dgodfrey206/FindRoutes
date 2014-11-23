@@ -11,6 +11,7 @@
 #include "db/DataBase.h"
 #include "graph/Network.h"
 #include "algorithm/DfsAlg.h"
+#include "algorithm/BFS.h"
 
 int main()
 {
@@ -19,9 +20,6 @@ int main()
 	Network net(db);
 
 	unsigned int startId, endId;
-
-	for(auto node: net.getAllNodes())
-		std::cout<<*node<<std::endl;
 
 	std::cerr<<"type start node id: ";
 	std::cin>> startId;
@@ -32,8 +30,10 @@ int main()
 	Node* endNode = net.getNode(endId);
 	std::cerr<<"chosen end node: "<<endNode ->getName()<<std::endl;
 
-	net.setSover(new DsfAlg());
+	//net.setSover(new DsfAlg());
+	net.setSover(new BsfAlg());
 	net.findRouteBetween(startNode,endNode,100);
+
 }
 
 

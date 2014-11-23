@@ -140,17 +140,6 @@ Network::Network(DataBase& dataB){
 
 	createIncidenceMatrix();
 
-	unsigned int numNodes = this->nodes.size();
-	for(unsigned int i = 0; i < numNodes; i++){
-		for(unsigned int j = 0; j < numNodes; j++){
-			if(incidenceMatrix[i][j])
-				std::cout<<1<<" ";
-			else
-				std::cout<<0<<" ";
-		}
-		std::cout<<std::endl;
-	}
-
 	std::cerr<<"Network::Network(DataBase& dataB): network created"<<std::endl;
 }
 
@@ -290,7 +279,7 @@ Node * Network::getNodeCloseToPos(double lat, double lon) const {
 	return closestNode;
 }
 
-unsigned int Network::calculateEdgeId(unsigned int startId, unsigned int endId){
+unsigned int Network::calculateEdgeId(unsigned int startId, unsigned int endId) const{
 	return startId + (this->nodes.size()+1)*endId;
 }
 

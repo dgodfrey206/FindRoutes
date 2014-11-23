@@ -143,6 +143,14 @@ public:
 	 */
 	bool ** incidenceMatrix;
 
+	/*
+	 * Calculates edge id form incident nodes ids
+	 * Can be used if findEdge function
+	 * @param startId id of node wher edge starts
+	 * @param endId id of node where edge ends
+	 * */
+	unsigned int calculateEdgeId(unsigned int startId, unsigned int endId) const;
+
 private:
 	std::set<Node *, nodePointerCompare> nodes;
 	std::set<Edge *, edgePointerCompare> edges;
