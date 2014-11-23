@@ -29,13 +29,14 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end) {
 	//T0 - starting temperature
 	//T - current temperature
 	//alfa - T = alfa * T for every iteration
-	Route * bestKnown;
-	double bestKnownWeight;
+	Route * bestKnown = NULL;
+	double bestKnownWeight = -1;
 
 	//get starting solution
 
 	Route * currentSolution = this->getFistSolution(n, start, end);
-
+	bestKnown = currentSolution;
+	bestKnownWeight = currentSolution->getWeight();
 
 	return bestKnown;
 }
