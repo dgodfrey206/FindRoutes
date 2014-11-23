@@ -10,12 +10,17 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <algorithm> //std::copy
+#include <iterator>  //std::istreambuf_iterator
 
 #include "lib/RouteData.h"
 #include "lib/TripData.h"
 #include "lib/StopData.h"
 #include "lib/StopTimeData.h"
 #include "lib/ServiceData.h"
+
+#include "../serialize/serialize.h"
 
 /**
  * Database class, used to loading from files and then being converted into
@@ -31,7 +36,8 @@ class DataBase{
 			JSON = 0,
 			GTFS = 1,
 			MULTJSON = 2,
-			EMPTY = 3
+			SAVEDDB = 3,
+			EMPTY = 4
 		};
 
 		/**
@@ -67,17 +73,25 @@ class DataBase{
 		 */
 		std::vector<ServiceData> services;
 
+		std::vector<std::vector<std::vector<Time>>> timeTable;
+
 		/**
 		 * Method checking validity of loaded database.
 		 * @return true if all vectors got populated with data, false otherwise.
 		 */
 		bool isValid();
 
+		void saveToFile(const std::string p) const;
+
 	private:
 		std::string path;
 		void loadGTFS();
 		void loadJSON();
 		void loadOneJSON();
+		void loadSavedDB(const std::string p);
+
+		void createTimeTable();
+
 		void validate();
 };
 
