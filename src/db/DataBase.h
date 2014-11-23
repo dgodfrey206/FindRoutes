@@ -18,8 +18,6 @@
 #include "lib/StopTimeData.h"
 #include "lib/ServiceData.h"
 
-//#include "../serialize/serialize.h"
-
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <assert.h>
