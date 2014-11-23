@@ -35,7 +35,7 @@ double Route::getWeight() const {
 			return 0;
 
 	double weight = 0;
-	for(std::list<const Edge *>::const_iterator it = this->route.begin(); it != this->route.end(); it++)
+	//for(std::list<const Edge *>::const_iterator it = this->route.begin(); it != this->route.end(); it++)
 		//weight += (*it)->getWeight();
 	return weight;
 }

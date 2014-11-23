@@ -46,7 +46,7 @@ Network::Network(DataBase& dataB){
 	this->solver = NULL;
 	this->incidenceMatrix = NULL;
 
-	std::cerr<<"Network::Network(DataBase& dataB): creating netork from database"<<std::endl;
+	std::cerr<<"Network::Network(DataBase& dataB): creating network from database"<<std::endl;
 	std::cerr<<"Network::Network(DataBase& dataB): creating nodes"<<std::endl;
 	for(unsigned int i=0; i<dataB.stops.size(); i++){
 		Node* new_node = NULL;
@@ -58,22 +58,25 @@ Network::Network(DataBase& dataB){
 	std::cerr<<"Network::Network(DataBase& dataB): connecting times with stop sequences"<<std::endl;
 	std::vector<std::vector<std::vector<Time>>>	stopTimesTable;
 
-	for(unsigned int trip_id=0; trip_id<dataB.trips.size(); trip_id++){
-		std::vector<std::vector<Time>> _stops_in_sec;
-		for(unsigned int stop=0; stop<dataB.trips[trip_id].getStopSec().size();stop++){
-			unsigned int stop_id = (dataB.trips[trip_id].getStopSec()[stop]);
-			std::vector<Time> _times;
-			for(unsigned int stop_time=0; stop_time< dataB.stopTimes.size();stop_time++){
-				if( (dataB.stopTimes[stop_time].getServiceId() == 0) 	&&
-					(dataB.stopTimes[stop_time].getStopId() == stop_id) &&
-					(dataB.stopTimes[stop_time].getTripId() == trip_id)){
-						_times.push_back(dataB.stopTimes[stop_time].getStopTime());
-				}
-			}
-			_stops_in_sec.push_back(_times);
-		}
-		stopTimesTable.push_back(_stops_in_sec);
-	}
+//	for(unsigned int trip_id=0; trip_id<dataB.trips.size(); trip_id++){
+//		std::vector<std::vector<Time>> _stops_in_sec;
+//		for(unsigned int stop=0; stop<dataB.trips[trip_id].getStopSec().size();stop++){
+//			unsigned int stop_id = (dataB.trips[trip_id].getStopSec()[stop]);
+//			std::vector<Time> _times;
+//			for(unsigned int stop_time=0; stop_time< dataB.stopTimes.size();stop_time++){
+//				if( (dataB.stopTimes[stop_time].getServiceId() == 0) 	&&
+//					(dataB.stopTimes[stop_time].getStopId() == stop_id) &&
+//					(dataB.stopTimes[stop_time].getTripId() == trip_id)){
+//						_times.push_back(dataB.stopTimes[stop_time].getStopTime());
+//				}
+//			}
+//			_stops_in_sec.push_back(_times);
+//		}
+//		stopTimesTable.push_back(_stops_in_sec);
+//	}
+
+	stopTimesTable = dataB.timeTable;
+
 	std::cerr<<"Network::Network(DataBase& dataB): done"<<std::endl;
 
 	std::cerr<<"Network::Network(DataBase& dataB): creating edges"<<std::endl;
