@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>643</width>
+    <width>639</width>
     <height>560</height>
    </rect>
   </property>
@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_6">
+   <layout class="QVBoxLayout" name="verticalLayout_7">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -118,11 +118,18 @@
        </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="search">
-        <property name="text">
-         <string>Szukaj</string>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QComboBox" name="algorithm"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="search">
+          <property name="text">
+           <string>Szukaj</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
@@ -148,7 +155,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>643</width>
+     <width>639</width>
      <height>19</height>
     </rect>
    </property>
@@ -163,6 +170,7 @@
      <addaction name="actionLoadGTFS"/>
      <addaction name="actionLoadJSON"/>
      <addaction name="actionLoadMulJSON"/>
+     <addaction name="actionLoadSavedDB"/>
     </widget>
     <addaction name="menuLoad"/>
     <addaction name="actionDebug"/>
@@ -214,6 +222,11 @@
   <action name="actionLoadMulJSON">
    <property name="text">
     <string>Wiele JSON</string>
+   </property>
+  </action>
+  <action name="actionLoadSavedDB">
+   <property name="text">
+    <string>Plik bazy</string>
    </property>
   </action>
  </widget>

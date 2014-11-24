@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     this->prepareMap();
 
+    this->loadAlgorithms();
 }
 
 MainWindow::~MainWindow()
@@ -33,6 +34,7 @@ void MainWindow::setupActions()
     connect(this->ui->actionLoadGTFS, SIGNAL(triggered()), this, SLOT(loadGTFS()));
     connect(this->ui->actionLoadJSON, SIGNAL(triggered()), this, SLOT(loadJSON()));
     connect(this->ui->actionLoadMulJSON, SIGNAL(triggered()), this, SLOT(loadMulJSON()));
+    connect(this->ui->actionLoadSavedDB, SIGNAL(triggered()), this, SLOT(loadSavedDB()));
 
     connect(this->ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
     connect(this->ui->actionHelp, SIGNAL(triggered()), this, SLOT(showHelp()));
@@ -40,6 +42,20 @@ void MainWindow::setupActions()
     this->debug->append(QString::fromUtf8("Actions assigned."));
 }
 
+void MainWindow::loadAlgorithms()
+{
+    this->ui->algorithm->addItem("Wybierz algorytm");
+
+    this->solvers.push_back(new SimAnnealingAlg());
+    this->solvers.push_back(new BsfAlg());
+    this->solvers.push_back(new DsfAlg());
+
+    for(Solver* s: this->solvers)
+    {
+        this->ui->algorithm->addItem(QString::fromStdString(s->getName()));
+    }
+
+}
 
 void MainWindow::manageDebugWindow()
 {
@@ -76,6 +92,10 @@ void MainWindow::loadFromFile(DataBase::LoadMethod method)
     {
         filename = QFileDialog::getExistingDirectory(this, tr("Select directory containing json files"), ".", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     }
+    else if(method == DataBase::LoadMethod::SAVEDDB)
+    {
+        filename = QFileDialog::getOpenFileName(this, tr("Select .json file containing database"), "ping");
+    }
     else
     {
         this->debug->append("Unsuspected behavior while loading database.");
@@ -95,34 +115,6 @@ void MainWindow::loadFromFile(DataBase::LoadMethod method)
         this->debug->append(QString("Database loaded successfully"));
 
         this->prepareGUI();
-
-
-
-        //todo debuging purposes only
-        int i = 0;
-        Node * begin;
-        Node * end;
-        Route * r = new Route;
-        for(Node * n: network->getAllNodes())
-        {
-            if(i == 0)
-            {
-                i++;
-                end = n;
-                continue;
-            }
-            else
-            {
-                begin = end;
-                end = n;
-                r->addEdge(new Edge(i-1, begin, end, 1, TransportType::BUS));
-                i++;
-            }
-            if(i == 6) break;
-
-        }
-
-        this->showRouteOnMap(r);
     }
 }
 
@@ -139,6 +131,11 @@ void MainWindow:: loadJSON()
 void MainWindow::loadMulJSON()
 {
     this->loadFromFile(DataBase::LoadMethod::MULTJSON);
+}
+
+void MainWindow::loadSavedDB()
+{
+    this->loadFromFile(DataBase::LoadMethod::SAVEDDB);
 }
 
 void MainWindow::prepareGUI()
@@ -205,6 +202,17 @@ void MainWindow::findRoute()
     {
         this->debug->append(QString("findRoute method called but no network exists."));
         return;
+    }
+
+    if(this->ui->algorithm->currentIndex() == 0)
+    {
+        this->debug->append(QString("findRoute method called but no algorithm selected."));
+        return;
+    }
+    else
+    {
+        this->debug->append(QString("findRoute method called with ") + this->ui->algorithm->currentText() + QString( " alg."));
+        this->network->setSolver(this->solvers[this->ui->algorithm->currentIndex() - 1]);
     }
 
     QString startNodeName = this->ui->startNode->currentText();
