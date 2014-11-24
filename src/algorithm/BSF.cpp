@@ -11,11 +11,15 @@
 #include <queue>
 #include "BSF.h"
 
-BsfAlg::BsfAlg(){
+const std::string BsfAlg::name = "BSF";
+
+BsfAlg::BsfAlg()
+{
 
 }
 
-BsfAlg::~BsfAlg(){
+BsfAlg::~BsfAlg()
+{
 
 }
 Route* BsfAlg::solve(const Network * n, Node * start, Node * end){
@@ -72,5 +76,9 @@ Route* BsfAlg::solve(const Network * n, Node * start, Node * end){
 	}
 
 	return resultRoute;
+}
+
+const std::string & BsfAlg::getName() const {
+	return this->name;
 }
 

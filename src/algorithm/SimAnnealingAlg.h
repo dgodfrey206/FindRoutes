@@ -30,7 +30,9 @@ public:
 	virtual Route* solve(const Network * n, Node * start, Node * end);
 	void setParams(double Tstart, double Tend, double k, double alpha);
 
+	virtual const std::string & getName() const;
 private:
+	static const std::string name;
 	std::default_random_engine generator;
 	std::uniform_real_distribution<> distribution;
 	double Tstart;

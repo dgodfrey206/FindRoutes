@@ -15,6 +15,11 @@ public:
 	BsfAlg();
 	~BsfAlg();
 	virtual Route* solve(const Network * n, Node * start, Node * end);
+	virtual const std::string & getName() const;
+
+private:
+
+	static const std::string name;
 };
 
 

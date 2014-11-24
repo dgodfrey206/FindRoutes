@@ -11,7 +11,10 @@
 #include <list>
 #include <stack>
 
-DsfAlg::DsfAlg(){
+const std::string DsfAlg::name = "DSF";
+
+DsfAlg::DsfAlg()
+{
 
 }
 
@@ -76,5 +79,8 @@ Route* DsfAlg::solve(const Network * n,Node * start,Node * end){
 
 	return resultRoute;*/
 	return NULL;
+}
 
+const std::string & DsfAlg::getName() const {
+	return this->name;
 }

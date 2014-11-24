@@ -7,6 +7,8 @@
 
 #include "SimAnnealingAlg.h"
 
+const std::string SimAnnealingAlg::name = "Simulated annealing";
+
 SimAnnealingAlg::SimAnnealingAlg()
 	:
 	Tstart(1000),
@@ -39,6 +41,10 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end) {
 	bestKnownWeight = currentSolution->getWeight();
 
 	return bestKnown;
+}
+
+const std::string & SimAnnealingAlg::getName() const {
+	return this->name;
 }
 
 double SimAnnealingAlg::getRandom() {
