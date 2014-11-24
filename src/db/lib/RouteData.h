@@ -13,13 +13,6 @@
 
 //todo RouteData need to contain TransportType enum value or coresponding.
 
-// Forward declaration of class boost::serialization::access
-namespace boost {
-	namespace serialization {
-		class access;
-	}
-}
-
 /**
  * Class containing data about routes when database is being created.
  * Then converted into Route object.
@@ -84,13 +77,6 @@ public:
 private:
 	std::string name;
 	unsigned int id;
-
-	friend class boost::serialization::access;
-
-	template<typename Archive>
-	void serialize(Archive& ar, const unsigned version) {
-		ar & id & name;  // Simply serialize the data members of Obj
-	}
 };
 
 

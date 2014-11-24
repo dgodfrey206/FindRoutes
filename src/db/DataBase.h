@@ -18,19 +18,7 @@
 #include "lib/StopTimeData.h"
 #include "lib/ServiceData.h"
 
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/serialization.hpp>
-#include <assert.h>
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-
-
-// Forward declaration of class boost::serialization::access
-namespace boost {
-	namespace serialization {
-		class access;
-	}
-}
+#include "../jsoncpp/json/json.h"
 
 /**
  * Database class, used to loading from files and then being converted into
@@ -104,45 +92,6 @@ private:
 
 	void validate();
 
-	//boost serialization:
-	friend class boost::serialization::access;
-
-	template<typename Archive>
-	void serialize(Archive& ar, const unsigned version) {
-		ar & routes & trips & stops & stopTimes & services & timeTable;  // Simply serialize the data members of Obj
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<RouteData>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<TripData>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<StopData>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<StopTimeData>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<ServiceData>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<std::vector<std::vector<Time>>>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<std::vector<Time>>& objs, const unsigned version) {
-	  ar & objs;
-	}
-	template<typename Archive>
-	void serialize(Archive& ar, std::vector<Time>& objs, const unsigned version) {
-	  ar & objs;
-	}
 };
 
 

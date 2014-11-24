@@ -109,17 +109,95 @@ void DataBase::createTimeTable() {
 	}
 }
 
-void DataBase::saveToFile(const std::string p) const {
-	std::ofstream ofs(p);
-	boost::archive::text_oarchive ar(ofs);
-	ar & (*this);
-}
-
 void DataBase::loadSavedDB(const std::string p) {
 	std::ifstream ifs(p);
-	boost::archive::text_iarchive ar(ifs);
-	// Load data
-	ar & (*this);
+	Json::Reader reader;
+	Json::Value root;
+
+	if(!reader.parse(ifs, root)) return;
+
+	Json::Value routes = root["routes"];
+	Json::Value stops = root["stops"];
+	Json::Value trips = root["trips"];
+	Json::Value stopTimes = root["stop_times"];
+	Json::Value services = root["services"];
+	Json::Value timetable = root["time_table"];
+
+	for(auto val: routes)
+	{
+		this->routes.push_back(RouteData(
+			val["name"].asString(),
+			val["id"].asInt()
+			)
+		);
+	}
+
+	for(auto val: trips)
+	{
+		std::vector<int> sec;
+		for(auto i: val["stop_sec"])
+		{
+			sec.push_back(i.asInt());
+		}
+		this->trips.push_back(TripData(
+			val["id"].asInt(),
+			val["route"].asInt(),
+			val["name"].asString(),
+			sec
+			)
+		);
+	}
+	for(auto val: stops)
+	{
+		this->stops.push_back(StopData(
+			val["name"].asString(),
+			val["id"].asInt(),
+			val["lat"].asDouble(),
+			val["lng"].asDouble()
+			)
+		);
+	}
+
+	for(auto val: stopTimes)
+	{
+		this->stopTimes.push_back(StopTimeData(
+			val["id"].asInt(),
+			val["stop"].asInt(),
+			val["service"].asInt(),
+			val["trip"].asInt(),
+			val["name"].asString()
+			)
+		);
+	}
+
+	for(auto val: services)
+	{
+		this->services.push_back(ServiceData(
+			val["id"].asInt(),
+			val["name"].asString(),
+			val["days"].asInt()
+			)
+		);
+	}
+
+	//std::vector<std::vector<std::vector<Time>>> timeTable;
+	for(auto val: timetable)
+	{
+		std::vector<std::vector<Time>> vec;
+		for(auto val2: val)
+		{
+			std::vector<Time> vec2;
+			for(auto val3: val2)
+			{
+				vec2.push_back(Time(
+					val3.asInt()
+					)
+				);
+			}
+			vec.push_back(vec2);
+		}
+		this->timeTable.push_back(vec);
+	}
 }
 
 void DataBase::validate() {
@@ -164,4 +242,88 @@ bool DataBase::isValid()
 			&& !this->services.empty() && !this->stopTimes.empty() && !this->timeTable.empty());
 }
 
+void DataBase::saveToFile(const std::string filename) const{
+
+	Json::StyledStreamWriter writer;
+	Json::Value root;
+
+	for(RouteData r: this->routes)
+	{
+		Json::Value v;
+		v["id"] = r.getId();
+		v["name"] = r.getName();
+		root["routes"].append(v);
+	}
+
+	for(TripData t: this->trips)
+	{
+		Json::Value v;
+		v["id"] = t.getId();
+		v["name"] = t.getName();
+		v["route"] = t.getRouteId();
+
+		auto stops = t.getStopSec();
+		for(auto s: t.getStopSec())
+		{
+			Json::Value stop(s);
+			v["stop_sec"].append(stop);
+		}
+		root["trips"].append(v);
+	}
+
+	for(StopData s: this->stops)
+	{
+		Json::Value v;
+		v["id"] = s.getId();
+		v["name"] = s.getName();
+		v["lat"] = s.getLat();
+		v["lng"] = s.getLng();
+
+		root["stops"].append(v);
+	}
+
+	for(StopTimeData s: this->stopTimes)
+	{
+		Json::Value v;
+		v["id"] = s.getId();
+		v["name"] = s.getName();
+		v["service"] = s.getServiceId();
+		v["stop"] = s.getStopId();
+		v["trip"] = s.getTripId();
+		v["stoptime"] = int(s.getStopTime());
+
+		root["stop_times"].append(v);
+	}
+
+	for(ServiceData s: this->services)
+	{
+		Json::Value v;
+		v["id"] = s.getId();
+		v["name"] = s.getName();
+		v["days"] = s.getDays();
+
+		root["services"].append(v);
+	}
+
+	for(auto t1: this->timeTable) //std::vector<std::vector<Time>>
+	{
+		Json::Value v;
+		for(auto t2: t1) //std::vector<Time>
+		{
+			Json::Value v2;
+			for(Time t: t2)
+			{
+				v2.append(int(t));
+			}
+			v.append(v2);
+		}
+		root["time_table"].append(v);
+	}
+
+	std::ofstream file(filename.c_str(), std::ios::out);
+
+	writer.write(file, root);
+
+
+}
 

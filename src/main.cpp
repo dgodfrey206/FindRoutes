@@ -15,15 +15,12 @@
 
 #include "db/lib/Time.h"
 
-//#include "serialize/serialize.h"
-//#include <fstream>
-//#include <iterator>
-//#include <algorithm>
 int main()
 {
 
-	DataBase db(DataBase::LoadMethod::SAVEDDB, "../db/database.bin");
+	DataBase db(DataBase::LoadMethod::SAVEDDB, "../db/database.json");
 	Network net(db);
+
 	while(1){
 		unsigned int startId, endId;
 
