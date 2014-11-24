@@ -261,6 +261,8 @@ void MainWindow::findRoute()
         this->debug->append(QString("Found solution."));
 
         this->showRouteOnMap(solution);
+
+        std::cout << *solution;
     }
     else
     {
