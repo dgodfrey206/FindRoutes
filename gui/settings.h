@@ -21,6 +21,7 @@ public:
     explicit Settings(QWidget *parent = 0);
     ~Settings();
 
+    Solver * getCurrentSolver();
 
 
 private:

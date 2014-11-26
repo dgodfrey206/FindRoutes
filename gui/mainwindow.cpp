@@ -205,6 +205,8 @@ void MainWindow::findRoute()
 //        this->network->setSolver(this->solvers[this->ui->algorithm->currentIndex() - 1]);
 //    }
 
+
+
     QString startNodeName = this->ui->startNode->currentText();
     QString endNodeName = this->ui->endNode->currentText();
 

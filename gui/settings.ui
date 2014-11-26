@@ -7,17 +7,31 @@
     <x>0</x>
     <y>0</y>
     <width>391</width>
-    <height>370</height>
+    <height>321</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Ustawienia</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Algorytm</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="algorithm"/>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QTabWidget" name="params">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="ParamsSimAnn" name="simann">
       <attribute name="title">

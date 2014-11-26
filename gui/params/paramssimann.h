@@ -15,6 +15,11 @@ public:
     explicit ParamsSimAnn(QWidget *parent = 0);
     ~ParamsSimAnn();
 
+    unsigned getT0();
+    unsigned getTend();
+    unsigned getIter();
+    double getAlfa();
+
 private:
     Ui::ParamsSimAnn *ui;
 };
