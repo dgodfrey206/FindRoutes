@@ -72,9 +72,9 @@ Time Time::operator+(const Time src){
 
 Time Time::operator-(const Time src){
 	if(this->minutes - src.minutes < 0)
-		return Time(0);
+		return Time(src.minutes - this->minutes);
 	else
-		return Time(this->minutes - src.minutes < 0);
+		return Time(this->minutes - src.minutes);
 }
 
 Time::operator int(){
