@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Settings</class>
+ <widget class="QDialog" name="Settings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>391</width>
+    <height>370</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Ustawienia</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QTabWidget" name="params">
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="ParamsSimAnn" name="simann">
+      <attribute name="title">
+       <string>Algorytm stymulowanego wyżarzania</string>
+      </attribute>
+     </widget>
+     <widget class="ParamsBSF" name="bsf">
+      <attribute name="title">
+       <string>BSF</string>
+      </attribute>
+     </widget>
+     <widget class="ParamsDSF" name="dsf">
+      <attribute name="title">
+       <string>DSF</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ParamsSimAnn</class>
+   <extends>QWidget</extends>
+   <header>params/paramssimann.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ParamsBSF</class>
+   <extends>QWidget</extends>
+   <header>params/paramsbsf.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ParamsDSF</class>
+   <extends>QWidget</extends>
+   <header>params/paramsdsf.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

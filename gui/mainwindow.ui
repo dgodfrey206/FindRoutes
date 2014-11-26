@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
-    <height>560</height>
+    <width>643</width>
+    <height>567</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RouteFInder</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -120,7 +120,11 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QComboBox" name="algorithm"/>
+         <widget class="QPushButton" name="settingsButton">
+          <property name="text">
+           <string>Parametry</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="search">
@@ -155,7 +159,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>639</width>
+     <width>643</width>
      <height>19</height>
     </rect>
    </property>

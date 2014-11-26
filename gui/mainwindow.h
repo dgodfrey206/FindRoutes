@@ -9,6 +9,7 @@
 #include <QWebView>
 
 #include "debugwindow.h"
+#include "settings.h"
 
 #include "../src/graph/Network.h"
 #include "debugwindow.h"
@@ -35,7 +36,6 @@ public:
 
 private:
     void setupActions();
-    void loadAlgorithms();
 
     void prepareGUI();//called after loading from file
 
@@ -46,11 +46,11 @@ private:
 
     debugWindow * debug;
 
+    Settings * settings;
+
     Network * network;
 
     QString apiKey;
-
-    std::vector<Solver*> solvers;
 
 private slots:
     void manageDebugWindow();
