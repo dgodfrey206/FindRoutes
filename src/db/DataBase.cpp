@@ -107,6 +107,19 @@ void DataBase::createTimeTable() {
 		}
 		timeTable.push_back(_stops_in_sec);
 	}
+
+	//repair for no times for last stops
+	for(unsigned int tripId=0; tripId<this->timeTable.size(); tripId++){
+		for(unsigned int stopInSec=0; stopInSec<this->timeTable[tripId].size(); stopInSec++){
+			if(this->timeTable[tripId][stopInSec].empty()){
+				Time delta = this->timeTable[tripId][stopInSec-1][0] - this->timeTable[tripId][stopInSec-2][0];
+				for(unsigned int j=0; j<this->timeTable[tripId][stopInSec-1].size();j++){
+					this->timeTable[tripId][stopInSec].push_back(this->timeTable[tripId][stopInSec-1][j] + delta);
+				}
+			}
+		}
+	}
+
 }
 
 void DataBase::loadSavedDB(const std::string p) {
