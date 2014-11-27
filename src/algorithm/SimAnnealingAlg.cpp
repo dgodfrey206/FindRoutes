@@ -58,50 +58,63 @@ void SimAnnealingAlg::setParams(double Tstart, double Tend, double k, double alp
 	this->alpha = alpha;
 }
 
-double SimAnnealingAlg::getAzimuth(const Node* from, const Node* to, const Node * marker) {
-	//compute cosine of angle between two vectors, [from, marker] and [from, to]
-	double lenASq, lenBSq, lenCSq;
-	lenBSq = pow((from->getLatitude() - to->getLatitude()), 2) - pow((from->getLongtitude() - to->getLongtitude()), 2);
-	lenASq = pow((from->getLatitude() - marker->getLatitude()), 2) - pow((from->getLongtitude() - marker->getLongtitude()), 2);
-	lenCSq = pow((marker->getLatitude() - to->getLatitude()), 2) - pow((marker->getLongtitude() - to->getLongtitude()), 2);
-
-	return (lenASq + lenBSq + lenCSq)/(2 * pow(lenASq, 0.5) * pow(lenBSq, 0.5));
-}
-
 Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {
+	std::cerr << "getFistSolution called" << std::endl;
+
 	Node * currentNode = start;
 	Route * route = new Route;
 
+	std::vector<Node *> visited;
+
 	while(*currentNode != *end)
 	{
-		double bestCosine = -1;
-		double cosine;
-		Edge * bestEdge = NULL;
+		visited.push_back(currentNode);
 
-		for(Edge * e: n->getEdgesForNode(currentNode))
+		std::cerr << " while loop" << std::endl;
+		std::cerr << " current node: " << *currentNode << std::endl;
+		std::list<Edge *> edgesForNode = n->getEdgesForNode(currentNode);
+		std::cerr << " Edges for node: " << edgesForNode.size() << std::endl;
+
+		//search all edges and select one closest to end node
+		double closestDist = 0;
+		Edge * closestNodeEdge = NULL;
+
+		for(Edge * e: edgesForNode)
 		{
-			if(*(e->getEndNode()) == *end)
+			//skip visited nodes:
+			bool isVisited = false;
+			for(Node * n: visited)
 			{
-				route->addEdge(e);
-				return route;
+				if(*n == (*e->getEndNode()))
+				{
+					isVisited = true;
+					break;
+				}
 			}
+			if(isVisited) continue;
 
-			cosine = this->getAzimuth(currentNode, e->getEndNode(), end);
-			if(abs(cosine - 1) < abs(bestCosine - 1)) //if current cosine is closed to 1 than best
+			double distance = sqrt(pow(e->getEndNode()->getLatitude() - end->getLatitude(), 2)
+					+ pow(e->getEndNode()->getLongtitude() - end->getLongtitude(), 2));
+			if(closestNodeEdge == NULL || distance < closestDist)
 			{
-				bestCosine = cosine;
-				bestEdge = e;
+				closestNodeEdge = e;
+				closestDist = distance;
 			}
 		}
 
-		if(bestEdge != NULL)
+		if(closestNodeEdge != NULL)
 		{
-
-			route->addEdge(bestEdge);
+			std::cerr <<"found closest node: " << *(closestNodeEdge->getEndNode()) << std::endl;
+			route->addEdge(closestNodeEdge);
+		}
+		else
+		{
+			std::cerr << " closest node edge is null" << std::endl;
 		}
 
-		currentNode = n->getNode(route->getEndNode()->getID());
+		currentNode = n->getNode(closestNodeEdge->getEndNode()->getID());
 	}
 
+	std::cerr << "getFistSolution finished" << std::endl;
 	return route;
 }

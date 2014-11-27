@@ -12,6 +12,7 @@
 
 #include <random>
 #include <cmath>
+#include <stack>
 
 /**
  * Simulated Annealing Algorithm used for finding routes.
@@ -42,7 +43,6 @@ private:
 
 
 	double getRandom();
-	double getAzimuth(const Node * s, const Node * e, const Node * marker); //return cosine of angle
 	Route * getFistSolution(const Network * n, Node * start, Node * end);
 };
 
