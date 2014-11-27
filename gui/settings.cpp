@@ -48,20 +48,28 @@ Solver * Settings::getCurrentSolver()
 
     if(index == 0) return NULL;
 
-    Solver * s = this->solvers[index - 1];
-
     if(index == 1)
     {
-        //sim ann
+        SimAnnealingAlg * s = reinterpret_cast<SimAnnealingAlg *>(this->solvers[index -1]);
+        s->setParams(this->ui->simann->getT0(),
+                     this->ui->simann->getTend(),
+                     this->ui->simann->getIter(),
+                     this->ui->simann->getAlfa());
+
+        return s;
     }
     if(index == 2)
     {
-        //bsf
+        BsfAlg * s = reinterpret_cast<BsfAlg *>(this->solvers[index - 1]);
+
+
+        return s;
     }
     if(index == 3)
     {
-        //dsf
-    }
+        DsfAlg * s = reinterpret_cast<DsfAlg *>(this->solvers[index - 1]);
 
-    return s;
+
+        return s;
+    }
 }

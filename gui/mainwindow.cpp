@@ -194,16 +194,17 @@ void MainWindow::findRoute()
         return;
     }
 
-//    if(this->ui->algorithm->currentIndex() == 0)
-//    {
-//        this->debug->append(QString("findRoute method called but no algorithm selected."));
-//        return;
-//    }
-//    else
-//    {
-//        this->debug->append(QString("findRoute method called with ") + this->ui->algorithm->currentText() + QString( " alg."));
-//        this->network->setSolver(this->solvers[this->ui->algorithm->currentIndex() - 1]);
-//    }
+    Solver * s = this->settings->getCurrentSolver();
+    if(s == NULL)
+    {
+        this->debug->append(QString("findRoute method called but no algorithm selected."));
+        return;
+    }
+    else
+    {
+        this->debug->append(QString("findRoute method called with ") + QString::fromStdString(s->getName()) + QString( " alg."));
+        this->network->setSolver(s);
+    }
 
 
 
