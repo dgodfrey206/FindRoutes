@@ -119,12 +119,12 @@ bool Route::switchRoute(Route& r) {
 			endPos++;
 		else
 			break;
+	if(endPos == this->route.end()) return false;
 
-	std::cout << **startPos;
-	std::cout << **endPos;
+
 	if(endPos == this->route.end())
 		return false;
-	std::cout << "ping";
+
 	std::list<const Edge *> newRoute;
 	std::list<const Edge *>::iterator it;
 
