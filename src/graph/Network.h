@@ -151,6 +151,7 @@ public:
 	 * */
 	unsigned int calculateEdgeId(unsigned int startId, unsigned int endId) const;
 
+	bool validate();
 private:
 	std::set<Node *, nodePointerCompare> nodes;
 	std::set<Edge *, edgePointerCompare> edges;

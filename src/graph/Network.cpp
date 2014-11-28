@@ -15,6 +15,35 @@ Network::Network() {
 	this->incidenceMatrix = NULL;
 }
 
+bool Network::validate() {
+	bool isValid = true;
+	for(Node * n: this->nodes)
+	{
+		if(n == NULL)
+		{
+			std::cerr << "Null node." << std::endl;
+			isValid = false;
+		}
+	}
+	for(Edge * e: this->edges)
+	{
+		if(e == NULL)
+		{
+			std::cerr << "Null edge." << std::endl;
+			isValid = false;
+		}
+		else
+		{
+			if(e->getEndNode() == NULL || e->getStartNode() == NULL)
+			{
+				std::cerr << "Null node in edge at address " << e << std::endl;
+				isValid = false;
+			}
+		}
+	}
+	return isValid;
+}
+
 void Network::createIncidenceMatrix() {
 	std::cerr<<"Network::createIncidenceMatrix(): creating incidence matrix"<<std::endl;
 	unsigned int numNodes = this->nodes.size();
