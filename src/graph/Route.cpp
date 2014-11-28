@@ -27,14 +27,22 @@ unsigned int Route::getLength() const {
 	return len;
 }
 
-double Route::getWeight() const {
+unsigned int Route::getWeight(Time t) const{
 	/*
 	 * return weight of route
 	 */
+	Time tStart = t;
 	if(this->route.empty())
 			return 0;
 
-	double weight = 0;
+	for(auto it = this->route.begin(); it != this->route.end(); it++){
+		auto edge = **it;
+		t = edge.getNextTime(t);
+		std::cerr<<t<<std::endl;
+	}
+
+	t= t - tStart;
+	unsigned int weight = t;
 	//for(std::list<const Edge *>::const_iterator it = this->route.begin(); it != this->route.end(); it++)
 		//weight += (*it)->getWeight();
 	return weight;
@@ -191,17 +199,17 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 	std::list<const Edge *>::const_iterator pos;
 
 	stream << "Route:" << std::endl;
-	stream << "[ FROM]->[   TO]-[WITH]-[ EDGE] ";
-	stream << std::setw(23) << std::right << "FROM NAME" << std::setw(24) << std::right << "TO NAME" << std::endl;
+	//stream << "[ FROM]->[   TO]-[WITH]-[ EDGE] ";
+	//stream << std::setw(23) << std::right << "FROM NAME" << std::setw(24) << std::right << "TO NAME" << std::endl;
 
 	for(pos = r.begin(); pos != r.end(); pos++)
 	{
 		stream << "[" << std::setw(5) << std::right << (*pos)->getStartNode()->getID() << "]->";
-		stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() << "]-";
+		stream << "[" << std::setw(5) << std::right << (*pos)->getEndNode()->getID() ;
 
-		stream << "]-[" <<std::setw(5) << std::right << (*pos)->getID() << "]";
-		stream << " " << std::setw(23) << std::left <<(*pos)->getStartNode()->getName();
-		stream << " " << std::setw(23) << std::left <<(*pos)->getEndNode()->getName() << std::endl;
+		stream << "]-[" <<std::setw(10) << std::right << (*pos)->getID() << "]";
+		stream << " " << std::setw(25) << std::left <<(*pos)->getStartNode()->getName();
+		stream << " " << std::setw(25) << std::left <<(*pos)->getEndNode()->getName() << std::endl;
 	}
 	//stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
 	//stream << std::endl << std::setw(15) << std::left << "Total weight: [" << std::setw(10) << std::right << r.getWeight() << "]";

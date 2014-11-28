@@ -88,6 +88,8 @@ public:
 	void addConnection(Time departureTime, Time arrivalTime,unsigned int tripId);
 
 	std::vector<Connection> connections;
+
+	Time getNextTime(Time t) const;
 private:
 	unsigned int id;
 	const Node * start;

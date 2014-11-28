@@ -35,7 +35,7 @@ public:
 	/**
 	 * @return Returns sum of weights of Edge objects.
 	 */
-	double getWeight() const;
+	unsigned int getWeight(Time t) const;
 
 	/**
 	 * Checks if Route does not contain any loops and if all edges are connected.
