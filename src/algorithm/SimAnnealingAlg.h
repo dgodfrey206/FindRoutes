@@ -13,6 +13,8 @@
 #include <random>
 #include <cmath>
 #include <stack>
+#include <algorithm>
+#include <array>
 
 /**
  * Simulated Annealing Algorithm used for finding routes.
@@ -32,6 +34,7 @@ public:
 	void setParams(double Tstart, double Tend, double k, double alpha);
 
 	virtual const std::string & getName() const;
+
 private:
 	static const std::string name;
 	std::default_random_engine generator;
@@ -42,8 +45,12 @@ private:
 	double alpha;
 
 
-	double getRandom();
+	double getRandom(unsigned i = 1);
+
+public://todo private
+	Route * getRouteInSurroundings(const Network * n, Route * r);
 	Route * getFistSolution(const Network * n, Node * start, Node * end);
+
 };
 
 #endif /* SRC_SIMANNEALINGALG_H_ */
