@@ -25,6 +25,8 @@ public:
 	 */
 	Route();
 
+	Route(const Route &r);
+
 	/**
 	 * @return Returns length - number of Edge objects.
 	 */

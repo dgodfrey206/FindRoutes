@@ -208,3 +208,7 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 
 	return stream;
 }
+
+Route::Route(const Route& r) {
+	this->route = r.route;
+}
