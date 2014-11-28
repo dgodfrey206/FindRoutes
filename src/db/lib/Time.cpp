@@ -35,48 +35,30 @@ Time& Time::operator=(const Time& src){
 }
 
 bool Time::operator==(const Time& src) const{
-	if( (this->minutes == src.minutes) ){
-		return true;
-	}else{
-		return false;
-	}
+	return this->minutes == src.minutes;
 }
 
 bool Time::operator!=(const Time& src) const{
-	return !(this->operator ==(src));
+	return !(*this == src);
 }
 
 
 bool Time::operator>(const Time src){
-	if(this->minutes > src.minutes ){
-		return true;
-	}else{
-		return false;
-	}
+	if(this->minutes > 23*60 && src.minutes < 60) return false;
+	else if(this->minutes < 60 && src.minutes > 23 * 60) return true;
+	else return this->minutes > src.minutes;
 }
 
 bool Time::operator>=(const Time src){
-	if(this->minutes >= src.minutes ){
-			return true;
-		}else{
-			return false;
-		}
+	return (*this > src) || (*this == src);
 }
 
 bool Time::operator<(const Time src){
-	if(this->minutes < src.minutes ){
-			return true;
-	}else{
-		return false;
-	}
+	return !(*this >= src);
 }
 
 bool Time::operator<=(const Time src){
-	if(this->minutes <= src.minutes ){
-			return true;
-	}else{
-		return false;
-	}
+	return !(*this > src);
 }
 
 Time Time::operator+(const Time src){
