@@ -150,6 +150,7 @@ Network::Network(DataBase& dataB){
 					for(Time t2: stopTimesTable[trip.getId()][stop]){
 						if(t1<t2){
 							newEdge->addConnection(t1,t2,trip.getId());
+							break;
 						}
 					}
 				}
