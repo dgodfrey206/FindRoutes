@@ -55,6 +55,14 @@ bool Time::operator>(const Time src){
 	}
 }
 
+bool Time::operator>=(const Time src){
+	if(this->minutes >= src.minutes ){
+			return true;
+		}else{
+			return false;
+		}
+}
+
 bool Time::operator<(const Time src){
 	if(this->minutes < src.minutes ){
 			return true;
@@ -63,11 +71,16 @@ bool Time::operator<(const Time src){
 	}
 }
 
+bool Time::operator<=(const Time src){
+	if(this->minutes <= src.minutes ){
+			return true;
+	}else{
+		return false;
+	}
+}
+
 Time Time::operator+(const Time src){
-	if(this->minutes + src.minutes < 60*24)
-		return Time(this->minutes + src.minutes);
-	else
-		return Time(0);
+	return Time( (this->minutes + src.minutes)/(24*60));
 }
 
 Time Time::operator-(const Time src){

@@ -71,12 +71,14 @@ public:
 	 * @return True if given "this" time is later from midnight than src time.
 	 */
 	bool operator>(const Time src);
-
+	bool operator>=(const Time src);
 	/**
 	 * Greater than operator.
 	 * @return True if given "this" time is sooner from midnight than src time.
 	 */
 	bool operator<(const Time src);
+	bool operator<=(const Time src);
+
 
 	/**
 	 * Addition operator.
