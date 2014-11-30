@@ -31,21 +31,17 @@ unsigned int Route::getWeight(Time t) const{
 	/*
 	 * return weight of route
 	 */
-	Time tStart = t;
+
 	if(this->route.empty())
 			return 0;
 
+	Time tStart = t;
 	for(auto it = this->route.begin(); it != this->route.end(); it++){
 		auto edge = **it;
 		t = edge.getNextTime(t);
 		std::cerr<<t<<std::endl;
 	}
-
-	t= t - tStart;
-	unsigned int weight = t;
-	//for(std::list<const Edge *>::const_iterator it = this->route.begin(); it != this->route.end(); it++)
-		//weight += (*it)->getWeight();
-	return weight;
+	return int(t - tStart);
 }
 
 bool Route::validate() const {
@@ -83,9 +79,8 @@ bool Route::addEdge(const Edge * e) {
 	/*
 	 * add edge to the end of route
 	 */
-	/*if((this->getLength() != 0) && (*this->route.back()->getEndNode()) != (*e->getStartNode()))
-		return false;
-		*/
+	if((this->getLength() != 0) && (*(this->route.back()->getEndNode())) != (*(e->getStartNode())))	return false;
+
 	this->route.push_back(e);
 	return true;
 }
