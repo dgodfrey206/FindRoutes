@@ -6,6 +6,7 @@
  */
 
 #include "Edge.h"
+#include <algorithm>
 
 Edge::Edge():id(0),start(NULL),end(NULL){
 	connections = std::vector<Connection>();
@@ -79,7 +80,15 @@ std::ostream& operator<<(std::ostream& stream, const Edge& e)
 }
 
 void Edge::addConnection(Time departureTime, Time arrivalTime,unsigned int tripId){
-	this->connections.push_back(Connection(departureTime,arrivalTime,tripId));
+
+	Connection newCon(departureTime,arrivalTime,tripId);
+
+	auto it = std::find_if(this->connections.begin(), this->connections.end(), [&](Connection c){
+		return (newCon.getArrivalTime() == c.getArrivalTime()) && (newCon.getDepartureTime() == c.getDepartureTime()) && (newCon.getTripID() == c.getTripID());
+	});
+	if(it == this->connections.end()){
+		this->connections.push_back(Connection(departureTime,arrivalTime,tripId));
+	}
 }
 
 Time Edge::getNextTime(Time t) const{
