@@ -6,6 +6,7 @@
  */
 
 #include "SimAnnealingAlg.h"
+#include <cmath>
 
 const std::string SimAnnealingAlg::name = "Simulated annealing";
 
@@ -28,19 +29,34 @@ SimAnnealingAlg::~SimAnnealingAlg()
 Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end) {
 
 	//k - number of iteration
-	//T0 - starting temperature
+	//Tstart - starting temperature
+	//Tend - ending temperature
 	//T - current temperature
 	//alfa - T = alfa * T for every iteration
-	Route * bestKnown = NULL;
-//	double bestKnownWeight = -1;
 
-	//get starting solution
-
+	double T = this->Tstart;
 	Route * currentSolution = this->getFistSolution(n, start, end);
-	bestKnown = currentSolution;
-//	bestKnownWeight = currentSolution->getWeight();
+	unsigned int currentWeight = currentSolution->getWeight(t);
+	while(T>this->Tend){
+		for(unsigned int i=0; i<k; i++){	//repeat k times
+			Route * newR =this->getRouteInSurroundings(n,currentSolution);		//get new solution and new weight
+			unsigned int newWeight = newR->getWeight(this->t);
+			int delta = int(newWeight) - int(currentWeight);
 
-	return bestKnown;
+			if(delta <0){	//if solution is better tha current
+				currentSolution = newR;
+				currentWeight = newWeight;
+			}else{
+				if( this->getRandom() < std::exp(double((-1)*delta) / double(T)) ){
+					currentSolution = newR;
+					currentWeight = newWeight;
+				}
+			}
+		}
+		T *= this->alpha;
+	}
+
+	return currentSolution;
 }
 
 const std::string & SimAnnealingAlg::getName() const {
@@ -51,11 +67,12 @@ double SimAnnealingAlg::getRandom(unsigned i) {
 	return i * this->distribution(this->generator);
 }
 
-void SimAnnealingAlg::setParams(double Tstart, double Tend, double k, double alpha) {
+void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, double alpha, Time t) {
 	this->Tstart = Tstart;
 	this->Tend = Tend;
 	this->k = k;
 	this->alpha = alpha;
+	this->t = t;
 }
 
 Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {

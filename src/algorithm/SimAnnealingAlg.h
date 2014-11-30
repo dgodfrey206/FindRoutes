@@ -31,7 +31,7 @@ public:
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
 	virtual Route* solve(const Network * n, Node * start, Node * end);
-	void setParams(double Tstart, double Tend, double k, double alpha);
+	void setParams(double Tstart, double Tend, unsigned int k, double alpha, Time t);
 
 	virtual const std::string & getName() const;
 
@@ -41,8 +41,9 @@ private:
 	std::uniform_real_distribution<> distribution;
 	double Tstart;
 	double Tend;
-	double k;
+	unsigned int k;
 	double alpha;
+	Time t;
 
 
 	double getRandom(unsigned i = 1);
