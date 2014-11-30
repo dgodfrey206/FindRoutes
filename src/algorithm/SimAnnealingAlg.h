@@ -15,7 +15,7 @@
 #include <stack>
 #include <algorithm>
 #include <array>
-
+#include <limits>
 /**
  * Simulated Annealing Algorithm used for finding routes.
  * See doc folder for more information.

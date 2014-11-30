@@ -79,7 +79,7 @@ bool Route::addEdge(const Edge * e) {
 	/*
 	 * add edge to the end of route
 	 */
-	if((this->getLength() != 0) && (*(this->route.back()->getEndNode())) != (*(e->getStartNode())))	return false;
+	if((this->getLength() != 0) && ((*(this->route.back()->getEndNode())) != (*(e->getStartNode()))))	return false;
 
 	this->route.push_back(e);
 	return true;

@@ -62,39 +62,52 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 	std::cerr << "getFistSolution called" << std::endl;
 
 	Node * currentNode = start;
-	Route * route = new Route;
+//	Route * route = new Route;
 
-	std::vector<Node *> visited;
+	std::vector<Node *> stack;
+	std::vector<Edge *> route;
+	std::vector<Node *> ignored;
+
+//	stack.push_back(start);
+//	ignored.push_back(start);
 
 	while(*currentNode != *end)
 	{
-		visited.push_back(currentNode);
-
 		std::cerr << " while loop" << std::endl;
 		std::cerr << " current node: " << *currentNode << std::endl;
 		std::list<Edge *> edgesForNode = n->getEdgesForNode(currentNode);
 		std::cerr << " Edges for node: " << edgesForNode.size() << std::endl;
 
 		//search all edges and select one closest to end node
-		double closestDist = 0;
+		double closestDist = std::numeric_limits<double>::max();
 		Edge * closestNodeEdge = NULL;
 
 		for(Edge * e: edgesForNode)
 		{
 			//skip visited nodes:
-			bool isVisited = false;
-			for(Node * n: visited)
+			bool isIgnored = false;
+
+			for(Node * n: stack)
 			{
 				if(*n == (*e->getEndNode()))
 				{
-					isVisited = true;
+					isIgnored = true;
 					break;
 				}
 			}
-			if(isVisited) continue;
+			for(Node * n: ignored)
+			{
+				if(*n == (*e->getEndNode()))
+				{
+					isIgnored = true;
+					break;
+				}
+			}
+			if(isIgnored) continue;
 
 			double distance = sqrt(pow(e->getEndNode()->getLatitude() - end->getLatitude(), 2)
 					+ pow(e->getEndNode()->getLongtitude() - end->getLongtitude(), 2));
+
 			if(closestNodeEdge == NULL || distance < closestDist)
 			{
 				closestNodeEdge = e;
@@ -104,19 +117,55 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 
 		if(closestNodeEdge != NULL)
 		{
+			stack.push_back(currentNode);
+			route.push_back(closestNodeEdge);
+
 			std::cerr <<"found closest node: " << *(closestNodeEdge->getEndNode()) << std::endl;
-			route->addEdge(closestNodeEdge);
+
+//			{
+				currentNode = n->getNode(closestNodeEdge->getEndNode()->getID());
+//			}
+//			else
+//			{
+//				std::cout <<"route became invalid" << std::endl;
+//				for(auto e: route) std::cout << *e << std::endl;
+//
+//				std::cout << *closestNodeEdge << std::endl;
+//				std::cout << "stack:" << std::endl;
+//				for(auto n: stack) std::cout << *n << std::endl;
+//				return NULL;
+//			}
+
 		}
 		else
 		{
 			std::cerr << " closest node edge is null" << std::endl;
+			if(stack.size() == 0)
+			{
+				std::cout << " stack is empty, abort" << std::endl;
+				return NULL;
+			}
+			ignored.push_back(currentNode);
+
+			currentNode = stack.back();
+			stack.pop_back();
+			route.pop_back();
+
+
 		}
-
-		currentNode = n->getNode(closestNodeEdge->getEndNode()->getID());
 	}
+	std::cerr << "while loop finished." << std::endl;
 
-	std::cerr << "getFistSolution finished" << std::endl;
-	return route;
+	Route * r = new Route;
+	for(Edge * e: route) r->addEdge(e);
+	if(r->validate())
+	{
+		std::cerr << "getFistSolution finished" << std::endl;
+		return r;
+	}
+	std::cerr << "Created route is invalid";
+	std::cerr << *r << std::endl;
+	return NULL;
 }
 
 Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
