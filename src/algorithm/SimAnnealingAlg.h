@@ -35,6 +35,8 @@ public:
 
 	virtual const std::string & getName() const;
 
+	std::vector<unsigned> getWeights() const;
+
 private:
 	static const std::string name;
 	std::default_random_engine generator;
@@ -43,7 +45,7 @@ private:
 	double Tend;
 	unsigned int k;
 	double alpha;
-
+	std::vector<unsigned> weights;
 
 	double getRandom(unsigned i = 1);
 

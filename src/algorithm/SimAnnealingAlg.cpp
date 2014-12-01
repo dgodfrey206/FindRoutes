@@ -33,6 +33,8 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 	//Tend - ending temperature
 	//T - current temperature
 	//alfa - T = alfa * T for every iteration
+	this->weights.clear();
+
 	Time t = time;
 	double T = this->Tstart;
 	Route * currentSolution = this->getFistSolution(n, start, end);
@@ -54,6 +56,7 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 			}
 		}
 		T *= this->alpha;
+		this->weights.push_back(currentWeight);
 	}
 
 	return currentSolution;
@@ -72,6 +75,10 @@ void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, doub
 	this->Tend = Tend;
 	this->k = k;
 	this->alpha = alpha;
+}
+
+std::vector<unsigned> SimAnnealingAlg::getWeights() const {
+	return this->weights;
 }
 
 Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {
