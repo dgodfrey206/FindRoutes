@@ -18,6 +18,7 @@
  * Includes info about start and end positions,
  * type of connection and weight of it.
  */
+class Node;
 class Edge {
 public:
 	Edge();
@@ -41,12 +42,12 @@ public:
 	/**
 	 * @return Returns pointer to starting Node.
 	 */
-	const Node * getStartNode() const;
+	Node * getStartNode() const;
 
 	/**
 	 * @return Returns pointer to ending Node.
 	 */
-	const Node * getEndNode() const;
+	Node * getEndNode() const;
 
 	/**
 	 * Compares itself id with given edge id.
@@ -92,8 +93,8 @@ public:
 	Time getNextTime(Time t) const;
 private:
 	unsigned int id;
-	const Node * start;
-	const Node * end;
+	Node * start;
+	Node * end;
 
 };
 

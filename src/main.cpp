@@ -32,14 +32,15 @@ int main()
 	Node * start = net.getNode(199);
 	Node * end = net.getNode(111);
 
-	std::cout << *start << std::endl << *end << std::endl;
-	Route * solution = solver->getFistSolution(&net, start, end);
-	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
+	auto startTime = std::chrono::system_clock::now();
 
-	solver->setParams(1000, 100, 10, 0.9, Time(1000));
-	solution = solver->solve(&net, start, end);
+	solver->setParams(25, 1, 20, 0.997);
+	auto solution = solver->solve(&net, start, end, Time(1000));
 	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
-
+	else std::cout << "Solution have not been found" << std::endl;
+	auto endTime = std::chrono::system_clock::now();
+	auto length = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+	std::cout << "Time: " << length.count() << "ms" << std::endl;
 }
 
 

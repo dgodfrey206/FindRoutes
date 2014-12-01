@@ -35,6 +35,21 @@ std::string Node::getName() const
 	return this->name;
 }
 
+std::list<Edge *> Node::getEdges() const
+{
+	return this->edges;
+}
+
+bool Node::addEdge(Edge * edge)
+{
+	for(Edge * e: this->edges)
+	{
+		if(*e == *edge) return false;
+	}
+	this->edges.push_back(edge);
+	return true;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Node& n)
 {
 	stream << "Node:" << std::endl;

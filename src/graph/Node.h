@@ -11,11 +11,15 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
-
+#include "Edge.h"
+#include <list>
 /**
  * primary element.
  * Contains info about position and name of itself.
  */
+
+class Edge;
+
 class Node {
 public:
 	/**
@@ -47,6 +51,9 @@ public:
 	 */
 	std::string getName() const;
 
+	std::list<Edge *> getEdges() const;
+
+	bool addEdge(Edge * e);
 	/**
 	 * Operator used for console debug purposes.
 	 * @param s Stream which is used for output.
@@ -88,6 +95,8 @@ private:
 	std::string name;
 	double longtitude;
 	double latitude;
+
+	std::list<Edge *> edges;
 };
 
 #endif /* SRC_NODE_H_ */

@@ -238,6 +238,7 @@ bool Network::addEdge(Edge* e) {
 		return false;
 
 	this->edges.insert(e);
+	e->getStartNode()->addEdge(e);
 	return true;
 }
 
@@ -268,12 +269,13 @@ Edge* Network::getEdge(unsigned int id) const {
 }
 
 std::list<Edge *> Network::getEdgesForNode(const Node* n) const {
-	std::list<Edge *> found;
+	/*std::list<Edge *> found;
 	for(Edge * e: this->edges)
 		if(*(e->getStartNode()) == *n)
 			found.push_back(e);
 
-	return found;
+	return found;*/
+	return n->getEdges();
 }
 
 std::list<Node*> Network::getAllNodes()const{

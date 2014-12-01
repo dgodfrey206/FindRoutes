@@ -32,11 +32,11 @@ unsigned int Edge::getID() const {
 	return this->id;
 }
 
-const Node* Edge::getStartNode() const {
+Node* Edge::getStartNode() const {
 	return this->start;
 }
 
-const Node* Edge::getEndNode() const {
+Node* Edge::getEndNode() const {
 	return this->end;
 }
 
