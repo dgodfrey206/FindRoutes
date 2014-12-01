@@ -90,10 +90,10 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 
 	while(*currentNode != *end)
 	{
-		std::cerr << " while loop" << std::endl;
-		std::cerr << " current node: " << *currentNode << std::endl;
+//		std::cerr << " while loop" << std::endl;
+//		std::cerr << " current node: " << *currentNode << std::endl;
 		std::list<Edge *> edgesForNode = n->getEdgesForNode(currentNode);
-		std::cerr << " Edges for node: " << edgesForNode.size() << std::endl;
+//		std::cerr << " Edges for node: " << edgesForNode.size() << std::endl;
 
 		//search all edges and select one closest to end node
 		double closestDist = std::numeric_limits<double>::max();
@@ -137,7 +137,7 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 			stack.push_back(currentNode);
 			route.push_back(closestNodeEdge);
 
-			std::cerr <<"found closest node: " << *(closestNodeEdge->getEndNode()) << std::endl;
+//			std::cerr <<"found closest node: " << *(closestNodeEdge->getEndNode()) << std::endl;
 
 //			{
 				currentNode = n->getNode(closestNodeEdge->getEndNode()->getID());
@@ -156,7 +156,7 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 		}
 		else
 		{
-			std::cerr << " closest node edge is null" << std::endl;
+//			std::cerr << " closest node edge is null" << std::endl;
 			if(stack.size() == 0)
 			{
 				std::cout << " stack is empty, abort" << std::endl;
@@ -171,7 +171,7 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 
 		}
 	}
-	std::cerr << "while loop finished." << std::endl;
+//	std::cerr << "while loop finished." << std::endl;
 
 	Route * r = new Route;
 	for(Edge * e: route) r->addEdge(e);
@@ -202,49 +202,49 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 
 	while(newRoute == NULL && nodes.size() > 0)
 	{
-		std::cout << "t1" << std::endl;
+//		std::cout << "t1" << std::endl;
 		const Node * n = nodes.back();
 		nodes.pop_back(); //get random node from list
 
-		std::cout << "t2" << std::endl;
+//		std::cout << "t2" << std::endl;
 
 		//first, try to remove node from route, then, if failed, adding node in front or back of given to route
-		std::cout << "t3" << std::endl;
+//		std::cout << "t3" << std::endl;
 		//locate node in route
 		auto it = r->begin();
 		decltype(it) inEdgeIt;
 		decltype(it) outEdgeIt;
-		std::cout << "t4" << std::endl;
+//		std::cout << "t4" << std::endl;
 		for(; it != r->end(); it++)
 		{
-			std::cout << "t41" << std::endl;
+//			std::cout << "t41" << std::endl;
 			/*std::cout << (*it) << std::endl;
 			std::cout << (*it)->getStartNode() << ", " << (*it)->getEndNode() << std::endl;
 			std::cout << n << std::endl;*/
 			if(*((*it)->getEndNode()) == *n)
 			{
-				std::cout << "t411" << std::endl;
+//				std::cout << "t411" << std::endl;
 				inEdgeIt = it;
 			}
 			else if(*((*it)->getStartNode()) == *n)
 			{
-				std::cout << "t412" << std::endl;
+//				std::cout << "t412" << std::endl;
 				outEdgeIt = it;
 			}
-			std::cout << "t42" << std::endl;
+//			std::cout << "t42" << std::endl;
 		}
 
-		std::cout << "t5" << std::endl;
+//		std::cout << "t5" << std::endl;
 
 		const Node * startNode = (*inEdgeIt)->getStartNode();
 		const Node * endNode = (*outEdgeIt)->getEndNode();
 
-		std::cout << "t6" << std::endl;
+//		std::cout << "t6" << std::endl;
 
 		//try removing
 		if(net->isEdgeBetween(startNode, endNode))
 		{
-			std::cout << "t61" << std::endl;
+//			std::cout << "t61" << std::endl;
 			//get that edge and return new Route
 			unsigned edgeID = net->calculateEdgeId(startNode->getID(), endNode->getID());
 			const Edge * newEdge = net->getEdge(edgeID);
@@ -253,28 +253,28 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 
 			newRoute->switchEdge(newEdge);
 
-			std::cout << "t62" << std::endl;
+//			std::cout << "t62" << std::endl;
 
 			return newRoute;
 		}
 
-		std::cout << "t7" << std::endl;
+//		std::cout << "t7" << std::endl;
 
 		//try adding
 		std::list<Edge *> startNodeEdges = net->getEdgesForNode(startNode);
-		std::cout << "t8" << std::endl;
+//		std::cout << "t8" << std::endl;
 		for(Edge * e: startNodeEdges)
 		{
-			std::cout << "t81" << std::endl;
+//			std::cout << "t81" << std::endl;
 			if(net->isEdgeBetween(e->getEndNode(), n))
 			{
-				std::cout << "t811" << std::endl;
+//				std::cout << "t811" << std::endl;
 				unsigned edgeID = net->calculateEdgeId(e->getEndNode()->getID(), n->getID());
 				const Edge * newEdge = net->getEdge(edgeID);
 
 				if(r->isEdgeIn(newEdge))
 				{
-					std::cout << "t8111" << std::endl;
+//					std::cout << "t8111" << std::endl;
 					continue;
 				}
 
@@ -286,48 +286,48 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 
 				if(newRoute->switchRoute(*newR) && newRoute->validate())
 				{
-					std::cout << "t812" << std::endl;
+//					std::cout << "t812" << std::endl;
 					return newRoute;
 				}
-				else std::cout << "t813" << std::endl;
+//				else std::cout << "t813" << std::endl;
 			}
 		}
-		std::cout << "t9" << std::endl;
+//		std::cout << "t9" << std::endl;
 		std::list<Edge *> endNodeEdges = net->getEdgesForNode(endNode);
-		std::cout << "t10" << std::endl;
+//		std::cout << "t10" << std::endl;
 		for(Edge * e: endNodeEdges)
 		{
-			std::cout << "t101" << std::endl;
+//			std::cout << "t101" << std::endl;
 			if(net->isEdgeBetween(n, e->getStartNode()))
 			{
-				std::cout << "t1011" << std::endl;
+//				std::cout << "t1011" << std::endl;
 				unsigned edgeID = net->calculateEdgeId(n->getID(), e->getStartNode()->getID());
 				const Edge * newEdge = net->getEdge(edgeID);
 
 				if(r->isEdgeIn(newEdge))
 				{
-					std::cout << "t10111" << std::endl;
+//					std::cout << "t10111" << std::endl;
 					continue;
 				}
-				std::cout << "t1012" << std::endl;
+//				std::cout << "t1012" << std::endl;
 				Route * newR = new Route;
 				newR->addEdge(newEdge);
 				newR->addEdge(e);
-				std::cout << "t1013" << std::endl;
+//				std::cout << "t1013" << std::endl;
 				Route * newRoute = new Route(*r);
-				std::cout << "t1014" << std::endl;
+//				std::cout << "t1014" << std::endl;
 				std::cout << *newRoute << std::endl << std::cout << *newR << std::endl;
 				if(newRoute->switchRoute(*newR) && newRoute->validate())
 				{
-					std::cout << "t1015" << std::endl;
+//					std::cout << "t1015" << std::endl;
 					return newRoute;
 				}
-				else std::cout << "t1016" << std::endl;
+//				else std::cout << "t1016" << std::endl;
 
 
 			}
 		}
-		std::cout << "t11" << std::endl;
+//		std::cout << "t11" << std::endl;
 	}
 
 	return newRoute;
