@@ -34,11 +34,15 @@ unsigned int Route::getWeight(Time t) const{
 	 */
 
 	if(this->route.empty())
-			return 0;
+			return 10000;
 
 	std::vector<Connection> conSeq = this->getConnectionsSequence(t);
 	if(conSeq.empty())
-		return 0;
+		return 10000;
+
+	if(conSeq.size() != this->route.size()){
+		std::cerr<<"error in conection sequence vs route size!"<<std::endl;
+	}
 
 	Time tStart = t;
 	unsigned int weight = 0;
@@ -66,6 +70,7 @@ std::vector<Connection>  Route::getConnectionsSequence(Time t) const{
 		auto edge = **it;
 		Time temp = t;
 		t = edge.getNextTime(t);
+		std::cout<<t<<std::endl;
 
 		auto conIt = std::find_if(edge.connections.begin(), edge.connections.end(), [&](Connection c){
 			return (c.getDepartureTime() >= temp) && (c.getArrivalTime() == t) ;
@@ -268,6 +273,10 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 		stream << "]-[" <<std::setw(10) << std::right << (*pos)->getID() << "]";
 		stream << " " << std::setw(25) << std::left <<(*pos)->getStartNode()->getName();
 		stream << " " << std::setw(25) << std::left <<(*pos)->getEndNode()->getName() << std::endl;
+
+		for(auto c: (*pos)->connections){
+			stream<<c<<std::endl;
+		}
 
 	}
 	//stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
