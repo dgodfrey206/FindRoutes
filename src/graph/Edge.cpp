@@ -95,13 +95,14 @@ Time Edge::getNextTime(Time t) const{
 
 	Time bestTimeDiff(24*60 -1);
 	Time bestTime(0);
+	//if(t == Time(10,59)) std::cerr<<"tu kurwa dzieje się coś dziwnego"<<std::endl;
 	for(auto c: this->connections){
-		if( (c.getDepartureTime() >= t) && (c.getArrivalTime()-t<bestTimeDiff)){
+		if( (c.getDepartureTime() >= t) && ( int(c.getArrivalTime()-t)< int(bestTimeDiff))){
 			bestTimeDiff = c.getArrivalTime()-t;
 			bestTime = c.getArrivalTime();
 		}
 	}
-
+	//if(t == Time(10,59)) std::cerr<< int(bestTimeDiff)<<std::endl;
 	return bestTime;
 }
 
