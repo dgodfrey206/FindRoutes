@@ -13,6 +13,7 @@
 #include <iostream>
 
 #include "Edge.h"
+#include "Connection.h"
 
 /**
  * contains information about route between two points
@@ -118,6 +119,14 @@ public:
 	 */
 	friend std::ostream& operator << (std::ostream& s, Route& r);
 
+	/*
+	 * Returns connection sequence on witch getWeight(Time) calculate result
+	 * @param t Time when calculating starts from
+	 * @return vector with found connections
+	 * */
+	std::vector<Connection> getConnectionsSequence(Time t) const;
+
+	static void printRoute(std::ostream& output, Route* r, Time t);
 
 private:
 	std::list<const Edge *> route;

@@ -6,6 +6,7 @@
  */
 
 #include "Route.h"
+#include <algorithm>
 
 Route::Route() {
 	/*
@@ -35,13 +36,75 @@ unsigned int Route::getWeight(Time t) const{
 	if(this->route.empty())
 			return 0;
 
+	std::vector<Connection> conSeq = this->getConnectionsSequence(t);
+	if(conSeq.empty())
+		return 0;
+
+	Time tStart = t;
+	unsigned int weight = 0;
+	for(Connection c: conSeq){
+		if( int(c.getArrivalTime()) < int(t)){	//when midnight has been crossed
+			weight+= (24*60-int(t)) + int(c.getArrivalTime());
+			t = c.getArrivalTime();
+		}else{
+			weight += int(c.getArrivalTime() - t);
+			t = c.getArrivalTime();
+		}
+	}
+
+	return weight;
+}
+
+
+std::vector<Connection>  Route::getConnectionsSequence(Time t) const{
+	std::vector<Connection> result;
+	if(this->route.empty())
+		return result;
+
 	Time tStart = t;
 	for(auto it = this->route.begin(); it != this->route.end(); it++){
 		auto edge = **it;
+		Time temp = t;
 		t = edge.getNextTime(t);
-		std::cerr<<t<<std::endl;
+
+		auto conIt = std::find_if(edge.connections.begin(), edge.connections.end(), [&](Connection c){
+			return (c.getDepartureTime() >= temp) && (c.getArrivalTime() == t) ;
+		});
+
+		if( conIt != edge.connections.end()){
+			result.push_back(*conIt);
+		}
 	}
-	return int(t - tStart);
+	return result;
+}
+
+void Route::printRoute(std::ostream& output, Route* r, Time t){
+	if(r->route.empty())
+		return;
+
+	std::vector<Connection> conSeq = r->getConnectionsSequence(t);
+	if(conSeq.empty())
+		return;
+
+	if(conSeq.size() != r->route.size()){
+		output<<"error in conection sequence vs route size!"<<std::endl;
+	}
+
+	output<<"trip start time: "<<t<<std::endl;
+	auto edgeIt = r->route.begin();
+	for(unsigned int i=0; i<conSeq.size(); i++){
+		if( int(conSeq[i].getDepartureTime()) < int(t)){
+			output<<"wait "<< 24*60 - int(t) + int(conSeq[i].getDepartureTime())<<" minutes"<<std::endl;
+		}else if( (conSeq[i].getDepartureTime() - t) ){
+			output<<"wait "<< int(conSeq[i].getDepartureTime() - t)<<" minutes"<<std::endl;
+		}
+		output<<"go from "<< (*edgeIt)->getStartNode()->getName()<<" on time "<< conSeq[i].getDepartureTime();
+		output<<" to "<< (*edgeIt)->getEndNode()->getName()<<" on time "<< conSeq[i].getArrivalTime();
+		output<<" with trip "<<conSeq[i].getTripID()<<std::endl;
+		edgeIt++;
+		t = conSeq[i].getArrivalTime();
+	}
+
 }
 
 bool Route::validate() const {
@@ -205,6 +268,7 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 		stream << "]-[" <<std::setw(10) << std::right << (*pos)->getID() << "]";
 		stream << " " << std::setw(25) << std::left <<(*pos)->getStartNode()->getName();
 		stream << " " << std::setw(25) << std::left <<(*pos)->getEndNode()->getName() << std::endl;
+
 	}
 	//stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
 	//stream << std::endl << std::setw(15) << std::left << "Total weight: [" << std::setw(10) << std::right << r.getWeight() << "]";
