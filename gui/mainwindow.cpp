@@ -258,6 +258,39 @@ void MainWindow::findRoute()
         std::cout << *solution;
         std::cout << "Total time: " << solution->getWeight(time) << std::endl;
         std::cout << "From: " << time << " to: " << Time(int(time) + solution->getWeight(time)) << std::endl;
+
+        try
+        {
+            SimAnnealingAlg * s = reinterpret_cast<SimAnnealingAlg *>(this->settings->getCurrentSolver());
+
+            std::cout << "ok";
+            QCustomPlot * plot = new QCustomPlot;
+            plot->addGraph();
+
+            QVector<double> yData;
+            QVector<double> xData;
+            std::vector<unsigned> weights = s->getWeights();
+
+            double ymax = 0;
+            for(int i = 0; i < yData.size(); i++)
+            {
+                xData.append(i);
+                yData.append(weights[i]);
+                if(ymax < weights[i]) ymax = weights[i];
+            }
+            plot->graph(0)->setData(xData, yData);
+            plot->xAxis->setRange(0, xData.back());
+            plot->xAxis->setLabel("Iteracja");
+            plot->yAxis->setRange(0, ymax);
+            plot->yAxis->setLabel("Wartość rozwiązania");
+            plot->replot();
+            plot->show();
+        }
+        catch(...)
+        {
+            //another solver, skip
+        }
+
     }
     else
     {
