@@ -34,9 +34,6 @@ private:
 
 public slots:
     void toggleVisibility();
-
-private slots:
-    void updateParamsView();
 };
 
 #endif // SETTINGS_H

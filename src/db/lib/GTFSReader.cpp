@@ -9,7 +9,7 @@
 
 void GTFSReader::readGTFS(std::string filename) {
 
-	std::cout << "readGTFS called. Filename " << filename << std::endl;
+	std::cerr << "readGTFS called. Filename " << filename << std::endl;
 	//open zip archive
 	int error = 0;
 	char errorBuffer[100];
@@ -17,9 +17,9 @@ void GTFSReader::readGTFS(std::string filename) {
 
 	if(error != ZIP_ER_OK)
 	{
-		std::cout << "Err value: " << error << std::endl;
+		std::cerr << "Err value: " << error << std::endl;
 		zip_error_to_str(errorBuffer, 100, 0, error);
-		std::cout << "Err msg: " << errorBuffer << std::endl;
+		std::cerr << "Err msg: " << errorBuffer << std::endl;
 		return;
 	}
 
@@ -34,10 +34,10 @@ void GTFSReader::readGTFS(std::string filename) {
 }
 
 void GTFSReader::loadStops(struct zip* z) {
-	std::cout << "loadStops called." << std::endl;
+	std::cerr << "loadStops called." << std::endl;
 	if(z == NULL)
 	{
-		std::cout << "Got empty pointer as argument, return." << std::endl;
+		std::cerr << "Got empty pointer as argument, return." << std::endl;
 		return;
 	}
 
@@ -77,10 +77,10 @@ void GTFSReader::loadStops(struct zip* z) {
 }
 
 void GTFSReader::loadRoutes(struct zip* z) {
-	std::cout << "loadRoutes called." << std::endl;
+	std::cerr << "loadRoutes called." << std::endl;
 	if(z == NULL)
 	{
-		std::cout << "Got empty pointer as argument, return." << std::endl;
+		std::cerr << "Got empty pointer as argument, return." << std::endl;
 		return;
 	}
 
@@ -116,10 +116,10 @@ void GTFSReader::loadRoutes(struct zip* z) {
 }
 
 void GTFSReader::loadTrips(struct zip* z) {
-	std::cout << "loadTrips called." << std::endl;
+	std::cerr << "loadTrips called." << std::endl;
 	if(z == NULL)
 	{
-		std::cout << "Got empty pointer as argument, return." << std::endl;
+		std::cerr << "Got empty pointer as argument, return." << std::endl;
 		return;
 	}
 
@@ -158,10 +158,10 @@ void GTFSReader::loadTrips(struct zip* z) {
 }
 
 void GTFSReader::loadServices(struct zip* z) {
-	std::cout << "loadServices called." << std::endl;
+	std::cerr << "loadServices called." << std::endl;
 	if(z == NULL)
 	{
-		std::cout << "Got empty pointer as argument, return." << std::endl;
+		std::cerr << "Got empty pointer as argument, return." << std::endl;
 		return;
 	}
 
@@ -195,7 +195,7 @@ void GTFSReader::loadServices(struct zip* z) {
 
 			if(operationalDays == 0)
 			{
-				std::cout << "Service with no working days, passing.";
+				std::cerr << "Service with no working days, passing.";
 				continue;
 			}
 
@@ -210,10 +210,10 @@ void GTFSReader::loadServices(struct zip* z) {
 }
 
 void GTFSReader::loadStopTimes(struct zip* z) {
-	std::cout << "loadStopTimes called." << std::endl;
+	std::cerr << "loadStopTimes called." << std::endl;
 	if(z == NULL)
 	{
-		std::cout << "Got empty pointer as argument, return." << std::endl;
+		std::cerr << "Got empty pointer as argument, return." << std::endl;
 		return;
 	}
 
@@ -239,7 +239,7 @@ void GTFSReader::loadStopTimes(struct zip* z) {
 		std::vector<std::string> timesData = GTFSReader::splitStrings(s, ',');
 
 		//create RouteData object and populate it
-		std::cout << s << std::endl;
+		std::cerr << s << std::endl;
 		unsigned tripID = this->tripIDsTranslate[timesData[0]];
 
 		/*try

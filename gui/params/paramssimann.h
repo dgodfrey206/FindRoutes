@@ -22,6 +22,9 @@ public:
 
 private:
     Ui::ParamsSimAnn *ui;
+private slots:
+    void updateAlphaBox();
+    void updateAlphaSlider();
 };
 
 #endif // PARAMSSIMANN_H

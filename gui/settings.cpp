@@ -38,10 +38,6 @@ void Settings::loadAlgorithms()
 
 }
 
-void Settings::updateParamsView(){
-
-}
-
 Solver * Settings::getCurrentSolver()
 {
     const unsigned index = this->ui->algorithm->currentIndex();

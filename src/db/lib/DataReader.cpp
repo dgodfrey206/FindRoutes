@@ -30,7 +30,7 @@ std::vector<RouteData> DataReader::readRoutes(std::string filename, bool oneFile
 
 
 		if( !parser.parse(file,root) ){
-			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			std::cerr<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}
 		else
@@ -65,7 +65,7 @@ std::vector<StopData> DataReader::readStops(std::string filename, bool oneFile){
 		Json::Value root;
 
 		if( !parser.parse(file,root) ){
-			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			std::cerr<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
 			Json::Value & stops = (oneFile ? root["stops"] : root);
@@ -95,7 +95,7 @@ std::vector<TripData> DataReader::readTrips(std::string filename, bool oneFile){
 		Json::Value root;
 
 		if( !parser.parse(file,root) ){
-			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			std::cerr<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
 			Json::Value & trips = (oneFile ? root["trips"] : root);
@@ -142,7 +142,7 @@ std::vector<StopTimeData> DataReader::readStopTimes(std::string filename, bool o
 		Json::Reader parser;
 		Json::Value root;
 		if( !parser.parse(file,root) ){
-			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			std::cerr<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
 			Json::Value & stopTimes = (oneFile ? root["stop_times"] : root);
@@ -175,7 +175,7 @@ std::vector<ServiceData> DataReader::readServices(std::string filename, bool one
 		Json::Reader parser;
 		Json::Value root;
 		if( !parser.parse(file,root) ){
-			std::cout<<parser.getFormatedErrorMessages()<<std::endl;
+			std::cerr<<parser.getFormatedErrorMessages()<<std::endl;
 			return result;
 		}else{
 			Json::Value & services = (oneFile ? root["services"] : root);

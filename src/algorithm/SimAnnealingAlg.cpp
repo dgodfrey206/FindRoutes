@@ -76,7 +76,7 @@ void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, doub
 }
 
 Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {
-	std::cerr << "getFistSolution called" << std::endl;
+//	std::cerr << "getFistSolution called" << std::endl;
 
 	Node * currentNode = start;
 //	Route * route = new Route;
@@ -159,7 +159,7 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 //			std::cerr << " closest node edge is null" << std::endl;
 			if(stack.size() == 0)
 			{
-				std::cout << " stack is empty, abort" << std::endl;
+//				std::cout << " stack is empty, abort" << std::endl;
 				return NULL;
 			}
 			ignored.push_back(currentNode);
@@ -177,7 +177,7 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 	for(Edge * e: route) r->addEdge(e);
 	if(r->validate())
 	{
-		std::cerr << "getFistSolution finished" << std::endl;
+//		std::cerr << "getFistSolution finished" << std::endl;
 		return r;
 	}
 	std::cerr << "Created route is invalid";
@@ -316,7 +316,7 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 //				std::cout << "t1013" << std::endl;
 				Route * newRoute = new Route(*r);
 //				std::cout << "t1014" << std::endl;
-				std::cout << *newRoute << std::endl << std::cout << *newR << std::endl;
+//				std::cout << *newRoute << std::endl << std::cout << *newR << std::endl;
 				if(newRoute->switchRoute(*newR) && newRoute->validate())
 				{
 //					std::cout << "t1015" << std::endl;

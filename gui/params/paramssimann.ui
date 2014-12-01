@@ -189,13 +189,16 @@
      <item row="3" column="2">
       <widget class="QSlider" name="alfaslider">
        <property name="maximum">
-        <number>9999</number>
+        <number>10000</number>
        </property>
        <property name="singleStep">
-        <number>10</number>
+        <number>100</number>
        </property>
        <property name="value">
-        <number>999</number>
+        <number>9990</number>
+       </property>
+       <property name="sliderPosition">
+        <number>9990</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -203,15 +206,18 @@
       </widget>
      </item>
      <item row="3" column="3">
-      <widget class="QSpinBox" name="alfabox">
+      <widget class="QDoubleSpinBox" name="alfabox">
+       <property name="decimals">
+        <number>4</number>
+       </property>
        <property name="maximum">
-        <number>9999</number>
+        <double>1.000000000000000</double>
        </property>
        <property name="singleStep">
-        <number>10</number>
+        <double>0.010000000000000</double>
        </property>
        <property name="value">
-        <number>9999</number>
+        <double>0.999000000000000</double>
        </property>
       </widget>
      </item>
@@ -314,38 +320,6 @@
     <hint type="destinationlabel">
      <x>429</x>
      <y>118</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>alfabox</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>alfaslider</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>439</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>347</x>
-     <y>244</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>alfaslider</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>alfabox</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>347</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>439</x>
-     <y>244</y>
     </hint>
    </hints>
   </connection>

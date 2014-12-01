@@ -18,6 +18,7 @@
 #include "algorithm/SimAnnealingAlg.h"
 
 #include <chrono>
+#include <random>
 
 int main()
 {
@@ -28,38 +29,17 @@ int main()
 	net.setSolver(solver);
 
 	net.validate();
-
-	Node * start = net.getNode(3);
-	Node * end = net.getNode(40);
-
-	std::cout << "Searching route between" << std::endl;
+	Node * start = net.getNode(199);
+	Node * end = net.getNode(111);
 
 	std::cout << *start << std::endl << *end << std::endl;
+	Route * solution = solver->getFistSolution(&net, start, end);
+	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
 
-	Route * first = solver->getFistSolution(&net, start, end);
-	Route * surr = first;
-	Route * newR;
-	for(int i = 0; i < 100; i++)
-	{
+	solver->setParams(1000, 100, 10, 0.9, Time(1000));
+	solution = solver->solve(&net, start, end);
+	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
 
-		newR = solver->getRouteInSurroundings(&net, surr);
-		if(surr != NULL)
-		{
-			std::cout << "Changed " << std::endl << *surr << std::endl;
-			std::cout << "Len:" << surr->getLength() << std::endl;
-			std::cout << "To " << std::endl << *newR << std::endl;
-			std::cout << "Len:" << newR->getLength() << std::endl;
-			surr = newR;
-		}
-		else
-		{
-			std::cout << "brik" << std::endl;
-			break;
-		}
-
-	}
-
-	//std::cout << *first << std::endl << *surr << std::endl;
 }
 
 
