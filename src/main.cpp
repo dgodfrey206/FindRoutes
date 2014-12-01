@@ -41,6 +41,10 @@ int main()
 	auto endTime = std::chrono::system_clock::now();
 	auto length = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
 	std::cout << "Time: " << length.count() << "ms" << std::endl;
+
+	std::ofstream f("save");
+	for(auto w:solver->getWeights()) f << w << std::endl;
+	f.close();
 }
 
 

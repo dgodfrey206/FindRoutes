@@ -158,7 +158,6 @@ bool Route::switchEdge(const Edge * e) {
 	Route r;
 	r.addEdge(e);
 	return this->switchRoute(r);
-
 }
 
 bool Route::switchRoute(Route& r) {
