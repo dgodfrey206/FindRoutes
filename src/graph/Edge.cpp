@@ -92,7 +92,7 @@ void Edge::addConnection(Time departureTime, Time arrivalTime,unsigned int tripI
 }
 
 Time Edge::getNextTime(Time t) const{
-	/*
+
 	Time bestTimeDiff(24*60 -1);
 	Time bestTime(0);
 	for(auto c: this->connections){
@@ -100,22 +100,8 @@ Time Edge::getNextTime(Time t) const{
 			bestTimeDiff = c.getArrivalTime()-t;
 			bestTime = c.getArrivalTime();
 		}
-	}*/
-
-	Time bestDepartureTime(0);
-	Time bestArrivalTime(0);
-	for(auto c: this->connections){
-		if( (c.getDepartureTime() >= t) ){
-			bestDepartureTime = c.getDepartureTime();
-			bestArrivalTime = c.getArrivalTime();
-		}
-	}
-	for(auto c: this->connections){
-		if( (c.getDepartureTime() >= t) && (c.getArrivalTime() <= bestArrivalTime  ) ){
-					bestArrivalTime = c.getArrivalTime();
-		}
 	}
 
-	return bestArrivalTime;
+	return bestTime;
 }
 
