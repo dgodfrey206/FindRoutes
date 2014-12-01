@@ -22,7 +22,7 @@ BsfAlg::~BsfAlg()
 {
 
 }
-Route* BsfAlg::solve(const Network * n, Node * start, Node * end){
+Route* BsfAlg::solve(const Network * n, Node * start, Node * end, Time t){
 
 	std::queue<unsigned int> S;
 	unsigned int* P;

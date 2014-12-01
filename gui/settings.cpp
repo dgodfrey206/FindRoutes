@@ -50,8 +50,7 @@ Solver * Settings::getCurrentSolver()
         s->setParams(this->ui->simann->getT0(),
                      this->ui->simann->getTend(),
                      this->ui->simann->getIter(),
-                     this->ui->simann->getAlfa(),
-                     Time(1000));
+                     this->ui->simann->getAlfa());
 
         return s;
     }

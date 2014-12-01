@@ -209,8 +209,8 @@ void Network::setSolver(Solver * s) {
 	}
 }
 
-Route* Network::findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches) {
-	return this->solver->solve(this,start,end);
+Route* Network::findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches, Time t) {
+	return this->solver->solve(this,start,end, t);
 }
 
 bool Network::isEdgeBetween(const Node * start, const Node * end) const {

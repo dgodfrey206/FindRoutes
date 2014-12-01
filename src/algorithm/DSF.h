@@ -14,7 +14,7 @@ class DsfAlg: public Solver{
 public:
 	DsfAlg();
 	~DsfAlg();
-	virtual Route* solve(const Network * n, Node * start, Node * end);
+	virtual Route* solve(const Network * n, Node * start, Node * end, Time t);
 
 	virtual const std::string & getName() const;
 private:

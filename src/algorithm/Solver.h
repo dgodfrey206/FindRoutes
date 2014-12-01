@@ -42,7 +42,7 @@ public:
 	 * @param n Pointer to Network in which Route is being searched for.
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
-	virtual Route* solve(const Network * n,Node * start,Node * end) = 0;
+	virtual Route* solve(const Network * n,Node * start,Node * end, Time t) = 0;
 
 	virtual const std::string & getName() const  = 0;
 private:

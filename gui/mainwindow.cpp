@@ -247,7 +247,7 @@ void MainWindow::findRoute()
         return;
     }
 
-    Route * solution = this->network->findRouteBetween(startNode, endNode, this->ui->numSwitches->value());
+    Route * solution = this->network->findRouteBetween(startNode, endNode, this->ui->numSwitches->value(), Time(1000));
 
     if(solution && solution->getLength() != 0)
     {

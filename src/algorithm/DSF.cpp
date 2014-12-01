@@ -22,7 +22,7 @@ DsfAlg::~DsfAlg(){
 
 }
 
-Route* DsfAlg::solve(const Network * n,Node * start,Node * end){
+Route* DsfAlg::solve(const Network * n,Node * start,Node * end, Time t){
 
 	std::stack<unsigned int> S;
 	unsigned int* P;

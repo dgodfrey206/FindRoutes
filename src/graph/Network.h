@@ -81,7 +81,7 @@ public:
 	 * @param maxSwitches Defines number of maximum transfers permited during trip.
 	 * @return Pointer to Route between given nodes, NULL if no route can be found.
 	 */
-	Route * findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches);
+	Route * findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches, Time t);
 
 	/**
 	 * This function is necessary for GUI.

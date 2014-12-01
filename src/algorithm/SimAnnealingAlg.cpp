@@ -26,21 +26,21 @@ SimAnnealingAlg::~SimAnnealingAlg()
 
 }
 
-Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end) {
+Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time time) {
 
 	//k - number of iteration
 	//Tstart - starting temperature
 	//Tend - ending temperature
 	//T - current temperature
 	//alfa - T = alfa * T for every iteration
-
+	Time t = time;
 	double T = this->Tstart;
 	Route * currentSolution = this->getFistSolution(n, start, end);
 	unsigned int currentWeight = currentSolution->getWeight(t);
 	while(T>this->Tend){
 		for(unsigned int i=0; i<k; i++){	//repeat k times
 			Route * newR =this->getRouteInSurroundings(n,currentSolution);		//get new solution and new weight
-			unsigned int newWeight = newR->getWeight(this->t);
+			unsigned int newWeight = newR->getWeight(t);
 			int delta = int(newWeight) - int(currentWeight);
 
 			if(delta <0){	//if solution is better tha current
@@ -67,12 +67,11 @@ double SimAnnealingAlg::getRandom(unsigned i) {
 	return i * this->distribution(this->generator);
 }
 
-void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, double alpha, Time t) {
+void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, double alpha) {
 	this->Tstart = Tstart;
 	this->Tend = Tend;
 	this->k = k;
 	this->alpha = alpha;
-	this->t = t;
 }
 
 Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {
@@ -186,7 +185,7 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 }
 
 Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
-	std::cerr << "getRouteInSurroundings called" << std::endl;
+//	std::cerr << "getRouteInSurroundings called" << std::endl;
 
 	//select two nodes and recreate connection between them.
 
