@@ -27,6 +27,7 @@ void debugWindow::append(const QString &str)
     {
         (*this->stream) << msg << endl;
     }
+
 }
 
 void debugWindow::on_logIntoFile_pressed()

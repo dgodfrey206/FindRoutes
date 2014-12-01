@@ -246,8 +246,8 @@ void MainWindow::findRoute()
         this->debug->append(QString("Nodes are equal, no need for searching."));
         return;
     }
-
-    Route * solution = this->network->findRouteBetween(startNode, endNode, this->ui->numSwitches->value(), Time(1000));
+    Time time = Time(this->ui->routeTime->time().hour() * 60 + this->ui->routeTime->time().minute());
+    Route * solution = this->network->findRouteBetween(startNode, endNode, this->ui->numSwitches->value(), Time(time));
 
     if(solution && solution->getLength() != 0)
     {
@@ -256,6 +256,8 @@ void MainWindow::findRoute()
         this->showRouteOnMap(solution);
 
         std::cout << *solution;
+        std::cout << "Total time: " << solution->getWeight(time) << std::endl;
+        std::cout << "From: " << time << " to: " << Time(int(time) + solution->getWeight(time)) << std::endl;
     }
     else
     {
