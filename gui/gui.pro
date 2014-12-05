@@ -6,6 +6,7 @@
 
 QT       += core gui webkit webkitwidgets
 QT       += core gui
+QT       += core gui webkit webkitwidgets printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -39,7 +40,8 @@ SOURCES += main.cpp\
     settings.cpp \
     params/paramssimann.cpp \
     params/paramsbsf.cpp \
-    params/paramsdsf.cpp
+    params/paramsdsf.cpp \
+    qcustomplot/qcustomplot.cpp
 
 HEADERS  += mainwindow.h \
     debugwindow.h \
@@ -67,7 +69,8 @@ HEADERS  += mainwindow.h \
     settings.h \
     params/paramssimann.h \
     params/paramsbsf.h \
-    params/paramsdsf.h
+    params/paramsdsf.h \
+    qcustomplot/qcustomplot.h
 
 FORMS    += mainwindow.ui \
     debugwindow.ui
