@@ -72,10 +72,6 @@ std::ostream& operator<<(std::ostream& stream, const Edge& e)
 	stream << "[" << std::setw(8) << std::right << e.getID()<<"]";
 	stream << " " << std::setw(19) << std::left <<e.getStartNode()->getName();
 	stream << " " << std::setw(19) << std::left <<e.getEndNode()->getName();
-	//stream << std::endl;
-	/*for(Connection c: e.connections){
-		std::cout<< c <<std::endl;
-	}*/
 	return stream;
 }
 
@@ -93,8 +89,13 @@ void Edge::addConnection(Time departureTime, Time arrivalTime,unsigned int tripI
 
 Time Edge::getNextTime(Time t) const{
 
-	Time bestTimeDiff(24*60 -1);
-	Time bestTime(0);
+	if(this->connections.empty()){
+		std::cerr << "no connections!" <<std::endl;
+		return Time(0,0);
+	}
+
+	Time bestTimeDiff(int(this->connections[0].getArrivalTime()-t));
+	Time bestTime = this->connections[0].getArrivalTime();
 
 	for(auto c: this->connections){
 		if( (c.getDepartureTime() >= t) && ( int(c.getArrivalTime()-t)< int(bestTimeDiff))){

@@ -41,7 +41,7 @@ unsigned int Route::getWeight(Time t) const{
 		return 10000;
 
 	if(conSeq.size() != this->route.size()){
-		std::cerr<<"error in conection sequence vs route size!"<<std::endl;
+		//std::cerr<<"error in conection sequence vs route size!"<<std::endl;
 	}
 
 	Time tStart = t;
@@ -65,20 +65,29 @@ std::vector<Connection>  Route::getConnectionsSequence(Time t) const{
 	if(this->route.empty())
 		return result;
 
-	Time tStart = t;
 	for(auto it = this->route.begin(); it != this->route.end(); it++){
 		auto edge = **it;
-		Time temp = t;
-		t = edge.getNextTime(t);
-		std::cout<<t<<std::endl;
+		Time tStart  = t;
+		t = edge.getNextTime(tStart);
+			auto conIt = std::find_if(edge.connections.begin(), edge.connections.end(), [&](Connection c){
+				return (c.getDepartureTime() >= tStart) && (c.getArrivalTime() == t) ;
+			});
 
-		auto conIt = std::find_if(edge.connections.begin(), edge.connections.end(), [&](Connection c){
-			return (c.getDepartureTime() >= temp) && (c.getArrivalTime() == t) ;
-		});
+			if( conIt != edge.connections.end()){
+				result.push_back(*conIt);
+			}else{
+				std::cerr << "warrning in finding connection, ";
 
-		if( conIt != edge.connections.end()){
-			result.push_back(*conIt);
-		}
+				auto It = std::find_if(edge.connections.begin(), edge.connections.end(), [&](Connection c){
+					return (c.getArrivalTime() == t) ;
+				});
+				if( It  != edge.connections.end()){
+					result.push_back(*It);
+					std::cerr << "connection repaired" <<std::endl;
+				}else{
+					std::cerr << "could not repair connection" <<std::endl;
+				}
+			}
 	}
 	return result;
 }
@@ -92,7 +101,7 @@ void Route::printRoute(std::ostream& output, Route* r, Time t){
 		return;
 
 	if(conSeq.size() != r->route.size()){
-		output<<"error in conection sequence vs route size!"<<std::endl;
+		output<<"error in conection sequence size(" << conSeq.size() << ") vs route size("<< r->route.size() << ")!" <<std::endl;
 	}
 
 	output<<"trip start time: "<<t<<std::endl;
@@ -272,10 +281,6 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 		stream << "]-[" <<std::setw(10) << std::right << (*pos)->getID() << "]";
 		stream << " " << std::setw(25) << std::left <<(*pos)->getStartNode()->getName();
 		stream << " " << std::setw(25) << std::left <<(*pos)->getEndNode()->getName() << std::endl;
-
-		for(auto c: (*pos)->connections){
-			stream<<c<<std::endl;
-		}
 
 	}
 	//stream << std::endl << std::setw(15) << std::left << "Total length: [" << std::setw(10) << std::right << r.getLength() << "]";
