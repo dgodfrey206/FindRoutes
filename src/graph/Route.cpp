@@ -76,16 +76,16 @@ std::vector<Connection>  Route::getConnectionsSequence(Time t) const{
 			if( conIt != edge.connections.end()){
 				result.push_back(*conIt);
 			}else{
-				std::cerr << "warrning in finding connection, ";
+				//std::cerr << "warrning in finding connection, ";
 
 				auto It = std::find_if(edge.connections.begin(), edge.connections.end(), [&](Connection c){
 					return (c.getArrivalTime() == t) ;
 				});
 				if( It  != edge.connections.end()){
 					result.push_back(*It);
-					std::cerr << "connection repaired" <<std::endl;
+					//std::cerr << "connection repaired" <<std::endl;
 				}else{
-					std::cerr << "could not repair connection" <<std::endl;
+					//std::cerr << "could not repair connection" <<std::endl;
 				}
 			}
 	}
@@ -236,11 +236,11 @@ bool Route::isEdgeIn(const Edge * e) const {
 	return false;
 }
 
-std::list<const Edge*>::const_iterator Route::begin() {
+std::list<const Edge*>::iterator Route::begin() {
 	return this->route.begin();
 }
 
-std::list<const Edge*>::const_iterator Route::end() {
+std::list<const Edge*>::iterator  Route::end() {
 	return this->route.end();
 }
 

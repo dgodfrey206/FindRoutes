@@ -104,12 +104,12 @@ public:
 	/**
 	 * @return Returns iterator to the begining of route.
 	 */
-	std::list<const Edge *>::const_iterator begin();
+	std::list<const Edge *>::iterator begin();
 
 	/**
 	 * @return Returns iterator to point after last Edge in route.
 	 */
-	std::list<const Edge *>::const_iterator end();
+	std::list<const Edge *>::iterator end();
 
 	/**
 	 * Used of debug in console purposes.
