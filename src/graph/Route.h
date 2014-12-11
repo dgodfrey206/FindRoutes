@@ -119,14 +119,27 @@ public:
 	 */
 	friend std::ostream& operator << (std::ostream& s, Route& r);
 
-	/*
+	/**
 	 * Returns connection sequence on witch getWeight(Time) calculate result
 	 * @param t Time when calculating starts from
 	 * @return vector with found connections
 	 * */
 	std::vector<Connection> getConnectionsSequence(Time t) const;
 
+	/**
+	 * prints route in "sophisticated" way
+	 * @param output stream to print route in
+	 * @param r route to print
+	 * @param t time when route starts
+	 * */
 	static void printRoute(std::ostream& output, Route* r, Time t);
+
+	/**
+	 * calculate how many times we have to change trip while traveling this route
+	 * @param t time when route starts
+	 * @return number of changes
+	 * */
+	unsigned int getChagneNumber(Time t) const;
 
 private:
 	std::list<const Edge *> route;

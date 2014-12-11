@@ -32,7 +32,7 @@ public:
 	 * @return Pointer to found Route, NULL if no route can be found.
 	 */
 	virtual Route* solve(const Network * n, Node * start, Node * end, Time t);
-	void setParams(double Tstart, double Tend, unsigned int k, double alpha);
+	void setParams(double Tstart, double Tend, unsigned int k, double alpha, unsigned int allowedChangeNumber, unsigned int changePunishment);
 
 	virtual const std::string & getName() const;
 
@@ -47,7 +47,8 @@ private:
 	unsigned int k;
 	double alpha;
 	std::vector<unsigned> weights;
-
+	unsigned int allowedChangeNumber;
+	unsigned int changePunishment;
 	double getRandom(unsigned i = 1);
 
 public://todo private

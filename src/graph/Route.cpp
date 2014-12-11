@@ -292,3 +292,18 @@ std::ostream& operator << (std::ostream& stream, Route & r){
 Route::Route(const Route& r) {
 	this->route = r.route;
 }
+
+unsigned int Route::getChagneNumber(Time t) const{
+	if(this->route.empty()) return 1000;
+
+	std::vector<Connection> conSeq = this->getConnectionsSequence(t);
+	if(conSeq.empty()) return 1000;
+
+	unsigned int result=0;
+
+	for(auto it = conSeq.begin()+1; it != conSeq.end(); it++){
+		if( (*it).getTripID() != (*(it-1)).getTripID()  ) result++;
+	}
+
+	return result;
+}

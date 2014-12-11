@@ -17,7 +17,9 @@ SimAnnealingAlg::SimAnnealingAlg()
 	Tstart(1000),
 	Tend(100),
 	k(100),
-	alpha(0.999)
+	alpha(0.999),
+	allowedChangeNumber(10),
+	changePunishment(50)
 {
 	this->distribution = std::uniform_real_distribution<>(0.0, 1.0);
 	this->generator = std::default_random_engine(100); //todo constant seed for debug
@@ -44,13 +46,14 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 	//Route * best;
 	//unsigned int bestWeight =10000;
 	unsigned int currentWeight = currentSolution->getWeight(t);
-	unsigned int iteration=0;
+	//unsigned int iteration=0;
 	while(T>this->Tend){
 		for(unsigned int i=0; i<k; i++){	//repeat k times
-			iteration++;
+			//iteration++;
 			Route * newR =this->getRouteInSurroundings(n,currentSolution);		//get new solution and new weight
 			unsigned int newWeight = newR->getWeight(t);
-
+			unsigned int changeNumber = newR->getChagneNumber(t);
+			if( changeNumber > allowedChangeNumber) newWeight += changeNumber * changePunishment;
 
 			//if(newWeight < bestWeight){
 			//	bestWeight = newWeight;
@@ -89,11 +92,13 @@ double SimAnnealingAlg::getRandom(unsigned i) {
 	return i * this->distribution(this->generator);
 }
 
-void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, double alpha) {
+void SimAnnealingAlg::setParams(double Tstart, double Tend, unsigned int k, double alpha, unsigned int allowedChangeNumber, unsigned int changePunishment){
 	this->Tstart = Tstart;
 	this->Tend = Tend;
 	this->k = k;
 	this->alpha = alpha;
+	this->allowedChangeNumber = allowedChangeNumber;
+	this->changePunishment = changePunishment;
 }
 
 std::vector<unsigned> SimAnnealingAlg::getWeights() const {
@@ -193,49 +198,4 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 	//std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
 	result = alg.solve(net,startNode,endNode,Time(0,0));
 	return result;
-
-	/*
-	if((r != NULL) && (r->getLength() != 0)){
-		unsigned int routeLength = r->getLength();
-		if(routeLength){
-			BsfRandAlg alg;
-
-			unsigned int firstEdgeNumber, secondEdgeNumber;
-			firstEdgeNumber = rand() % routeLength;
-			secondEdgeNumber = rand() % routeLength;
-			while(firstEdgeNumber == secondEdgeNumber){
-				secondEdgeNumber = rand() % routeLength;
-			}
-			if(firstEdgeNumber>secondEdgeNumber){
-				unsigned int temp;
-				temp = secondEdgeNumber;
-				secondEdgeNumber = firstEdgeNumber;
-				firstEdgeNumber = temp;
-			}
-
-			std::cout << routeLength << " " << firstEdgeNumber << "  " <<secondEdgeNumber<<std::endl;
-
-			auto startEdge = r->begin();
-			auto endEdge = r->begin();
-
-			while(firstEdgeNumber--){
-				startEdge++;
-			}
-
-			while(secondEdgeNumber--){
-				endEdge++;
-			}
-
-			auto startNode = (*startEdge)->getStartNode();
-			auto endNode = (*endEdge)->getEndNode();
-
-			std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
-			Route* solverResult = alg.solve(net,startNode,endNode,Time(0,0));
-
-			if((solverResult != NULL) && (solverResult->getLength() != 0)){
-				if(r->switchRoute(*solverResult)) result = r;
-			}
-		}
-	}*/
-
 }
