@@ -190,7 +190,7 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 
 	auto startNode = (*startEdge)->getStartNode();
 	auto endNode = (*endEdge)->getEndNode();
-	std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
+	//std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
 	result = alg.solve(net,startNode,endNode,Time(0,0));
 	return result;
 
