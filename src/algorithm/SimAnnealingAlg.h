@@ -37,6 +37,8 @@ public:
 	virtual const std::string & getName() const;
 
 	std::vector<unsigned> getWeights() const;
+	std::vector<unsigned> getPunishments() const;
+	std::vector<unsigned> getBestPosWeights() const;
 
 private:
 	static const std::string name;
@@ -46,10 +48,14 @@ private:
 	double Tend;
 	unsigned int k;
 	double alpha;
-	std::vector<unsigned> weights;
+
 	unsigned int allowedChangeNumber;
 	unsigned int changePunishment;
 	double getRandom(unsigned i = 1);
+
+	std::vector<unsigned> weights;
+	std::vector<unsigned> punishments;
+	std::vector<unsigned> bestPosWeights;
 
 public://todo private
 	Route * getRouteInSurroundings(const Network * n, Route * r);

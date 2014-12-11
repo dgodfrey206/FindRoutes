@@ -43,45 +43,51 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 	Time t = time;
 	double T = this->Tstart;
 	Route * currentSolution = this->getFistSolution(n, start, end);
-	//Route * best;
-	//unsigned int bestWeight =10000;
 	unsigned int currentWeight = currentSolution->getWeight(t);
-	//unsigned int iteration=0;
+
+	Route * bestPossible = currentSolution;
+	unsigned bestPossibleWeight = currentWeight;
+
 	while(T>this->Tend){
-		for(unsigned int i=0; i<k; i++){	//repeat k times
-			//iteration++;
+		std::cout << "Current temperature: " << T << " (" << Tstart << " : " << Tend << ")" << std::endl;
+
+		for(unsigned int i=0; i<k; i++)
+		{	//repeat k times
+
 			Route * newR =this->getRouteInSurroundings(n,currentSolution);		//get new solution and new weight
 			unsigned int newWeight = newR->getWeight(t);
-			unsigned int changeNumber = newR->getChagneNumber(t);
-			if( changeNumber > allowedChangeNumber) newWeight += changeNumber * changePunishment;
+			unsigned int changeNumber = newR->getChangeNumber(t);
+			bool isPossible = true; //determines if number of changes is not greater than permited
 
-			//if(newWeight < bestWeight){
-			//	bestWeight = newWeight;
-			//	best = newR;
-			//}
-			//auto g = std::find(vec.begin(), vec.end(),newWeight);
-			//if( g== vec.end()) vec.push_back(newWeight);
+			if( changeNumber > allowedChangeNumber)
+			{
+				newWeight += changeNumber * changePunishment;
+				isPossible = false;
+			}
 
 			int delta = int(newWeight) - int(currentWeight);
 
-			if(delta <=0){	//if solution is better tha current
+			if(delta <=0 || (this->getRandom() < std::exp(double((-1)*delta) / double(T))))
+			{	//if solution is better tha current
 				currentSolution = newR;
 				currentWeight = newWeight;
-			}else{
-				if( this->getRandom() < std::exp(double((-1)*delta) / double(T)) ){
-					currentSolution = newR;
-					currentWeight = newWeight;
+
+				if(isPossible && currentWeight < bestPossibleWeight)
+				{
+					bestPossible = currentSolution;
+					bestPossibleWeight = currentWeight;
 				}
 			}
 		}
 		T *= this->alpha;
-		//std::cerr << "iteration " << iteration << " temperature "<< T << " weight "<< currentWeight <<std::endl;
 		this->weights.push_back(currentWeight);
+		unsigned changes = currentSolution->getChangeNumber(t);
+		if(changes > allowedChangeNumber) this->punishments.push_back(changes * changePunishment);
+		else this->punishments.push_back(0);
+
+		this->bestPosWeights.push_back(bestPossibleWeight);
 	}
-	//std::cerr << "wieghts founds: "<<vec.size()<<std::endl;
-	//std::cerr << "best weight " << bestWeight << std::endl;
-	//Route::printRoute(std::cerr,best,t);
-	return currentSolution;
+	return bestPossible;
 }
 
 const std::string & SimAnnealingAlg::getName() const {
@@ -105,6 +111,12 @@ std::vector<unsigned> SimAnnealingAlg::getWeights() const {
 	return this->weights;
 }
 
+std::vector<unsigned> SimAnnealingAlg::getPunishments() const {
+	return this->punishments;
+}
+std::vector<unsigned> SimAnnealingAlg::getBestPosWeights() const {
+	return this->bestPosWeights;
+}
 Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end) {
 
 	Node * currentNode = start;

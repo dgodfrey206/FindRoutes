@@ -293,7 +293,7 @@ Route::Route(const Route& r) {
 	this->route = r.route;
 }
 
-unsigned int Route::getChagneNumber(Time t) const{
+unsigned int Route::getChangeNumber(Time t) const{
 	if(this->route.empty()) return 1000;
 
 	std::vector<Connection> conSeq = this->getConnectionsSequence(t);

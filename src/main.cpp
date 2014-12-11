@@ -29,12 +29,12 @@ int main()
 	net.setSolver(solver);
 
 	net.validate();
-	Node * start = net.getNode(199);
-	Node * end = net.getNode(111);
+	Node * start = net.getNode(710);
+	Node * end = net.getNode(21);
 
 	auto startTime = std::chrono::system_clock::now();
 
-	solver->setParams(25, 1, 20, 0.997);
+	solver->setParams(50, 10, 20, 0.99, 5, 50);
 	auto solution = solver->solve(&net, start, end, Time(1000));
 	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
 	else std::cout << "Solution have not been found" << std::endl;
@@ -42,8 +42,11 @@ int main()
 	auto length = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
 	std::cout << "Time: " << length.count() << "ms" << std::endl;
 
-	std::ofstream f("save");
-	for(auto w:solver->getWeights()) f << w << std::endl;
+	std::ofstream f("../tests/data/save");
+	auto w = solver->getWeights();
+	auto p = solver->getPunishments();
+	auto b = solver->getBestPosWeights();
+	for(unsigned i = 0; i < w.size(); i++) f << w[i] << " " << p[i] << " " << b[i] << std::endl;
 	f.close();
 }
 

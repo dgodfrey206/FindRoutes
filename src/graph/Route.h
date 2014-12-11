@@ -139,7 +139,7 @@ public:
 	 * @param t time when route starts
 	 * @return number of changes
 	 * */
-	unsigned int getChagneNumber(Time t) const;
+	unsigned int getChangeNumber(Time t) const;
 
 private:
 	std::list<const Edge *> route;
