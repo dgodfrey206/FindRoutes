@@ -61,7 +61,7 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 
 			if( changeNumber > allowedChangeNumber)
 			{
-				newWeight += changeNumber * changePunishment;
+				newWeight += (changeNumber - allowedChangeNumber) * changePunishment;
 				isPossible = false;
 			}
 

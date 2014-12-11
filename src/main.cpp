@@ -29,12 +29,12 @@ int main()
 	net.setSolver(solver);
 
 	net.validate();
-	Node * start = net.getNode(710);
+	Node * start = net.getNode(711);
 	Node * end = net.getNode(21);
 
 	auto startTime = std::chrono::system_clock::now();
 
-	solver->setParams(50, 10, 20, 0.99, 5, 50);
+	solver->setParams(50, 10, 10, 0.99, 9, 15);
 	auto solution = solver->solve(&net, start, end, Time(1000));
 	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
 	else std::cout << "Solution have not been found" << std::endl;
