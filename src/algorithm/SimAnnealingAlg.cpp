@@ -6,7 +6,9 @@
  */
 
 #include "SimAnnealingAlg.h"
+#include "BSFR.h"
 #include <cmath>
+#include <algorithm>
 
 const std::string SimAnnealingAlg::name = "Simulated annealing";
 
@@ -33,19 +35,33 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 	//Tend - ending temperature
 	//T - current temperature
 	//alfa - T = alfa * T for every iteration
+	//std::vector<unsigned int> vec;
 	this->weights.clear();
 
 	Time t = time;
 	double T = this->Tstart;
 	Route * currentSolution = this->getFistSolution(n, start, end);
+	//Route * best;
+	//unsigned int bestWeight =10000;
 	unsigned int currentWeight = currentSolution->getWeight(t);
+	unsigned int iteration=0;
 	while(T>this->Tend){
 		for(unsigned int i=0; i<k; i++){	//repeat k times
+			iteration++;
 			Route * newR =this->getRouteInSurroundings(n,currentSolution);		//get new solution and new weight
 			unsigned int newWeight = newR->getWeight(t);
+
+
+			//if(newWeight < bestWeight){
+			//	bestWeight = newWeight;
+			//	best = newR;
+			//}
+			//auto g = std::find(vec.begin(), vec.end(),newWeight);
+			//if( g== vec.end()) vec.push_back(newWeight);
+
 			int delta = int(newWeight) - int(currentWeight);
 
-			if(delta <0){	//if solution is better tha current
+			if(delta <=0){	//if solution is better tha current
 				currentSolution = newR;
 				currentWeight = newWeight;
 			}else{
@@ -56,9 +72,12 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 			}
 		}
 		T *= this->alpha;
+		//std::cerr << "iteration " << iteration << " temperature "<< T << " weight "<< currentWeight <<std::endl;
 		this->weights.push_back(currentWeight);
 	}
-
+	//std::cerr << "wieghts founds: "<<vec.size()<<std::endl;
+	//std::cerr << "best weight " << bestWeight << std::endl;
+	//Route::printRoute(std::cerr,best,t);
 	return currentSolution;
 }
 
@@ -163,107 +182,60 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 
 Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 
-	//select two nodes and recreate connection between them.
+	Route* result = NULL;
+	BsfRandAlg alg;
 
-	std::vector<const Node *> nodes;
-	for(auto it = r->begin(); it != r->end(); it++)
-	{
-		nodes.push_back((*it)->getEndNode());
-	}
-	nodes.pop_back(); //remove ending node
-	std::random_shuffle(nodes.begin(), nodes.end());
+	auto startEdge = r->begin();
+	auto endEdge = --r->end();
 
-	Route * newRoute = NULL;
+	auto startNode = (*startEdge)->getStartNode();
+	auto endNode = (*endEdge)->getEndNode();
+	std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
+	result = alg.solve(net,startNode,endNode,Time(0,0));
+	return result;
 
-	while(newRoute == NULL && nodes.size() > 0)
-	{
-		const Node * n = nodes.back();
-		nodes.pop_back(); //get random node from list
+	/*
+	if((r != NULL) && (r->getLength() != 0)){
+		unsigned int routeLength = r->getLength();
+		if(routeLength){
+			BsfRandAlg alg;
 
-		//first, try to remove node from route, then, if failed, adding node in front or back of given to route
-		//locate node in route
-		auto it = r->begin();
-		decltype(it) inEdgeIt;
-		decltype(it) outEdgeIt;
-
-		for(; it != r->end(); it++)
-		{
-
-			if(*((*it)->getEndNode()) == *n)
-			{
-				inEdgeIt = it;
+			unsigned int firstEdgeNumber, secondEdgeNumber;
+			firstEdgeNumber = rand() % routeLength;
+			secondEdgeNumber = rand() % routeLength;
+			while(firstEdgeNumber == secondEdgeNumber){
+				secondEdgeNumber = rand() % routeLength;
 			}
-			else if(*((*it)->getStartNode()) == *n)
-			{
-				outEdgeIt = it;
+			if(firstEdgeNumber>secondEdgeNumber){
+				unsigned int temp;
+				temp = secondEdgeNumber;
+				secondEdgeNumber = firstEdgeNumber;
+				firstEdgeNumber = temp;
 			}
-		}
 
-		const Node * startNode = (*inEdgeIt)->getStartNode();
-		const Node * endNode = (*outEdgeIt)->getEndNode();
+			std::cout << routeLength << " " << firstEdgeNumber << "  " <<secondEdgeNumber<<std::endl;
 
-		//try removing
-		if(net->isEdgeBetween(startNode, endNode))
-		{
-			//get that edge and return new Route
-			unsigned edgeID = net->calculateEdgeId(startNode->getID(), endNode->getID());
-			const Edge * newEdge = net->getEdge(edgeID);
+			auto startEdge = r->begin();
+			auto endEdge = r->begin();
 
-			Route * newRoute = new Route(*r);
+			while(firstEdgeNumber--){
+				startEdge++;
+			}
 
-			newRoute->switchEdge(newEdge);
+			while(secondEdgeNumber--){
+				endEdge++;
+			}
 
-			return newRoute;
-		}
+			auto startNode = (*startEdge)->getStartNode();
+			auto endNode = (*endEdge)->getEndNode();
 
-		//try adding
-		std::list<Edge *> startNodeEdges = startNode->getEdges();
+			std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
+			Route* solverResult = alg.solve(net,startNode,endNode,Time(0,0));
 
-		for(Edge * e: startNodeEdges)
-		{
-//			std::cout << "t81" << std::endl;
-			if(net->isEdgeBetween(e->getEndNode(), n))
-			{
-				unsigned edgeID = net->calculateEdgeId(e->getEndNode()->getID(), n->getID());
-				const Edge * newEdge = net->getEdge(edgeID);
-
-				if(r->isEdgeIn(newEdge)) continue;
-
-				Route * newR = new Route;
-				newR->addEdge(e);
-				newR->addEdge(newEdge);
-
-				Route * newRoute = new Route(*r);
-
-				if(newRoute->switchRoute(*newR) && newRoute->validate())
-				{
-					return newRoute;
-				}
+			if((solverResult != NULL) && (solverResult->getLength() != 0)){
+				if(r->switchRoute(*solverResult)) result = r;
 			}
 		}
-		std::list<Edge *> endNodeEdges = endNode->getEdges();
-		for(Edge * e: endNodeEdges)
-		{
-			if(net->isEdgeBetween(n, e->getStartNode()))
-			{
-				unsigned edgeID = net->calculateEdgeId(n->getID(), e->getStartNode()->getID());
-				const Edge * newEdge = net->getEdge(edgeID);
+	}*/
 
-				if(r->isEdgeIn(newEdge)) continue;
-
-				Route * newR = new Route;
-				newR->addEdge(newEdge);
-				newR->addEdge(e);
-
-				Route * newRoute = new Route(*r);
-
-				if(newRoute->switchRoute(*newR) && newRoute->validate())
-				{
-					return newRoute;
-				}
-			}
-		}
-	}
-
-	return newRoute;
 }
