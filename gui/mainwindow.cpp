@@ -411,4 +411,25 @@ void MainWindow::showRouteOnMap(Route * r)
         double lat = (*it)->getStartNode()->getLatitude();
         this->debug->append(QString("Coords: ") + QString::number(lat) + ' ' + QString::number(lon));
     }
+    QString url = "https://maps.googleapis.com/maps/api/staticmap?zoom=11.5&size=600x430&amp;center=50.0647%2C19.9450&key=" + this->apiKey;
+    url += "&path=color:0xff0000ff|weight:5|";
+    for(auto it = r->begin(); it != r->end(); it++)
+    {
+        double lon = (*it)->getStartNode()->getLongtitude();
+        double lat = (*it)->getStartNode()->getLatitude();
+        if(lon == 0 || lat == 0) continue;
+
+        url += QString::number(lon) + ',' + QString::number(lat) + "|";
+        this->debug->append(QString("Coords: ") + QString::number(lon) + ' ' + QString::number(lat));
+    }
+    double lon = r->getEndNode()->getLongtitude();
+    double lat = r->getEndNode()->getLatitude();
+    if(lon != 0 && lat != 0) url += QString::number(lon) + ',' + QString::number(lat);
+    this->debug->append(QString("Coords: ") + QString::number(lon) + ' ' + QString::number(lat));
+
+    this->ui->map->setHtml("<img src=\"" + url + "\"/>");
+
+    this->debug->append(url);
+
+    this->updateMap();
 }
