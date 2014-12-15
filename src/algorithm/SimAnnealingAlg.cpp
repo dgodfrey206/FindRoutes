@@ -82,7 +82,7 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 		T *= this->alpha;
 		this->weights.push_back(currentWeight);
 		unsigned changes = currentSolution->getChangeNumber(t);
-		if(changes > allowedChangeNumber) this->punishments.push_back(changes * changePunishment);
+		if(changes > allowedChangeNumber) this->punishments.push_back((changes - allowedChangeNumber) * changePunishment);
 		else this->punishments.push_back(0);
 
 		this->bestPosWeights.push_back(bestPossibleWeight);

@@ -215,7 +215,6 @@ void MainWindow::findRoute()
     this->debug->append(QString("findRoute method has been called."));
     this->debug->append(QString("Params:"));
     this->debug->append(QString(" * Time and date: ") + this->ui->routeTime->time().toString(QString("hh:mm")) + " " + this->ui->routeDate->date().toString("dd.M.yyyy"));
-    this->debug->append(QString(" * Max switches ") + QString::number(this->ui->numSwitches->value()));
     this->debug->append(QString(" * Starting node is ") + QString::number(this->ui->startNode->currentIndex()) + ": " + startNodeName);
     this->debug->append(QString(" * Ending node is ") + QString::number(this->ui->endNode->currentIndex()) + ": " + endNodeName);
 
@@ -247,7 +246,7 @@ void MainWindow::findRoute()
         return;
     }
     Time time = Time(this->ui->routeTime->time().hour() * 60 + this->ui->routeTime->time().minute());
-    Route * solution = this->network->findRouteBetween(startNode, endNode, this->ui->numSwitches->value(), Time(time));
+    Route * solution = this->network->findRouteBetween(startNode, endNode, Time(time));
 
     if(solution && solution->getLength() != 0)
     {
@@ -258,38 +257,6 @@ void MainWindow::findRoute()
         std::cout << *solution;
         std::cout << "Total time: " << solution->getWeight(time) << std::endl;
         std::cout << "From: " << time << " to: " << Time(int(time) + solution->getWeight(time)) << std::endl;
-
-        try
-        {
-            SimAnnealingAlg * s = reinterpret_cast<SimAnnealingAlg *>(this->settings->getCurrentSolver());
-
-            std::cout << "ok";
-            QCustomPlot * plot = new QCustomPlot;
-            plot->addGraph();
-
-            QVector<double> yData;
-            QVector<double> xData;
-            std::vector<unsigned> weights = s->getWeights();
-
-            double ymax = 0;
-            for(int i = 0; i < yData.size(); i++)
-            {
-                xData.append(i);
-                yData.append(weights[i]);
-                if(ymax < weights[i]) ymax = weights[i];
-            }
-            plot->graph(0)->setData(xData, yData);
-            plot->xAxis->setRange(0, xData.back());
-            plot->xAxis->setLabel("Iteracja");
-            plot->yAxis->setRange(0, ymax);
-            plot->yAxis->setLabel("Wartość rozwiązania");
-            plot->replot();
-            plot->show();
-        }
-        catch(...)
-        {
-            //another solver, skip
-        }
 
     }
     else

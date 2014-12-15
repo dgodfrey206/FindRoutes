@@ -50,7 +50,9 @@ Solver * Settings::getCurrentSolver()
         s->setParams(this->ui->simann->getT0(),
                      this->ui->simann->getTend(),
                      this->ui->simann->getIter(),
-                     this->ui->simann->getAlfa());
+                     this->ui->simann->getAlfa(),
+                     this->ui->simann->getChanges(),
+                     this->ui->simann->getPunishment());
 
         return s;
     }

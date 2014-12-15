@@ -19,6 +19,8 @@ public:
     unsigned getTend();
     unsigned getIter();
     double getAlfa();
+    unsigned getChanges();
+    unsigned getPunishment();
 
 private:
     Ui::ParamsSimAnn *ui;

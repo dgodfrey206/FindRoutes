@@ -78,10 +78,9 @@ public:
 	 * Searches for Route beetween two given points.
 	 * @param start Start Node.
 	 * @param end End Node.
-	 * @param maxSwitches Defines number of maximum transfers permited during trip.
 	 * @return Pointer to Route between given nodes, NULL if no route can be found.
 	 */
-	Route * findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches, Time t);
+    Route * findRouteBetween(Node * start, Node * end, Time t);
 
 	/**
 	 * This function is necessary for GUI.

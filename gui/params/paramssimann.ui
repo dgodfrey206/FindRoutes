@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>474</width>
-    <height>300</height>
+    <width>453</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
@@ -48,7 +48,7 @@
         <number>100</number>
        </property>
        <property name="value">
-        <number>500</number>
+        <number>100</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -64,7 +64,7 @@
         <number>10</number>
        </property>
        <property name="value">
-        <number>500</number>
+        <number>100</number>
        </property>
       </widget>
      </item>
@@ -97,7 +97,7 @@
         <number>10</number>
        </property>
        <property name="value">
-        <number>200</number>
+        <number>10</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -113,7 +113,7 @@
         <number>10</number>
        </property>
        <property name="value">
-        <number>200</number>
+        <number>10</number>
        </property>
       </widget>
      </item>
@@ -146,7 +146,7 @@
         <number>10</number>
        </property>
        <property name="value">
-        <number>100</number>
+        <number>30</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -162,7 +162,7 @@
         <number>10</number>
        </property>
        <property name="value">
-        <number>100</number>
+        <number>30</number>
        </property>
       </widget>
      </item>
@@ -195,10 +195,10 @@
         <number>100</number>
        </property>
        <property name="value">
-        <number>9990</number>
+        <number>9900</number>
        </property>
        <property name="sliderPosition">
-        <number>9990</number>
+        <number>9900</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -217,7 +217,81 @@
         <double>0.010000000000000</double>
        </property>
        <property name="value">
-        <double>0.999000000000000</double>
+        <double>0.990000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Dopuszczalna ilość przesiadek</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="4" column="2">
+      <widget class="QSlider" name="changesSlider">
+       <property name="value">
+        <number>5</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="3">
+      <widget class="QSpinBox" name="changesBox">
+       <property name="value">
+        <number>5</number>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Kara za nadmiar przesiadek</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <spacer name="horizontalSpacer_6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="2">
+      <widget class="QSlider" name="punishmentSlider">
+       <property name="value">
+        <number>40</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QSpinBox" name="punishmentBox">
+       <property name="value">
+        <number>40</number>
        </property>
       </widget>
      </item>
@@ -234,12 +308,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>347</x>
-     <y>55</y>
+     <x>373</x>
+     <y>36</y>
     </hint>
     <hint type="destinationlabel">
-     <x>439</x>
-     <y>55</y>
+     <x>442</x>
+     <y>41</y>
     </hint>
    </hints>
   </connection>
@@ -250,12 +324,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>439</x>
-     <y>55</y>
+     <x>442</x>
+     <y>41</y>
     </hint>
     <hint type="destinationlabel">
-     <x>347</x>
-     <y>55</y>
+     <x>373</x>
+     <y>36</y>
     </hint>
    </hints>
   </connection>
@@ -266,12 +340,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>429</x>
-     <y>181</y>
+     <x>442</x>
+     <y>117</y>
     </hint>
     <hint type="destinationlabel">
-     <x>337</x>
-     <y>181</y>
+     <x>373</x>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -282,12 +356,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>429</x>
-     <y>118</y>
+     <x>442</x>
+     <y>79</y>
     </hint>
     <hint type="destinationlabel">
-     <x>337</x>
-     <y>118</y>
+     <x>373</x>
+     <y>74</y>
     </hint>
    </hints>
   </connection>
@@ -298,12 +372,12 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>337</x>
-     <y>181</y>
+     <x>373</x>
+     <y>112</y>
     </hint>
     <hint type="destinationlabel">
-     <x>429</x>
-     <y>181</y>
+     <x>442</x>
+     <y>117</y>
     </hint>
    </hints>
   </connection>
@@ -314,12 +388,76 @@
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>337</x>
-     <y>118</y>
+     <x>373</x>
+     <y>74</y>
     </hint>
     <hint type="destinationlabel">
-     <x>429</x>
-     <y>118</y>
+     <x>442</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>changesSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>changesBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>312</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>178</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>changesBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>changesSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>418</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>300</x>
+     <y>187</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>punishmentSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>punishmentBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>388</x>
+     <y>220</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>punishmentBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>punishmentSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>408</x>
+     <y>223</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>221</y>
     </hint>
    </hints>
   </connection>

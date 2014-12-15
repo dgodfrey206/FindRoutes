@@ -36,6 +36,16 @@ double ParamsSimAnn::getAlfa()
     return this->ui->alfabox->value();
 }
 
+unsigned ParamsSimAnn::getChanges()
+{
+    return this->ui->changesBox->value();
+}
+
+unsigned ParamsSimAnn::getPunishment()
+{
+    return this->ui->punishmentBox->value();
+}
+
 void ParamsSimAnn::updateAlphaBox()
 {
     this->ui->alfabox->setValue(this->ui->alfaslider->value() / double(10000));

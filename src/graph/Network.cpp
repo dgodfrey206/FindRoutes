@@ -209,7 +209,7 @@ void Network::setSolver(Solver * s) {
 	}
 }
 
-Route* Network::findRouteBetween(Node * start, Node * end, const unsigned int maxSwitches, Time t) {
+Route* Network::findRouteBetween(Node * start, Node * end, Time t) {
 	return this->solver->solve(this,start,end, t);
 }
 
