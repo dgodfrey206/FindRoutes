@@ -159,6 +159,8 @@
     <addaction name="menuLoad"/>
     <addaction name="actionDebug"/>
     <addaction name="separator"/>
+    <addaction name="actionTests"/>
+    <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -211,6 +213,14 @@
   <action name="actionLoadSavedDB">
    <property name="text">
     <string>Plik bazy</string>
+   </property>
+  </action>
+  <action name="actionTests">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Wykonaj testy</string>
    </property>
   </action>
  </widget>

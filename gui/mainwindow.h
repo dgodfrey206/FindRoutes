@@ -22,6 +22,8 @@
 #include "../src/algorithm/DSF.h"
 #include "../src/algorithm/SimAnnealingAlg.h"
 
+#include "../src/tester/Tester.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -79,6 +81,8 @@ private slots:
     void loadSavedDB();
 
     void showRouteOnMap(Route * r);
+
+    void makeTests();
 };
 
 #endif // MAINWINDOW_H

@@ -44,6 +44,9 @@ void MainWindow::setupActions()
     connect(this->ui->search, SIGNAL(clicked()), this, SLOT(findRoute()));
 
     connect(this->ui->settingsButton, SIGNAL(clicked()), this->settings, SLOT(toggleVisibility()));
+
+    connect(this->ui->actionTest, SIGNAL(triggered()), this, SLOT(makeTests()));
+
     this->debug->append(QString::fromUtf8("Actions assigned."));
 }
 
@@ -184,6 +187,12 @@ void MainWindow::updateMap()
 void MainWindow::showHelp()
 {
 
+}
+
+void MainWindow::makeTests()
+{
+    Tester t(this->network);
+    t.makeTests(NULL, NULL, std::string("../tests/data"));
 }
 
 void MainWindow::findRoute()

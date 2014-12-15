@@ -42,6 +42,9 @@ void Tester::makeTests(Node * f, Node * t, std::string dir) {
 	this->from = f;
 	this->to = t;
 
+    if(this->from == NULL) this->from = this->network->getNode(std::rand() * this->network->getAllNodes().size());
+    if(this->to == NULL) this->to = this->network->getNode(std::rand() * this->network->getAllNodes().size());
+
 	this->directory = dir;
 	if(this->directory[this->directory.size()-1] != '/') this->directory += "/";
 
