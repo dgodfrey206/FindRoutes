@@ -156,6 +156,7 @@ public:
 
 	void limitRandomly(unsigned size, long seed);
 
+	static Network * generateRandomNetwork(unsigned width, unsigned height, long seed = 0, double probability = 1);
 private:
 	std::set<Node *, nodePointerCompare> nodes;
 	std::set<Edge *, edgePointerCompare> edges;

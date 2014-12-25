@@ -62,6 +62,10 @@ int main()
 	//std::cout << net << std::endl;
 	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
 	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
+
+	Network * test = Network::generateRandomNetwork(50, 50, 1000, 0.5);
+	std::cout << "nodes:" << test->getAllNodes().size() << std::endl;
+	std::cout << "edges:" << test->getAllEdges().size() << std::endl;
 }
 
 
