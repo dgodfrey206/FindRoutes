@@ -12,6 +12,8 @@ http://open.spotify.com/track/0QervLYxa3WBLkSTLkcGNw * Network.h
 #include <list>
 #include <iostream>
 #include <cmath> //distance computing
+#include <random>
+#include <algorithm>
 
 #include "Node.h"
 #include "Edge.h"
@@ -151,6 +153,9 @@ public:
 	unsigned int calculateEdgeId(unsigned int startId, unsigned int endId) const;
 
 	bool validate();
+
+	void limitRandomly(unsigned size, long seed);
+
 private:
 	std::set<Node *, nodePointerCompare> nodes;
 	std::set<Edge *, edgePointerCompare> edges;

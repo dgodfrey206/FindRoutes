@@ -52,9 +52,16 @@ int main()
 //	for(unsigned i = 0; i < w.size(); i++) f << w[i] << " " << p[i] << " " << b[i] << std::endl;
 //	f.close();
 
-	Tester tester(&net);
-	tester.setDefaults(100, 1, 10, 0.99, 10, 50);
-	tester.makeTests(start, end, "../tests/data");
+//	Tester tester(&net);
+//	tester.setDefaults(100, 1, 10, 0.99, 10, 50);
+//	tester.makeTests(start, end, "../tests/data");
+
+	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
+	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
+	net.limitRandomly(1000, 10000);
+	//std::cout << net << std::endl;
+	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
+	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
 }
 
 

@@ -357,8 +357,47 @@ Network::Network(DataBase& dataB){
 		}
 	}
 }
+void Network::limitRandomly(unsigned size, long seed) {
+	if(this->nodes.size() <= size) return;
+
+	//prepare list od nodes ids and shuffle it
+	std::vector<unsigned> ids = {};
+	for(auto n: this->nodes) ids.push_back(n->getID());
+
+	std::srand(seed);
+	std::random_shuffle(ids.begin(), ids.end());
+
+	//reset incidenceMatrix
+	for(unsigned i = 0; i < this->nodes.size(); i++)
+	{
+		for(unsigned j = 0; j < this->nodes.size(); j++) this->incidenceMatrix[i][j] = false;
+	}
 
 
+	//save toMantain number of elements and corresponding edges.
+	std::set<Node *, nodePointerCompare> newNodes;
+	std::set<Edge *, edgePointerCompare> newEdges;
 
+	for(unsigned i = 0; i < size; i++)
+	{
+		newNodes.insert(this->getNode(ids[i]));
+	}
 
+	for(auto n: newNodes)
+	{
+		for(auto e: n->getEdges())
+		{
+			if(newNodes.find(e->getEndNode()) != newNodes.end())
+			{
+				this->incidenceMatrix[n->getID()][e->getEndNode()->getID()] = true;
+				newEdges.insert(e);
+			}
+		}
+	}
+	this->nodes.clear();
+	this->edges.clear();
 
+	this->nodes = newNodes;
+	this->edges = newEdges;
+	//todo remove unused resources
+}
