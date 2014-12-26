@@ -296,11 +296,11 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 		{
 			if((temp = network->getNode(currentNodeID)) != NULL)
 			{
+				start = end;
+				end = temp;
+
 				if(start != NULL && end != NULL)
 				{
-					start = end;
-					end = temp;
-
 					//locate proper edge:
 					Edge * edgeBetween = NULL;
 
@@ -346,11 +346,11 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 		{
 			if((temp = network->getNode(currentNodeID)) != NULL)
 			{
+				start = end;
+				end = temp;
+
 				if(start != NULL && end != NULL)
 				{
-					start = end;
-					end = temp;
-
 					//locate proper edge:
 					Edge * edgeBetween = NULL;
 
