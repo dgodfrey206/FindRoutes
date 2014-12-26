@@ -278,7 +278,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 			currentNodeID -= width;
 
 		}
-		while(currentNodeID > 0 && currentNodeID < width * height);
+		while(currentNodeID >= 0 && currentNodeID < width * height);
 
 		tripID++;
 	}
