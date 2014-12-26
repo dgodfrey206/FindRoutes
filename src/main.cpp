@@ -25,15 +25,15 @@
 
 int main()
 {
-	DataBase db(DataBase::LoadMethod::SAVEDDB, "../db/database.json");
-	Network net(db);
-	SimAnnealingAlg * solver = new SimAnnealingAlg;
-
-	net.setSolver(solver);
-
-	net.validate();
-	Node * start = net.getNode(711);
-	Node * end = net.getNode(21);
+//	DataBase db(DataBase::LoadMethod::SAVEDDB, "../db/database.json");
+//	Network net(db);
+//	SimAnnealingAlg * solver = new SimAnnealingAlg;
+//
+//	net.setSolver(solver);
+//
+//	net.validate();
+//	Node * start = net.getNode(711);
+//	Node * end = net.getNode(21);
 
 //	auto startTime = std::chrono::system_clock::now();
 //
@@ -56,16 +56,25 @@ int main()
 //	tester.setDefaults(100, 1, 10, 0.99, 10, 50);
 //	tester.makeTests(start, end, "../tests/data");
 
-	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
-	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
-	net.limitRandomly(1000, 10000);
-	//std::cout << net << std::endl;
-	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
-	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
+//	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
+//	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
+//	net.limitRandomly(1000, 10000);
+//	//std::cout << net << std::endl;
+//	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
+//	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
 
-	Network * test = Network::generateRandomNetwork(50, 50, 1000, 0.5);
+	Network * test = Network::generateRandomNetwork(4, 4, 1000, 0.6);
 	std::cout << "nodes:" << test->getAllNodes().size() << std::endl;
 	std::cout << "edges:" << test->getAllEdges().size() << std::endl;
+
+	for(auto n: test->getAllNodes())
+	{
+		std::cout << *n << std::endl;
+		for(auto e: n->getEdges())
+		{
+			std::cout << *e << std::endl;
+		}
+	}
 }
 
 

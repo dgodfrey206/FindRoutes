@@ -91,10 +91,9 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 	{
 		unsigned id = n->getID();
 		//top
-		if(id < width) continue; //first row
-		else
+		if(id >= width) //not first row
 		{
-			int searchedID = id;
+			unsigned searchedID = id;
 			Node * searchedNode = NULL;
 
 			do
@@ -102,7 +101,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				searchedID -= width;
 				searchedNode = network->getNode(searchedID);
 			}
-			while(searchedNode == NULL && searchedID > 0);
+			while(searchedNode == NULL && searchedID >= width && searchedID < width * height);
 
 			if(searchedNode != NULL)
 			{
@@ -111,11 +110,11 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				network->addEdge(tempEdge);
 			}
 		}
+
 		//bottom
-		if(id >= width * (height - 1)) continue; //last row
-		else
+		if(id < width * (height - 1)) //not last row
 		{
-			int searchedID = id;
+			unsigned searchedID = id;
 			Node * searchedNode = NULL;
 
 			do
@@ -123,7 +122,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				searchedID += width;
 				searchedNode = network->getNode(searchedID);
 			}
-			while(searchedNode == NULL && searchedID < (width * height - 1));
+			while(searchedNode == NULL && searchedID <= (width * (height - 1) - 1));
 
 			if(searchedNode != NULL)
 			{
@@ -132,11 +131,11 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				network->addEdge(tempEdge);
 			}
 		}
+
 		//left
-		if(id % height == 0) continue; //first column
-		else
+		if(id % width != 0) //not first column
 		{
-			int searchedID = id;
+			unsigned searchedID = id;
 			Node * searchedNode = NULL;
 
 			do
@@ -144,7 +143,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				searchedID--;
 				searchedNode = network->getNode(searchedID);
 			}
-			while(searchedNode == NULL && searchedID >= (id - (id % height)));
+			while(searchedNode == NULL && searchedID > (id - (id % width)) && searchedID < width * height);
 
 			if(searchedNode != NULL)
 			{
@@ -153,11 +152,11 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				network->addEdge(tempEdge);
 			}
 		}
+
 		//right
-		if(id % height == width - 1) continue; //last column
-		else
+		if(id % width != width - 1) //not last column
 		{
-			int searchedID = id;
+			unsigned searchedID = id;
 			Node * searchedNode = NULL;
 
 			do
@@ -165,7 +164,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 				searchedID++;
 				searchedNode = network->getNode(searchedID);
 			}
-			while(searchedNode == NULL && searchedID < (id - (id % height) + width));
+			while(searchedNode == NULL && searchedID < (id - (id % width) + width - 1));
 
 			if(searchedNode != NULL)
 			{
@@ -186,10 +185,11 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 	Node * temp = NULL;
 
 	//top-bottom
-	std::cout << "generateRandomNetwork: Generating trips, vertical" << std::endl;
+	std::cout << "generateRandomNetwork: Generating trips, top-bottom" << std::endl;
 	for(unsigned i = 0; i < width; i++)
 	{
 		currentStop = 0;
+		start = end = temp = NULL;
 
 		unsigned currentNodeID = i;
 		do
@@ -234,11 +234,62 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 		tripID++;
 	}
 
+	//bottom-top
+	std::cout << "generateRandomNetwork: Generating trips, bottom-top" << std::endl;
+	for(unsigned i = 0; i < width; i++)
+	{
+		currentStop = 0;
+		start = end = temp = NULL;
+
+		unsigned currentNodeID = width * (height - 1) + i;
+		do
+		{
+			if((temp = network->getNode(currentNodeID)) != NULL)
+			{
+				start = end;
+				end = temp;
+
+				if(start != NULL && end != NULL)
+				{
+					//locate proper edge:
+					Edge * edgeBetween = NULL;
+
+					for(auto e: start->getEdges())
+					{
+						if(e->getEndNode() == end)
+						{
+							edgeBetween = e;
+							break;
+						}
+					}
+					//populate connections
+					if(edgeBetween != NULL)
+					{
+						for(unsigned t = 8; t < 44; t++) //trip every half an hour, from 4 to 22.
+						{
+							edgeBetween->addConnection(Time(30 * t + currentStop * drivingTime),
+									Time(30 * t + (currentStop + 1) * drivingTime), tripID);
+						}
+						currentStop++;
+					}
+				}
+			}
+
+			currentNodeID -= width;
+
+		}
+		while(currentNodeID > 0 && currentNodeID < width * height);
+
+		tripID++;
+	}
+
+
 	//left-right
-	std::cout << "generateRandomNetwork: Generating trips, horizontal" << std::endl;
+	std::cout << "generateRandomNetwork: Generating trips, left-right" << std::endl;
 	for(unsigned i = 0; i < height; i++)
 	{
 		currentStop = 0;
+		start = end = temp = NULL;
 
 		unsigned currentNodeID = i * width;
 		do
@@ -283,7 +334,55 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 		tripID++;
 	}
 
+	//right-left
+	std::cout << "generateRandomNetwork: Generating trips, right-left" << std::endl;
+	for(unsigned i = 0; i < height; i++)
+	{
+		currentStop = 0;
+		start = end = temp = NULL;
 
+		unsigned currentNodeID = (i + 1) * width - 1;
+		do
+		{
+			if((temp = network->getNode(currentNodeID)) != NULL)
+			{
+				if(start != NULL && end != NULL)
+				{
+					start = end;
+					end = temp;
+
+					//locate proper edge:
+					Edge * edgeBetween = NULL;
+
+					for(auto e: start->getEdges())
+					{
+						if(e->getEndNode() == end)
+						{
+							edgeBetween = e;
+							break;
+						}
+					}
+
+					//populate connections
+					if(edgeBetween != NULL)
+					{
+						for(unsigned t = 8; t < 44; t++) //trip every half an hour, from 4 to 22.
+						{
+							edgeBetween->addConnection(Time(30 * t + currentStop * drivingTime),
+									Time(30 * t + (currentStop + 1) * drivingTime), tripID);
+						}
+						currentStop++;
+					}
+				}
+			}
+
+			currentNodeID--;
+
+		}
+		while(currentNodeID >= i * width && currentNodeID < width * height);
+
+		tripID++;
+	}
 
 	return network;
 }
