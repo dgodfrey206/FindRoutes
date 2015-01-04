@@ -25,56 +25,33 @@
 
 int main()
 {
-//	DataBase db(DataBase::LoadMethod::SAVEDDB, "../db/database.json");
-//	Network net(db);
-//	SimAnnealingAlg * solver = new SimAnnealingAlg;
-//
-//	net.setSolver(solver);
-//
-//	net.validate();
-//	Node * start = net.getNode(711);
-//	Node * end = net.getNode(21);
 
-//	auto startTime = std::chrono::system_clock::now();
-//
-//	solver->setParams(50, 10, 10, 0.99, 5, 15);
-//	auto solution = solver->solve(&net, start, end, Time(1000));
-//	if(solution) std::cout << *solution << std::endl << solution->getWeight(Time(1000)) << std::endl;
-//	else std::cout << "Solution have not been found" << std::endl;
-//	auto endTime = std::chrono::system_clock::now();
-//	auto length = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
-//	std::cout << "Time: " << length.count() << "ms" << std::endl;
-//
-//	std::ofstream f("../tests/data/save");
-//	auto w = solver->getWeights();
-//	auto p = solver->getPunishments();
-//	auto b = solver->getBestPosWeights();
-//	for(unsigned i = 0; i < w.size(); i++) f << w[i] << " " << p[i] << " " << b[i] << std::endl;
-//	f.close();
-
-//	Tester tester(&net);
-//	tester.setDefaults(100, 1, 10, 0.99, 10, 50);
-//	tester.makeTests(start, end, "../tests/data");
-
-//	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
-//	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
-//	net.limitRandomly(1000, 10000);
-//	//std::cout << net << std::endl;
-//	std::cout << "nodes:" << net.getAllNodes().size() << std::endl;
-//	std::cout << "edges:" << net.getAllEdges().size() << std::endl;
-
-	Network * test = Network::generateRandomNetwork(4, 4, 1000, 0.6);
-	std::cout << "nodes:" << test->getAllNodes().size() << std::endl;
-	std::cout << "edges:" << test->getAllEdges().size() << std::endl;
-
-	for(auto n: test->getAllNodes())
+	long seed = 889573451;
+	std::vector<unsigned> sizes = {5, 10, 20, 30, 50, 100};
+	for(auto s : sizes)
 	{
-		std::cout << *n << std::endl;
-		for(auto e: n->getEdges())
-		{
-			std::cout << *e << std::endl;
-		}
+		Node * start;
+		Node * end;
+
+		Network * net = Network::generateRandomNetwork(s, s, seed, 1);
+
+		auto nodes = net->getAllNodes();
+		auto pos = nodes.begin();
+		std::advance(pos, std::rand() % nodes.size());
+		start = *pos;
+		pos = nodes.begin();
+		std::advance(pos, std::rand() % nodes.size());
+		end = *pos;
+
+		std::cout << start << " " << end << std::endl;
+		Tester tester(net);
+		tester.setDefaults(100, 1, 10, 0.99, 10, 50);
+		tester.makeTests(start, end, "../tests/data/" + std::to_string(s));
+		break;
+
 	}
+
+
 }
 
 

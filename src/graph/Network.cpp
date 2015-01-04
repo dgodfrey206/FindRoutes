@@ -106,8 +106,10 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 			if(searchedNode != NULL)
 			{
 				//create edge
-				tempEdge = new Edge(currentEdgeID++, n, searchedNode);
-				network->addEdge(tempEdge);
+				tempEdge = NULL;
+				currentEdgeID = network->calculateEdgeId(n->getID(), searchedNode->getID());
+				tempEdge = new Edge(currentEdgeID, n, searchedNode);
+				if(tempEdge != NULL) network->addEdge(tempEdge);
 			}
 		}
 
@@ -127,8 +129,10 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 			if(searchedNode != NULL)
 			{
 				//create edge
-				Edge * tempEdge = new Edge(currentEdgeID++, n, searchedNode);
-				network->addEdge(tempEdge);
+				tempEdge = NULL;
+				currentEdgeID = network->calculateEdgeId(n->getID(), searchedNode->getID());
+				Edge * tempEdge = new Edge(currentEdgeID, n, searchedNode);
+				if(tempEdge != NULL) network->addEdge(tempEdge);
 			}
 		}
 
@@ -148,8 +152,10 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 			if(searchedNode != NULL)
 			{
 				//create edge
-				Edge * tempEdge = new Edge(currentEdgeID++, n, searchedNode);
-				network->addEdge(tempEdge);
+				tempEdge = NULL;
+				currentEdgeID = network->calculateEdgeId(n->getID(), searchedNode->getID());
+				Edge * tempEdge = new Edge(currentEdgeID, n, searchedNode);
+				if(tempEdge != NULL) network->addEdge(tempEdge);
 			}
 		}
 
@@ -169,8 +175,10 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 			if(searchedNode != NULL)
 			{
 				//create edge
-				Edge * tempEdge = new Edge(currentEdgeID++, n, searchedNode);
-				network->addEdge(tempEdge);
+				tempEdge = NULL;
+				currentEdgeID = network->calculateEdgeId(n->getID(), searchedNode->getID());
+				Edge * tempEdge = new Edge(currentEdgeID, n, searchedNode);
+				if(tempEdge != NULL) network->addEdge(tempEdge);
 			}
 		}
 	}
@@ -384,6 +392,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 		tripID++;
 	}
 
+	network->createIncidenceMatrix();
 	return network;
 }
 
