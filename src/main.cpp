@@ -43,16 +43,11 @@ int main()
 		std::advance(pos, std::rand() % nodes.size());
 		end = *pos;
 
-		std::cout << start << " " << end << std::endl;
 		Tester tester(net);
 		tester.setDefaults(100, 1, 10, 0.99, 10, 50);
 		tester.makeTests(start, end, "../tests/data/" + std::to_string(s));
-		break;
 
 	}
 
 
 }
-
-
-
