@@ -244,9 +244,6 @@ void DataBase::validate() {
 	}else{
 		std::cerr<<"Services vector is ready, contains " << this->services.size() << " entries."<<std::endl;
 	}
-
-	//todo recursively validate timetable (vector of vectors of vectors of objects FTW)
-
 }
 
 bool DataBase::isValid()

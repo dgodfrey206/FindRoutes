@@ -9,7 +9,6 @@
 
 Tester::Tester(Network * n):
 	network(n){
-	// TODO Auto-generated constructor stub
 	this->TStart = 100;
 	this->TEnd = 1;
 	this->k = 10;

@@ -86,7 +86,7 @@ public:
 	 * @param src given Time object.
 	 * @return Time object.
 	 */
-	Time operator+(const Time src); //todo, time can pass next midnight, operator+(-) gets two arguments.
+	Time operator+(const Time src);
 
 	/**
 	 * Subtraction operator.
@@ -94,12 +94,12 @@ public:
 	 * @param src given Time object.
 	 * @return Time object.
 	 */
-	Time operator-(const Time src);	//todo, time can pass next midnight, operator+(-) gets two arguments.
+	Time operator-(const Time src);
 
 	/**
 	 * Converts Time to int.
 	 */
-	operator int(); //todo shouldn't it return something?
+	operator int();
 
 	/**
 	 * Helper output function.

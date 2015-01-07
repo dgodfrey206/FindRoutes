@@ -70,7 +70,6 @@ Route* DsfAlg::solve(const Network * n,Node * start,Node * end, Time t){
 	/*
 	Route* resultRoute;
 	resultRoute = new Route();
-//todo solver should return Route*
 	for(unsigned int i=1; i<resultVector.size();i++){
 		unsigned int edgeId = n->calculateEdgeId(resultVector[i-1],resultVector[i]);
 		resultRoute->addEdge(n->getEdge(edgeId));

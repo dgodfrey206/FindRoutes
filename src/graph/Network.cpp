@@ -759,3 +759,4 @@ void Network::limitRandomly(unsigned size, long seed) {
 	this->edges = newEdges;
 	//todo remove unused resources
 }
+

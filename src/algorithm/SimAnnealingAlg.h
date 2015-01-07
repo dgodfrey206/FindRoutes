@@ -60,7 +60,7 @@ private:
 	std::vector<unsigned> punishments;
 	std::vector<unsigned> bestPosWeights;
 
-public://todo private
+private:
 	Route * getRouteInSurroundings(const Network * n, Route * r);
 	Route * getFistSolution(const Network * n, Node * start, Node * end);
 

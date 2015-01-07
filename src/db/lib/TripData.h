@@ -12,7 +12,6 @@
 #include <string>
 #include <vector>
 
-//todo appendStopToSec(unsigned int id); would be nice to have
 
 /**
  * Class containing data about Trip when database is being created.

@@ -90,7 +90,6 @@ void Edge::addConnection(Time departureTime, Time arrivalTime,unsigned int tripI
 Time Edge::getNextTime(Time t) const{
 
 	if(this->connections.empty()){
-		//std::cerr << "no connections!" <<std::endl; //todo
 		return Time(0,0);
 	}
 

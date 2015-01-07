@@ -11,7 +11,6 @@
 #include <iostream>
 #include <string>
 
-//todo RouteData need to contain TransportType enum value or coresponding.
 
 /**
  * Class containing data about routes when database is being created.

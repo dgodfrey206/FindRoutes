@@ -163,7 +163,6 @@ bool Route::addEdge(const Edge * e) {
 }
 
 bool Route::switchEdge(const Edge * e) {
-	// todo rewrite for optimisation, do not create route object.
 	Route r;
 	r.addEdge(e);
 	return this->switchRoute(r);
