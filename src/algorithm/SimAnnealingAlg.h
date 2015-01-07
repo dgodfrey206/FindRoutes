@@ -24,6 +24,7 @@
 class SimAnnealingAlg: public Solver {
 public:
 	SimAnnealingAlg();
+	SimAnnealingAlg(long long seed);
 	~SimAnnealingAlg();
 
 	/**
@@ -39,6 +40,8 @@ public:
 	std::vector<unsigned> getWeights() const;
 	std::vector<unsigned> getPunishments() const;
 	std::vector<unsigned> getBestPosWeights() const;
+
+	void setSeed(long long seed);
 
 private:
 	static const std::string name;

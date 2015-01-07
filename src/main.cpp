@@ -27,7 +27,7 @@ int main()
 {
 
 	long seed = 889573451;
-	std::vector<unsigned> sizes = {5, 10, 20, 30, 50, 100};
+	std::vector<unsigned> sizes = {/*5, 10,*/ 20/*, 30, 50, 100*/};
 	for(auto s : sizes)
 	{
 		Node * start;
@@ -45,7 +45,7 @@ int main()
 
 		Tester tester(net);
 		tester.setDefaults(100, 1, 10, 0.99, 10, 50);
-		tester.makeTests(start, end, "../tests/data/" + std::to_string(s));
+		tester.makeTests(start, end, "../tests/data/" + std::to_string(s), seed);
 
 	}
 

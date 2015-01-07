@@ -24,18 +24,20 @@ Tester::Tester(Network * n):
 	this->from = NULL;
 	this->to = NULL;
 
+	this->seed = 0;
+
 	this->directory = "";
 }
 
 Tester::~Tester() {
 }
 
-void Tester::makeTests(Node * f, Node * t, std::string dir) {
+void Tester::makeTests(Node * f, Node * t, std::string dir, long long seed) {
 	if(this->network == NULL) return;
 
 	if(this->solver == NULL)
 	{
-		this->solver = new SimAnnealingAlg;
+		this->solver = new SimAnnealingAlg(seed);
 		this->network->setSolver(this->solver);
 	}
 
@@ -47,6 +49,8 @@ void Tester::makeTests(Node * f, Node * t, std::string dir) {
 
 	this->directory = dir;
 	if(this->directory[this->directory.size()-1] != '/') this->directory += "/";
+
+	this->seed = seed;
 
 	this->variableAlphaTest();
 	this->variableChangesTest();
@@ -61,7 +65,8 @@ void Tester::variableKTest() {
 
 	for(auto k: possibleK)
 	{
-		std::cout << k << std::endl;
+		this->solver->setSeed(this->seed * k);
+
 		this->solver->setParams(this->TStart, this->TEnd, k, this->alpha, this->allowedChanges, this->changePunishment);
 
 		Route * solution = this->solver->solve(this->network, this->from, this->to, this->time);
@@ -86,7 +91,8 @@ void Tester::variableAlphaTest() {
 
 	for(auto a: possibleAlpha)
 	{
-		std::cout << a << std::endl;
+		this->solver->setSeed(this->seed * a);
+
 		this->solver->setParams(this->TStart, this->TEnd, this->k, a, this->allowedChanges, this->changePunishment);
 
 		Route * solution = this->solver->solve(this->network, this->from, this->to, this->time);
@@ -111,7 +117,8 @@ void Tester::variableTempTest() {
 
 	for(auto t: possibleTemps)
 	{
-		std::cout << t << std::endl;
+		this->solver->setSeed(this->seed * t);
+
 		this->solver->setParams(t, this->TEnd, this->k, this->alpha, this->allowedChanges, this->changePunishment);
 
 		Route * solution = this->solver->solve(this->network, this->from, this->to, this->time);
@@ -136,7 +143,8 @@ void Tester::variablePunishmentTest() {
 
 	for(auto p: possiblePuns)
 	{
-		std::cout << p << std::endl;
+		this->solver->setSeed(this->seed * p);
+
 		this->solver->setParams(this->TStart, this->TEnd, this->k, this->alpha, this->allowedChanges, p);
 
 		Route * solution = this->solver->solve(this->network, this->from, this->to, this->time);
@@ -161,7 +169,8 @@ void Tester::variableChangesTest() {
 
 	for(auto c: possibleChanges)
 	{
-		std::cout << c << std::endl;
+		this->solver->setSeed(this->seed * c);
+
 		this->solver->setParams(this->TStart, this->TEnd, this->k, this->alpha, c, this->changePunishment);
 
 		Route * solution = this->solver->solve(this->network, this->from, this->to, this->time);

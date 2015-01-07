@@ -21,8 +21,19 @@ SimAnnealingAlg::SimAnnealingAlg()
 	allowedChangeNumber(10),
 	changePunishment(50)
 {
-	this->distribution = std::uniform_real_distribution<>(0.0, 1.0);
-	this->generator = std::default_random_engine(100); //todo constant seed for debug
+	this->setSeed(0);
+}
+
+SimAnnealingAlg::SimAnnealingAlg(long long seed)
+	:
+	Tstart(1000),
+	Tend(100),
+	k(100),
+	alpha(0.999),
+	allowedChangeNumber(10),
+	changePunishment(50)
+{
+	this->setSeed(seed);
 }
 
 SimAnnealingAlg::~SimAnnealingAlg()
@@ -131,9 +142,10 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 		std::list<Edge *> edgesForNode = n->getEdgesForNode(currentNode);
 
 		//search all edges and select one closest to end node
-		double closestDist = std::numeric_limits<double>::max();
+		//double closestDist = std::numeric_limits<double>::max();
 		Edge * closestNodeEdge = NULL;
 
+		std::vector<Edge *> possible;
 		for(Edge * e: edgesForNode)
 		{
 			//skip visited nodes:
@@ -157,14 +169,19 @@ Route* SimAnnealingAlg::getFistSolution(const Network* n, Node* start, Node* end
 			}
 			if(isIgnored) continue;
 
-			double distance = sqrt(pow(e->getEndNode()->getLatitude() - end->getLatitude(), 2)
+			/*double distance = sqrt(pow(e->getEndNode()->getLatitude() - end->getLatitude(), 2)
 					+ pow(e->getEndNode()->getLongtitude() - end->getLongtitude(), 2));
 
 			if(closestNodeEdge == NULL || distance < closestDist)
 			{
 				closestNodeEdge = e;
 				closestDist = distance;
-			}
+			}*/
+			possible.push_back(e);
+		}
+		if(possible.size() > 0)
+		{
+			closestNodeEdge = possible[this->getRandom(possible.size())];
 		}
 
 		if(closestNodeEdge != NULL)
@@ -210,4 +227,10 @@ Route* SimAnnealingAlg::getRouteInSurroundings(const Network* net, Route* r) {
 	//std::cout << startNode->getName() << " -> "<<endNode->getName()<<std::endl;
 	result = alg.solve(net,startNode,endNode,Time(0,0));
 	return result;
+}
+
+void SimAnnealingAlg::setSeed(long long seed)
+{
+	this->distribution = std::uniform_real_distribution<>(0.0, 1.0);
+	this->generator = std::default_random_engine(seed);
 }

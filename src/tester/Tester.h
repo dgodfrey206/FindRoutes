@@ -19,7 +19,7 @@ public:
 	Tester(Network * n);
 	~Tester();
 
-	void makeTests(Node * from, Node * to, std::string directory);
+	void makeTests(Node * from, Node * to, std::string directory, long long seed = 0);
 
 	void setDefaults(double Tstart, double Tend, unsigned int k, double alpha, unsigned int allowedChangeNumber, unsigned int changePunishment);
 
@@ -43,6 +43,7 @@ private:
 	Node *				to;
 	Time				time;
 	std::string			directory;
+	long long 			seed;
 };
 
 #endif /* SRC_TESTER_TESTER_H_ */
