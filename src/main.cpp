@@ -27,7 +27,7 @@ int main()
 {
 
 	long seed = 889573451;
-	std::vector<unsigned> sizes = {/*5, 10,*/ 20/*, 30, 50, 100*/};
+	std::vector<unsigned> sizes = {5, 10, 20, 30, 50};
 	for(auto s : sizes)
 	{
 		Node * start;
