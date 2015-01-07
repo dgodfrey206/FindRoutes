@@ -50,14 +50,16 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 	//alfa - T = alfa * T for every iteration
 	//std::vector<unsigned int> vec;
 	this->weights.clear();
+	this->bestPosWeights.clear();
+	this->punishments.clear();
 
 	Time t = time;
 	double T = this->Tstart;
 	Route * currentSolution = this->getFistSolution(n, start, end);
 	unsigned int currentWeight = currentSolution->getWeight(t);
 
-	Route * bestPossible = currentSolution;
-	unsigned bestPossibleWeight = currentWeight;
+	Route * bestPossible = NULL;
+	unsigned bestPossibleWeight = std::numeric_limits<unsigned>::max();
 
 	while(T>this->Tend){
 		std::cout << "Current temperature: " << T << " (" << Tstart << " : " << Tend << ")" << std::endl;
