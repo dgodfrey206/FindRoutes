@@ -28,9 +28,13 @@ if __name__ == '__main__':
     
     for d in subdirs:
         curdir = directory + d + '/'
+        print('Working on directory: ' + curdir)
+        
         files = os.listdir(curdir)
 
         for f in files:
+            print('  Working of file ' + f)
+
             number, test = f.rsplit('.', 1)
 
             data = {'w': [], 'p': [], 'b': []}
