@@ -58,7 +58,7 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 	{
 		for(unsigned j = 0; j < width; j++)
 		{
-			if(std::rand() < probability * RAND_MAX)
+			if(std::rand() < probability * double(RAND_MAX))
 			{
 				tempNode = new Node(width * i + j, std::to_string(width * i + j), 0.02 * j, 0.02 * i);
 				network->addNode(tempNode);
@@ -399,23 +399,29 @@ Network* Network::generateRandomNetwork(unsigned width, unsigned height,
 void Network::createIncidenceMatrix() {
 	std::cerr<<"Network::createIncidenceMatrix(): creating incidence matrix"<<std::endl;
 	unsigned int numNodes = this->nodes.size();
-
+	for(auto n: this->nodes)
+	{
+		if(n != NULL && n->getID() > numNodes) numNodes = n->getID();
+	}
 	if(numNodes == 0){
 		std::cerr<<"Network::createIncidenceMatrix(): creating incidence matrix failed, no nodes found"<<std::endl;
 		return;
 	}
-	this->incidenceMatrix = new bool*[numNodes];
-	for (unsigned int i = 0; i < numNodes; i++) {
-		this->incidenceMatrix[i] = new bool[numNodes];
+	this->incidenceMatrix = new bool*[numNodes + 1];
+	for (unsigned int i = 0; i <= numNodes; i++) {
+		this->incidenceMatrix[i] = new bool[numNodes + 1];
 	}
-	for(unsigned int i = 0; i < numNodes; i++){
-		for(unsigned int j = 0; j < numNodes; j++){
+	for(unsigned int i = 0; i <= numNodes; i++){
+		for(unsigned int j = 0; j <= numNodes; j++){
 			incidenceMatrix[i][j] = false;
 		}
 	}
 	for (Edge* e : this->edges)
 	{
-		this->incidenceMatrix[e->getStartNode()->getID()][e->getEndNode()->getID()] = true;
+		Node * start = e->getStartNode();
+		Node * end = e->getEndNode();
+
+		if(start != NULL && end != NULL) this->incidenceMatrix[start->getID()][end->getID()] = true;
 	}
 	std::cerr<<"Network::createIncidenceMatrix(): incidence matrix done"<<std::endl;
 
