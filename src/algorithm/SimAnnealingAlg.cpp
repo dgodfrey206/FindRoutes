@@ -59,7 +59,7 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 	unsigned int currentWeight = currentSolution->getWeight(t);
 
 	Route * bestPossible = NULL;
-	unsigned bestPossibleWeight = std::numeric_limits<unsigned>::max();
+	unsigned bestPossibleWeight = 0;
 
 	while(T>this->Tend){
 		std::cout << "Current temperature: " << T << " (" << Tstart << " : " << Tend << ")" << std::endl;
@@ -85,7 +85,7 @@ Route* SimAnnealingAlg::solve(const Network * n, Node * start, Node * end, Time 
 				currentSolution = newR;
 				currentWeight = newWeight;
 
-				if(isPossible && currentWeight < bestPossibleWeight)
+				if(isPossible && (bestPossible == NULL || currentWeight < bestPossibleWeight))
 				{
 					bestPossible = currentSolution;
 					bestPossibleWeight = currentWeight;
