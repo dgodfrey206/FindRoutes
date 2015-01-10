@@ -1,8 +1,8 @@
 /*
  * GTFSReader.cpp
  *
- *  Created on: 9 lis 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 9 Oct 2014
+ *      Author: David Godfrey
  */
 
 #include "GTFSReader.h"

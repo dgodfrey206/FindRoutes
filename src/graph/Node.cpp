@@ -1,8 +1,8 @@
 /*
  * Node.cpp
  *
- *  Created on: 26 paź 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 26 Oct 2014
+ *      Author: David Godfrey
  */
 
 #include "Node.h"

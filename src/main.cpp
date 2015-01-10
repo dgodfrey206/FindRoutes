@@ -1,8 +1,8 @@
 /*
  * main.cpp
  *
- *  Created on: 15 paź 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 15 Oct 2014
+ *      Author: David Godfrey
  */
 
 #include <iostream>

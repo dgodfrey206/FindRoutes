@@ -1,8 +1,8 @@
 /*
  * Edge.h
  *
- *  Created on: 20 paź 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 20 Oct 2014
+ *      Author: David Godfrey
  */
 
 #ifndef SRC_EDGE_H_

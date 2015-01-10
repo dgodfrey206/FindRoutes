@@ -1,8 +1,8 @@
 /*
  * SimAnnealingAlg.cpp
  *
- *  Created on: 19 lis 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 19 Oct 2014
+ *      Author: David Godfrey
  */
 
 #include "SimAnnealingAlg.h"

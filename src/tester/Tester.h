@@ -1,8 +1,8 @@
 /*
  * Tester.h
  *
- *  Created on: 15 gru 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 15 Oct 2014
+ *      Author: David Godfrey
  */
 
 #ifndef SRC_TESTER_TESTER_H_

@@ -1,8 +1,8 @@
 /*
  * GTFSReader.h
  *
- *  Created on: 9 lis 2014
- *      Author: Wojtek Gumuła
+ *  Created on: 9 Oct 2014
+ *      Author: David Godfrey
  */
 
 #ifndef SRC_DB_GTFSREADER_H_
