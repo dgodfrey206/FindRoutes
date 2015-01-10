@@ -200,3 +200,4 @@ void Tester::setDefaults(double Tstart, double Tend, unsigned int k,
 	this->allowedChanges = allowedChangeNumber;
 	this->changePunishment = changePunishment;
 }
+ 

@@ -67,3 +67,4 @@ private:
 };
 
 #endif /* SRC_SIMANNEALINGALG_H_ */
+ 

@@ -99,3 +99,4 @@ private:
 };
 
 #endif /* SRC_EDGE_H_ */
+ 

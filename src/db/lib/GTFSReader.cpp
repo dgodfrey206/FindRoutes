@@ -306,3 +306,4 @@ std::vector<StopTimeData> GTFSReader::getStopTimes() {
 std::vector<ServiceData> GTFSReader::getServices() {
 	return this->services;
 }
+ 

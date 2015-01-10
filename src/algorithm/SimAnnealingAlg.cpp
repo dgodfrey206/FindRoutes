@@ -243,3 +243,4 @@ void SimAnnealingAlg::setSeed(long long seed)
 	this->distribution = std::uniform_real_distribution<>(0.0, 1.0);
 	this->generator = std::default_random_engine(seed);
 }
+ 
