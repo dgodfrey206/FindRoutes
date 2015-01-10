@@ -169,7 +169,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Współczynnik alfa * 10000</string>
+        <string>Współczynnik alfa</string>
        </property>
       </widget>
      </item>

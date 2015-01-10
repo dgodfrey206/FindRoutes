@@ -7,6 +7,7 @@
 #include <QTime>
 #include <QDate>
 #include <QWebView>
+#include <QDesktopServices>
 
 #include "debugwindow.h"
 #include "settings.h"

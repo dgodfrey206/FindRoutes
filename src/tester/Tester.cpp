@@ -59,12 +59,12 @@ void Tester::makeTests(Node * f, Node * t, std::string dir, long long seed) {
 }
 
 void Tester::variableKTest() {
-	std::vector<unsigned> possibleK = { 1, 10/*, 100, 1000*/ };
+	std::vector<unsigned> possibleK = { 1, 10, 50, 100 };
 
 
 	for(auto k: possibleK)
 	{
-		this->solver->setSeed(this->seed * k);
+		this->solver->setSeed(this->seed);
 
 		this->solver->setParams(this->TStart, this->TEnd, k, this->alpha, this->allowedChanges, this->changePunishment);
 
@@ -86,11 +86,11 @@ void Tester::variableKTest() {
 }
 
 void Tester::variableAlphaTest() {
-	std::vector<double> possibleAlpha = { 0.9, 0.99/*, 0.999, 0.9999*/ };
+	std::vector<double> possibleAlpha = { 0.9, 0.99, 0.999 };
 
 	for(auto a: possibleAlpha)
 	{
-		this->solver->setSeed(this->seed * a);
+		this->solver->setSeed(this->seed);
 
 		this->solver->setParams(this->TStart, this->TEnd, this->k, a, this->allowedChanges, this->changePunishment);
 
@@ -112,11 +112,11 @@ void Tester::variableAlphaTest() {
 }
 
 void Tester::variableTempTest() {
-	std::vector<unsigned> possibleTemps = { 2, 10, 100, 1000 };
+	std::vector<unsigned> possibleTemps = { 2, 10, 100, 300, 500, 1000 };
 
 	for(auto t: possibleTemps)
 	{
-		this->solver->setSeed(this->seed * t);
+		this->solver->setSeed(this->seed);
 
 		this->solver->setParams(t, this->TEnd, this->k, this->alpha, this->allowedChanges, this->changePunishment);
 
@@ -142,7 +142,7 @@ void Tester::variablePunishmentTest() {
 
 	for(auto p: possiblePuns)
 	{
-		this->solver->setSeed(this->seed * p);
+		this->solver->setSeed(this->seed);
 
 		this->solver->setParams(this->TStart, this->TEnd, this->k, this->alpha, this->allowedChanges, p);
 
@@ -164,11 +164,11 @@ void Tester::variablePunishmentTest() {
 }
 
 void Tester::variableChangesTest() {
-	std::vector<unsigned> possibleChanges = { 0, 1, 3, 5, 10, 100 };
+	std::vector<unsigned> possibleChanges = { 0, 1, 3, 5, 10, 20, 100 };
 
 	for(auto c: possibleChanges)
 	{
-		this->solver->setSeed(this->seed * c);
+		this->solver->setSeed(this->seed);
 
 		this->solver->setParams(this->TStart, this->TEnd, this->k, this->alpha, c, this->changePunishment);
 

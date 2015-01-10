@@ -186,6 +186,7 @@ void MainWindow::updateMap()
 
 void MainWindow::showHelp()
 {
+    QDesktopServices::openUrl(QUrl::fromLocalFile("sprawozdanie.pdf"));
 
 }
 
