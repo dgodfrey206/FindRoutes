@@ -1,26 +1,15 @@
+#unzip tests.zip file and run $python3 makeplots.py
+
 import matplotlib.pyplot as plt
 import os
 
-# data = {'w': [], 'p': [], 'b': []}
-#
-# with open('data/save', 'r') as f:
-# 	for line in f:
-# 		weight, punishment, best = line.split()
-# 		data['w'].append(weight)
-# 		data['p'].append(punishment)
-# 		data['b'].append(best)
-#
-# time = range(len(data['w']))
-#
-# plt.plot(time, data['w'], 'r', label='wagi')
-# plt.plot(time, data['p'], 'g', label='kara')
-# plt.plot(time, data['b'], 'b', label='najlepsze')
-# plt.legend()
-# plt.xlabel('Iteracja')
-# plt.ylabel('Wartosci')
-# plt.axis([0, len(time), 0, 200])
-# plt.show()
-
+dictionary = {
+    'variableChangesTest':      'Ilosc przesiadek: ',
+    'variableTempTest':         'Temperatura poczatkowa: ',
+    'variablePunishmentTest':   'Wartosc wspolczynnika kary: ',
+    'variableAlphaTest':        'Wartosc wspolczynnika alfa: ',
+    'variableKTest':            'Ilosc iteracji: '
+}
 
 if __name__ == '__main__':
     directory = 'data/'
@@ -33,8 +22,6 @@ if __name__ == '__main__':
         files = os.listdir(curdir)
 
         for f in files:
-            print('  Working of file ' + f)
-
             number, test = f.rsplit('.', 1)
 
             data = {'w': [], 'p': [], 'b': []}
@@ -56,7 +43,7 @@ if __name__ == '__main__':
             plt.legend()
             plt.xlabel('Iteracja')
             plt.ylabel('Wartosci')
-            plt.title(test + ', wartosc: ' + number)
+            plt.title(dictionary[test] + number)
             plt.axis([0, len(time), 0, maximumVal * 1.2])
 
             savedir = 'plots/' + d + '/'
