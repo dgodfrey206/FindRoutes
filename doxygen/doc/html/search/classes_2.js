@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['gtfsreader',['GTFSReader',['../classGTFSReader.html',1,'']]]
+  ['database',['DataBase',['../classDataBase.html',1,'']]],
+  ['datareader',['DataReader',['../classDataReader.html',1,'']]],
+  ['dsfalg',['DsfAlg',['../classDsfAlg.html',1,'']]]
 ];

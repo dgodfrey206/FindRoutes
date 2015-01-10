@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['network',['Network',['../classNetwork.html',1,'']]],
-  ['node',['Node',['../classNode.html',1,'']]]
+  ['edge',['Edge',['../classEdge.html',1,'']]],
+  ['edgepointercompare',['edgePointerCompare',['../structedgePointerCompare.html',1,'']]]
 ];

@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['time',['Time',['../classTime.html',1,'']]],
-  ['tripdata',['TripData',['../classTripData.html',1,'']]]
+  ['servicedata',['ServiceData',['../classServiceData.html',1,'']]],
+  ['simannealingalg',['SimAnnealingAlg',['../classSimAnnealingAlg.html',1,'']]],
+  ['solver',['Solver',['../classSolver.html',1,'']]],
+  ['stopdata',['StopData',['../classStopData.html',1,'']]],
+  ['stoptimedata',['StopTimeData',['../classStopTimeData.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['routes',['routes',['../classDataBase.html#a19ced4f434f070c28b8d7a2644a6ae32',1,'DataBase']]]
+  ['incidencematrix',['incidenceMatrix',['../classNetwork.html#ade2adcec4d1ac654ba4dea2499be7556',1,'Network']]]
 ];

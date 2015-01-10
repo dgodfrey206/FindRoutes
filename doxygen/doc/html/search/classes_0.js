@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['database',['DataBase',['../classDataBase.html',1,'']]],
-  ['datareader',['DataReader',['../classDataReader.html',1,'']]]
+  ['bsfalg',['BsfAlg',['../classBsfAlg.html',1,'']]],
+  ['bsfrandalg',['BsfRandAlg',['../classBsfRandAlg.html',1,'']]]
 ];
